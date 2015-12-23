@@ -1,0 +1,819 @@
+---
+layout:     post
+title:      "Java8简明教程"
+subtitle:   "Modern Java - A Guide to Java 8"
+date:       2015-12-23 16:34:00
+author:     "decaywood"
+header-img: "img/post/2015-12-23-Java8-guide.jpg"
+tags:
+    - 技术文档
+    - 翻译
+---
+
+> 半年前开始试用Java8的新特性，当时没有很好的中文书籍，于是把Java8 in Action看了一遍。可惜并没有写一个像样的读书笔记。经过半年，几个项目中都用到了Java8的新特性，深感新特性的便利性，主要是语法的表达能力得到了很大的增强，可以用很少量的代码完成更多的工作。
+> 现在处于稍微空闲的状态，故想借此机会把Java8的一些特性进行归纳，由于Java8 in Action内容太多，涉及过多细节，并不适合入门，而且碰巧翻到了一个国外技术大牛的博客有类似的总结文档，简单易懂，知识覆盖也足够全面。遂舶过来翻译好并整理到博客，顺便给自己的知识脉络查漏补缺。踩在巨人肩膀上好办事～ 这是大牛的**[原版文章](https://github.com/winterbe/java8-tutorial)**。在这篇文章的基础上，我适当补充了一些解释，帮助更好的理解。
+
+## Table of Contents
+
+* [Default Methods for Interfaces](#default-methods-for-interfaces)
+* [Lambda expressions](#lambda-expressions)
+* [Functional Interfaces](#functional-interfaces)
+* [Method and Constructor References](#method-and-constructor-references)
+* [Lambda Scopes](#lambda-scopes)
+  * [Accessing local variables](#accessing-local-variables)
+  * [Accessing fields and static variables](#accessing-fields-and-static-variables)
+  * [Accessing Default Interface Methods](#accessing-default-interface-methods)
+* [Built-in Functional Interfaces](#built-in-functional-interfaces)
+  * [Predicates](#predicates)
+  * [Functions](#functions)
+  * [Suppliers](#suppliers)
+  * [Consumers](#consumers)
+  * [Comparators](#comparators)
+* [Optionals](#optionals)
+* [Streams](#streams)
+  * [Filter](#filter)
+  * [Sorted](#sorted)
+  * [Map](#map)
+  * [Match](#match)
+  * [Count](#count)
+  * [Reduce](#reduce)
+* [Parallel Streams](#parallel-streams)
+  * [Sequential Sort](#sequential-sort)
+  * [Parallel Sort](#parallel-sort)
+* [Maps](#maps)
+* [Date API](#date-api)
+  * [Clock](#clock)
+  * [Timezones](#timezones)
+  * [LocalTime](#localtime)
+  * [LocalDate](#localdate)
+  * [LocalDateTime](#localdatetime)
+* [Annotations](#annotations)
+* [Where to go from here?](#where-to-go-from-here)
+
+整个教程将详细的介绍Java8所有的新特性，并以简短的代码展示出来。你将学会如何使用默认接口方法/lambda表达式/方法引用以及@Repeatable注解。读完本文后，你将对流（stream）/函数式接口（functional interface）/map拓展以及新的日期API等最新的API变动有一个相对了解。整个教程大部分都是以代码形式体现，没有过多的文字说明，让我们开始吧：）
+
+## Default Methods for Interfaces
+
+Java8可以让我们通过default关键字在接口中添加非抽象的方法，这是一个新的概念，**[虚拟拓展方法](http://stackoverflow.com/questions/24096421/java-8-add-extension-default-method-to-class/24102730#24102730)**（补充：这样可以提供声明行为的默认实现）
+
+话不多说，上代码：
+
+```java
+interface Formula {
+    double calculate(int a);
+
+    default double sqrt(int a) {
+        return Math.sqrt(a);
+    }
+}
+```
+
+除了calcilate抽象方法，Formula接口同时定义了默认方法sqrt。这样一来，接口实现类只需要实现抽象方法calculate即可，而默认方法sqrt则可以在实现类外部进行调用。代码如下：
+
+```java
+Formula formula = new Formula() {
+    @Override
+    public double calculate(int a) {
+        return sqrt(a * 100);
+    }
+};
+
+formula.calculate(100);     // 100.0
+formula.sqrt(16);           // 4.0
+```
+上述代码中，Formula接口由匿名对象实现。可以看出，代码非常冗长，仅仅简单的实现了sqrt(a * 100)计算就用了6行代码。我们将在下一章节看到如何在Java8中用更简洁的方式实现单个抽象方法的接口。
+
+## Lambda expressions
+
+让我们以一个简单老版本的字符串排序为例子开始这一章节：
+
+```java
+List<String> names = Arrays.asList("peter", "anna", "mike", "xenia");
+
+Collections.sort(names, new Comparator<String>() {
+    @Override
+    public int compare(String a, String b) {
+        return b.compareTo(a);
+    }
+});
+```
+
+静态排序方法Collections.sort接收一个List和一个比较器来对List里面的元素进行排序，你可能经常遇到这种需要传入一个匿名比较器给排序方法的情况。
+
+除了创建一个匿名对象的方式来实现Comparator接口之外，Java8提供了一个更加简洁的语法，lambda表达式：
+
+```java
+Collections.sort(names, (String a, String b) -> {
+    return b.compareTo(a);
+});
+```
+
+很明显，代码明显简洁了许多而且表达更加清晰了，但它还可以简化：
+
+```java
+Collections.sort(names, (String a, String b) -> b.compareTo(a));
+```
+
+对于只有一行的方法，可以采取去掉外围方法体和返回值的方式进一步简化：
+
+```java
+names.sort((a, b) -> b.compareTo(a));
+```
+
+List现在新增了**sort**方法,并且编译器可以自动分析出形参类型，所以你可以直接省略形参类型。让我们更加深入探索lambda表达式的各种神奇的用法。
+
+## Functional Interfaces
+
+lambda表达式是如何适应Java的类型系统的呢？每种给定类型的lambda表达式由一个接口来进行描述。这就是所谓的函数式接口，函数式接口必须只包含一个抽象方法定义。每个对应的lambda表达式唯一匹配这一个抽象方法。由于默认方法非抽象，你可以在函数式接口中随意添加默认方法。
+
+只要接口只含有唯一的抽象方法，我们就可以把它用作lambda表达式。为了确定你的方法能满足函数式接口的要求，建议加上**@FunctionalInterface**注解。编译器会通过这个注解来进行编译检查，只要你在被注解标记的接口中定义了第二个抽象方法，编译器在编译时就会抛出一个异常。
+
+例子：
+
+```java
+@FunctionalInterface
+interface Converter<F, T> {
+    T convert(F from);
+}
+```
+
+```java
+Converter<String, Integer> converter = (from) -> Integer.valueOf(from);
+Integer converted = converter.convert("123");
+System.out.println(converted);    // 123
+```
+
+请一定要记住**@FunctionalInterface**注解不是必须的，如果省略，代码依然是有效的。
+
+## Method and Constructor References
+
+如果使用静态方法引用，上文中的例子能够得到更进一步的简化。
+
+```java
+Converter<String, Integer> converter = Integer::valueOf;
+Integer converted = converter.convert("123");
+System.out.println(converted);   // 123
+```
+
+Java8允许你通过使用**::**关键字来传递方法和构造器的引用。上面的例子展示了如何引用一个静态方法。不过我们也可以引用实例方法：
+
+```java
+class Something {
+    String startsWith(String s) {
+        return String.valueOf(s.charAt(0));
+    }
+}
+```
+
+```java
+Something something = new Something();
+Converter<String, String> converter = something::startsWith;
+String converted = converter.convert("Java");
+System.out.println(converted);    // "J"
+```
+
+让我们看看**::**关键字是如何引用构造器的。首先我们定义一个有不同构造器的Person类：
+
+```java
+class Person {
+    String firstName;
+    String lastName;
+
+    Person() {}
+
+    Person(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+}
+```
+
+接下来我们定义一个Person工厂接口用于创建Person对象：
+
+```java
+interface PersonFactory<P extends Person> {
+    P create(String firstName, String lastName);
+}
+```
+
+除了像以前那样新建一个实现类来实现接口以外，我们还可以通过构造器引用把接口和构造器两者关联起来：
+
+```java
+PersonFactory<Person> personFactory = Person::new;
+Person person = personFactory.create("Peter", "Parker");
+```
+
+我们通过**Person::new**创建了一个指向Person构造器的引用。Java编译器会自动对代码进行分析最后选择一个对应的构造器来匹配PersonFactory接口中定义的方法签名即**PersonFactory.create**。
+
+## Lambda Scopes
+
+从lambda表达式访问外部作用域的变量和匿名对象有点类似。你可以从本地外部作用域访问带有final修饰符的变量，也可以访问实例变量和静态变量。
+
+* ### Accessing local variables
+
+我们可以从lambda表达式的外部作用域读取本地final变量：
+
+```java
+final int num = 1;
+Converter<Integer, String> stringConverter =
+        (from) -> String.valueOf(from + num);
+
+stringConverter.convert(2);     // 3
+```
+
+但不同于匿名对象，num变量如果不声明为final，代码依然是有效的：
+
+```java
+int num = 1;
+Converter<Integer, String> stringConverter =
+        (from) -> String.valueOf(from + num);
+
+stringConverter.convert(2);     // 3
+```
+
+然而，虽然不需要定义num为final，但是隐式地必须为不变量才能通过编译检查，下面的代码就不能通过编译，因为num值被修改了：
+
+```java
+int num = 1;
+Converter<Integer, String> stringConverter =
+        (from) -> String.valueOf(from + num);
+num = 3;
+```
+
+同时，从lambda表达式赋值给num也是禁止的。（补充：对于这种行为很好理解，本地变量存储在栈中，lambda表达式本质上还是对象，存储在堆中，必然不能对栈数据进行写操作。）
+
+* ### Accessing fields and static variables
+
+相比本地变量，对于实例变量和静态变量，lambda表达式既有读权限也有写权限，这种行为在匿名对象中非常常见。
+
+```java
+class Lambda4 {
+    static int outerStaticNum;
+    int outerNum;
+
+    void testScopes() {
+        Converter<Integer, String> stringConverter1 = (from) -> {
+            outerNum = 23;
+            return String.valueOf(from);
+        };
+
+        Converter<Integer, String> stringConverter2 = (from) -> {
+            outerStaticNum = 72;
+            return String.valueOf(from);
+        };
+    }
+}
+```
+
+* ### Accessing Default Interface Methods
+
+你应该还记得第一章提到的Formula例子吧？Formula接口定义了一个默认方法sqrt，它能被Formula接口的实现类或者匿名对象调用。但在lambda表达式中则不能调用默认方法。下面的代码不能通过编译：
+
+```java
+Formula formula = (a) -> sqrt( a * 100);
+```
+
+## Built-in Functional Interfaces
+
+JDK1.8的API囊括了许多内置函数式接口。其中一些在老版本中就被广泛使用（补充：还记得上文说过的吗？只要接口中定义了唯一的抽象方法就符合函数式接口的规范，可以被当做函数式接口。），例如**Comparator**或者**Runnable**。这些老版本就存在的接口在新版本中经过**@FunctionalInterface**注解标记进行拓展以提供lambda支持。
+
+除了这些接口，Java8 API也提供了全新的函数式接口来减轻你的工作负担。其中一些接口借鉴了**[Google Guava](https://code.google.com/p/guava-libraries/)**库中被广泛使用的功能。即使你对Guava了如指掌，你也应该认真地了解一下Java8中提供的新接口拓展了哪些有用的方法。
+
+* ### Predicates
+
+Predicate接口是一个返回boolean值的接口，它接收一个参数。这个接口包含了各种默认方法，可以对Predicates进行各种组合来完成复杂的逻辑运算（and, or, negate）。
+
+```java
+Predicate<String> predicate = (s) -> s.length() > 0;
+
+predicate.test("foo");              // true
+predicate.negate().test("foo");     // false
+
+Predicate<Boolean> nonNull = Objects::nonNull;
+Predicate<Boolean> isNull = Objects::isNull;
+
+Predicate<String> isEmpty = String::isEmpty;
+Predicate<String> isNotEmpty = isEmpty.negate();
+```
+
+* ### Functions
+
+Function接口接收一个参数，返回一个结果。其包含的默认方法能用于将多个Functions结构链接起来（compose，andthen）
+
+```java
+Function<String, Integer> toInteger = Integer::valueOf;
+Function<String, String> backToString = toInteger.andThen(String::valueOf);
+
+backToString.apply("123");     // "123"
+```
+
+* ### Suppliers
+
+Supplier接口根据给定的泛型返回一个结果。不像Functions接口，Suppliers不需要传入参数。
+
+```java
+Supplier<Person> personSupplier = Person::new;
+personSupplier.get();   // new Person
+```
+
+* ### Consumers
+
+Consumer接口代表一类只接收一个参数的操作。
+
+```java
+Consumer<Person> greeter = (p) -> System.out.println("Hello, " + p.firstName);
+greeter.accept(new Person("Luke", "Skywalker"));
+```
+
+* ### Comparators
+
+Comparator接口在老版本JDK中就广泛使用。Java8新引入了许多默认方法到接口中。
+
+```java
+Comparator<Person> comparator = (p1, p2) -> p1.firstName.compareTo(p2.firstName);
+
+Person p1 = new Person("John", "Doe");
+Person p2 = new Person("Alice", "Wonderland");
+
+comparator.compare(p1, p2);             // > 0
+comparator.reversed().compare(p1, p2);  // < 0
+```
+
+## Optionals
+
+Optional虽然不属于函数式接口，但它是防止**空指针错误（NullPointerException）**的利器。Optional对于接下来的内容来说是一个非常重要的概念，所以，让我们先大概地了解一下Optional是如何工作的。
+
+Optional是一个存储值的简单容器，只有null和non-null两种概念。想象一个方法，它有可能返回一个非空的结果，但也有可能什么都不返回（补充：例如查找某个用户，但是并没有这个用户的相关信息，null会造成空指针错误，所以返回null按道理是不合适的）。在Java8中，你这时就可以返回Optional来替代null了。
+
+```java
+Optional<String> optional = Optional.of("bam");
+
+optional.isPresent();           // true
+optional.get();                 // "bam"
+optional.orElse("fallback");    // "bam"
+
+optional.ifPresent((s) -> System.out.println(s.charAt(0)));     // "b"
+```
+
+## Streams
+
+**java.util.Stream**代表一系列可以进行一种或多种操作的元素，Stream也叫做流。流操作既可以是intermediate（补充：即还有下一步操作）也可以是terminal（终止）的。terminal操作返回一个特定类型的结果。intermediate操作则返回流对象自身以进行链式调用。流由source（数据源）创建，例如**集合(java.util.Collection)**中的List/Set（map不支持流操作）。流操作既可以顺序地执行也可以并行执行（补充：这里指并行流）。
+
+> 有需要的可以看一看[Stream.js](https://github.com/winterbe/streamjs)，一个跟Java8 Stream API风格相似的javascript API。
+
+让我们看看顺序流是如何工作的。首先我们创建一个String列表作为Stream的示例源：
+
+```java
+List<String> stringCollection = new ArrayList<>();
+stringCollection.add("ddd2");
+stringCollection.add("aaa2");
+stringCollection.add("bbb1");
+stringCollection.add("aaa1");
+stringCollection.add("bbb3");
+stringCollection.add("ccc");
+stringCollection.add("bbb2");
+stringCollection.add("ddd1");
+```
+
+Collections在Java8中进行了拓展，所以你可以通过调用**Collection.stream()**或者**Collection.parallelStream()**很方便地生成流。接下来的章节中将会介绍最常用的一些流操作。
+
+* ### Filter
+
+Filter接收一个Predicate类型的参数来对流中的所有元素进行过滤操作。Filter操作属于intermediate操作，可以让我们在输出结果后进一步调用其他流操作（forEach）。**ForEach**操作接收一个Consumer类型的参数来处理经过Filter操作后的流的元素。ForEach属于terminal操作。它没有返回值，所以我们不能继续流操作。
+
+```java
+stringCollection
+    .stream()
+    .filter((s) -> s.startsWith("a"))
+    .forEach(System.out::println);
+
+// "aaa2", "aaa1"
+```
+
+* ### Sorted
+
+Sorted操作属于intermediate操作，它返回一个排好序的流的视图。如果不传入自定义的Comparator，元素将以默认排序规则排序。
+
+```java
+stringCollection
+    .stream()
+    .sorted()
+    .filter((s) -> s.startsWith("a"))
+    .forEach(System.out::println);
+
+// "aaa1", "aaa2"
+```
+
+注意，sorted操作只是创建一个排好序的流的视图而不是操作内部隐藏的集合元素顺序。stringCollection的顺序被没有被篡改：
+
+```java
+System.out.println(stringCollection);
+// ddd2, aaa2, bbb1, aaa1, bbb3, ccc, bbb2, ddd1
+```
+
+* ### Map
+
+intermediate操作map传入Function对象将流中的每个元素转换为另一个对象。下面的例子演示了将每个String对象转换为大写的String对象。你也可以使用map操作来将流中的元素转换为其他类型的对象。返回的流的泛型类型依赖于你传给map的Function对象的泛型类型（补充：你不需要显式指定泛型类型，Java8的编译器相当智能，可以自动推导出参数类型）。
+
+```java
+stringCollection
+    .stream()
+    .map(String::toUpperCase)
+    .sorted((a, b) -> b.compareTo(a))
+    .forEach(System.out::println);
+
+// "DDD2", "DDD1", "CCC", "BBB3", "BBB2", "AAA2", "AAA1"
+```
+
+* ### Match
+
+不同的match操作可以用于判断特定的predicate是否匹配流中的元素。所有这种类型的操作都属于terminal操作，以返回一个boolean值结束。
+
+```java
+boolean anyStartsWithA =
+    stringCollection
+        .stream()
+        .anyMatch((s) -> s.startsWith("a"));
+
+System.out.println(anyStartsWithA);      // true
+
+boolean allStartsWithA =
+    stringCollection
+        .stream()
+        .allMatch((s) -> s.startsWith("a"));
+
+System.out.println(allStartsWithA);      // false
+
+boolean noneStartsWithZ =
+    stringCollection
+        .stream()
+        .noneMatch((s) -> s.startsWith("z"));
+
+System.out.println(noneStartsWithZ);      // true
+```
+
+* ### Count
+
+Count属于terminal操作，返回流中的元素个数，类型为long。
+
+```java
+long startsWithB =
+    stringCollection
+        .stream()
+        .filter((s) -> s.startsWith("b"))
+        .count();
+
+System.out.println(startsWithB);    // 3
+```
+
+* ### Reduce
+
+这种terminal操作将会借助传入的Function类型参数对流中的元素进行归一化。结果为Optional类型的对象，包含归一化的结果。
+
+```java
+Optional<String> reduced =
+    stringCollection
+        .stream()
+        .sorted()
+        .reduce((s1, s2) -> s1 + "#" + s2);
+
+reduced.ifPresent(System.out::println);
+// "aaa1#aaa2#bbb1#bbb2#bbb3#ccc#ddd1#ddd2"
+```
+
+## Parallel Streams
+
+在流那一节中提到过，流既可以为顺序的也可以是并行的。顺序流中的操作在单个线程中执行，而并行流中的操作则是多线程并发执行。
+
+下面的例子将演示使用并行流提升性能有多简单。
+
+首先我们创建一个存储着许多不同的数据的列表：
+
+```java
+int max = 1000000;
+List<String> values = new ArrayList<>(max);
+for (int i = 0; i < max; i++) {
+    UUID uuid = UUID.randomUUID();
+    values.add(uuid.toString());
+}
+```
+
+现在我们测试一下对这个集合进行排序操作所消耗的时间。
+
+* ### Sequential Sort
+
+```java
+long t0 = System.nanoTime();
+
+long count = values.stream().sorted().count();
+System.out.println(count);
+
+long t1 = System.nanoTime();
+
+long millis = TimeUnit.NANOSECONDS.toMillis(t1 - t0);
+System.out.println(String.format("sequential sort took: %d ms", millis));
+
+// sequential sort took: 899 ms
+```
+
+* ### Parallel Sort
+
+```java
+long t0 = System.nanoTime();
+
+long count = values.parallelStream().sorted().count();
+System.out.println(count);
+
+long t1 = System.nanoTime();
+
+long millis = TimeUnit.NANOSECONDS.toMillis(t1 - t0);
+System.out.println(String.format("parallel sort took: %d ms", millis));
+
+// parallel sort took: 472 ms
+```
+
+可以看出，两段代码基本一样，但并行流的排序时间几乎快了50%。而你只需要把**stream()**改成**parallelStream()**而已。
+
+（补充：并行流的底层实现为ForkJoin框架，底层工作线程数可通过设值系统属性来进行定制，例如System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", 4），这样就可以根据自己业务是计算密集型还是IO密集型来采取不同的配置，使CPU利用率最大化。）
+
+## Maps
+
+上文中提到过，Map类型不直接支持Stream操作。在Map接口中没有可用的Stream()方法。然而你可以通过**map.keySet().stream()**，**map.values().stream()**和**map.entrySet().stream()**在Map的键/值或者Entry上创建特殊的流。
+
+此外，Map支持新增各种有用的方法来完成很多常用的操作。
+
+```java
+Map<Integer, String> map = new HashMap<>();
+
+for (int i = 0; i < 10; i++) {
+    map.putIfAbsent(i, "val" + i);
+}
+
+map.forEach((id, val) -> System.out.println(val));
+```
+
+上面的代码非常清晰明了：**putIfAbsent**可以让我们避免额外的添加null检查；**forEach**接收一个Consumer对象来对map中的值进行操作。
+
+下面的例子展示了如何在map中利用Function对象进行计算（补充：这里用到了重载方法，map会将计算结果置入value中）：
+
+```java
+map.computeIfPresent(3, (num, val) -> val + num);
+map.get(3);             // val33
+
+map.computeIfPresent(9, (num, val) -> null);
+map.containsKey(9);     // false
+
+map.computeIfAbsent(23, num -> "val" + num);
+map.containsKey(23);    // true
+
+map.computeIfAbsent(3, num -> "bam");
+map.get(3);             // val33
+```
+
+接下来，我们将学会如何根据给定的key移除entries，只有map中有匹配的entry才会进行移除动作：
+
+```java
+map.remove(3, "val3");
+map.get(3);             // val33
+
+map.remove(3, "val33");
+map.get(3);             // null
+```
+
+另外一个有用的方法（如果map中对应的key没有对应值则指定一个默认值）：
+
+```java
+map.getOrDefault(42, "not found");  // not found
+```
+
+在map中合并entries变得相当简单：
+
+```java
+map.merge(9, "val9", (value, newValue) -> value.concat(newValue));
+map.get(9);             // val9
+
+map.merge(9, "concat", (value, newValue) -> value.concat(newValue));
+map.get(9);             // val9concat
+```
+
+合并操作会在key对应的entry不存在时将新的值置入，否则进行合并操作后再置入合并结果。
+
+## Date API
+
+Java8包含了全新的日期和时间API，他们放在**java.time**包下面。新的日期API功能可与**[Joda-Time](http://www.joda.org/joda-time/)**相比，然而他们还是存在一些**[差异](blog.joda.org/2009/11/why-jsr-310-isn-joda-time_4941.html)**。下面的例子将会介绍新API中最重要的一些特性。
+
+* ### Clock
+
+Clock可以访问当前的日期和时间。它可以处理时区问题，也可以用于代替**System.currentTimeMillis()**来获取从**Unix EPOCH（1970-01-01 00:00:00 UTC）**到现在的毫秒数。而Instant类则可以表示当前时间。它可以用来创建遗留的**java.util.Date**对象。
+
+```java
+Clock clock = Clock.systemDefaultZone();
+long millis = clock.millis();
+
+Instant instant = clock.instant();
+Date legacyDate = Date.from(instant);   // legacy java.util.Date
+```
+
+* ### Timezones
+
+Timezones由ZoneId表示。它们能通过静态工厂方法返回。Timezones定义了偏移量，这对于Instant实例和本地日期（local dates）和时间之间的转换非常重要：
+
+```java
+System.out.println(ZoneId.getAvailableZoneIds());
+// prints all available timezone ids
+
+ZoneId zone1 = ZoneId.of("Europe/Berlin");
+ZoneId zone2 = ZoneId.of("Brazil/East");
+System.out.println(zone1.getRules());
+System.out.println(zone2.getRules());
+
+// ZoneRules[currentStandardOffset=+01:00]
+// ZoneRules[currentStandardOffset=-03:00]
+```
+
+* ### LocalTime
+
+LocalTime表示本地时间，省略了时区因素。例如10pm 或者 17:30:15。下面的例子用上面定义的Timezone对象创建了两个LocalTime对象。下面我们将比较两个时间，并计算两个时间在时和分上的差。
+
+```java
+LocalTime now1 = LocalTime.now(zone1);
+LocalTime now2 = LocalTime.now(zone2);
+
+System.out.println(now1.isBefore(now2));  // false
+
+long hoursBetween = ChronoUnit.HOURS.between(now1, now2);
+long minutesBetween = ChronoUnit.MINUTES.between(now1, now2);
+
+System.out.println(hoursBetween);       // -3
+System.out.println(minutesBetween);     // -239
+```
+
+LocalTime可以通过各种工厂方法简化实例对象的创建过程，包括通过字符串创建。
+
+```java
+LocalTime late = LocalTime.of(23, 59, 59);
+System.out.println(late);       // 23:59:59
+
+DateTimeFormatter germanFormatter =
+    DateTimeFormatter
+        .ofLocalizedTime(FormatStyle.SHORT)
+        .withLocale(Locale.GERMAN);
+
+LocalTime leetTime = LocalTime.parse("13:37", germanFormatter);
+System.out.println(leetTime);   // 13:37
+```
+
+* ### LocalDate
+
+LocalDate代表一个特定的日期，例如2014-03-11。它是不可变的，和LocalTime类似。下面的例子演示了如何通过增减天数/月数/年数来计算新的日期。注意，每次操作都返回了一个新的实例。
+
+```java
+LocalDate today = LocalDate.now();
+LocalDate tomorrow = today.plus(1, ChronoUnit.DAYS);
+LocalDate yesterday = tomorrow.minusDays(2);
+
+LocalDate independenceDay = LocalDate.of(2014, Month.JULY, 4);
+DayOfWeek dayOfWeek = independenceDay.getDayOfWeek();
+System.out.println(dayOfWeek);    // FRIDAY
+```
+
+把String对象解析为LocalDate和解析LocalTime一样简单：
+
+```java
+DateTimeFormatter germanFormatter =
+    DateTimeFormatter
+        .ofLocalizedDate(FormatStyle.MEDIUM)
+        .withLocale(Locale.GERMAN);
+
+LocalDate xmas = LocalDate.parse("24.12.2014", germanFormatter);
+System.out.println(xmas);   // 2014-12-24
+```
+
+* ### LocalDateTime
+
+LocalDateTime就是就像上文中日期和时间的组合而成的一个实例。LocalDateTime也是不可变的且和LocalTime/LocalDate行为相似。我们可以利用一些方法来获得LocalDateTime中的属性：
+
+```java
+LocalDateTime sylvester = LocalDateTime.of(2014, Month.DECEMBER, 31, 23, 59, 59);
+
+DayOfWeek dayOfWeek = sylvester.getDayOfWeek();
+System.out.println(dayOfWeek);      // WEDNESDAY
+
+Month month = sylvester.getMonth();
+System.out.println(month);          // DECEMBER
+
+long minuteOfDay = sylvester.getLong(ChronoField.MINUTE_OF_DAY);
+System.out.println(minuteOfDay);    // 1439
+```
+
+利用TimeZone对象提供的信息，它可以转换为一个Instant对象。Instant对象可以很容易的转换为遗留类型**java.util.Data**。
+
+```java
+Instant instant = sylvester
+        .atZone(ZoneId.systemDefault())
+        .toInstant();
+
+Date legacyDate = Date.from(instant);
+System.out.println(legacyDate);     // Wed Dec 31 23:59:59 CET 2014
+```
+
+格式化LocalDateTime对象和上述LocalDate等类似。除了使用标准的Formatter，我们还可以进行自定义。
+
+```java
+DateTimeFormatter formatter =
+    DateTimeFormatter
+        .ofPattern("MMM dd, yyyy - HH:mm");
+
+LocalDateTime parsed = LocalDateTime.parse("Nov 03, 2014 - 07:13", formatter);
+String string = formatter.format(parsed);
+System.out.println(string);     // Nov 03, 2014 - 07:13
+```
+
+不像**java.text.NumberFormat**，新的DateTimeFormatter是不可变且线程安全的。
+可以在[这里](https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html)查看更多模式的语法细节。
+
+## Annotations
+
+注解在Java8中是可以重复定义的。让我们用例子直观地理解新的注解。
+首先，我们定义了一个注解集，它包含一个注解数组：
+
+```java
+@interface Hints {
+    Hint[] value();
+}
+
+@Repeatable(Hints.class)
+@interface Hint {
+    String value();
+}
+```
+
+java8允许我们使用多个相同类型的注解标注同一个位置，不过注解定义时必须使用**@Repeatable**进行标注。
+
+* ### 对比1：使用容器注解（container annotation） -- 旧版用法
+
+```java
+@Hints({@Hint("hint1"), @Hint("hint2")})
+class Person {}
+```
+
+* ### 对比2：使用容器注解（container annotation） -- 新版用法
+
+```java
+@Hint("hint1")
+@Hint("hint2")
+class Person {}
+```
+
+使用第二种方式时，java编译器在底层会隐式地建立形如@Hints那种格式的注解数组。这对于通过反射读取注解信息至关重要。
+
+```java
+Hint hint = Person.class.getAnnotation(Hint.class);
+System.out.println(hint);                   // null
+
+Hints hints1 = Person.class.getAnnotation(Hints.class);
+System.out.println(hints1.value().length);  // 2
+
+Hint[] hints2 = Person.class.getAnnotationsByType(Hint.class);
+System.out.println(hints2.length);          // 2
+```
+
+在对比2中，虽然我们没有在Person类声明@Hints注解，但是通过**getAnnotation(Hints.class)**任然可以读出数据。然而，更方便的方式是**getAnnotationsByType(Hint.class)**，通过这种方法，我们可以直接访问所有标注的@Hint注解。
+
+此外，Java 8扩展了注解的上下文。现在几乎可以为任何东西添加注解：局部变量、泛型类、父类与接口的实现，就连方法的异常也能添加注解。下面演示几个例子：
+
+```java
+public class Annotations {
+    @Retention( RetentionPolicy.RUNTIME )
+    @Target( { ElementType.TYPE_USE, ElementType.TYPE_PARAMETER } )
+    public @interface NonEmpty {
+    }
+         
+    public static class Holder< @NonEmpty T > extends @NonEmpty Object {
+        public void method() throws @NonEmpty Exception {           
+        }
+    }
+         
+    @SuppressWarnings( "unused" )
+    public static void main(String[] args) {
+        final Holder< String > holder = new @NonEmpty Holder< String >();       
+        @NonEmpty Collection< @NonEmpty String > strings = new ArrayList<>();       
+    }
+}
+```
+
+## Where to go from here?
+
+除了这篇文章外，大神的[blog](http://winterbe.com)还写了一系列文章，有时间再翻译吧，感兴趣的可以看看：
+
+- [Java 8 Stream Tutorial](http://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/)
+- [Java 8 Nashorn Tutorial](http://winterbe.com/posts/2014/04/05/java8-nashorn-tutorial/)
+- [Java 8 Concurrency Tutorial: Threads and Executors](http://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-examples/)
+- [Java 8 Concurrency Tutorial: Synchronization and Locks](http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/)
+- [Java 8 Concurrency Tutorial: Atomic Variables and ConcurrentMap](http://winterbe.com/posts/2015/05/22/java8-concurrency-tutorial-atomic-concurrent-map-examples/)
+- [Java 8 API by Example: Strings, Numbers, Math and Files](http://winterbe.com/posts/2015/03/25/java8-examples-string-number-math-files/)
+- [Avoid Null Checks in Java 8](http://winterbe.com/posts/2015/03/15/avoid-null-checks-in-java/)
+- [Fixing Java 8 Stream Gotchas with IntelliJ IDEA](http://winterbe.com/posts/2015/03/05/fixing-java-8-stream-gotchas-with-intellij-idea/)
+- [Using Backbone.js with Java 8 Nashorn](http://winterbe.com/posts/2014/04/07/using-backbonejs-with-nashorn/)
+
+

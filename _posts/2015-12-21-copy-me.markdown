@@ -1,0 +1,11 @@
+---
+layout:     post
+title:      "title"
+subtitle:   "subtitle"
+date:       2015-12-21 12:00:00
+author:     "decaywood"
+header-img: "img/post/404-bg.jpg"
+tags:
+    - 生活
+---
+
