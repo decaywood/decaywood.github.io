@@ -11,7 +11,7 @@ tags:
 ---
 
 > 半年前开始试用Java8的新特性，当时没有很好的中文书籍，于是把Java8 in Action看了一遍。可惜并没有写一个像样的读书笔记。经过半年，几个项目中都用到了Java8的新特性，深感新特性的便利性，主要是语法的表达能力得到了很大的增强，可以用很少量的代码完成更多的工作。
-> 现在处于稍微空闲的状态，故想借此机会把Java8的一些特性进行归纳，由于Java8 in Action内容太多，涉及过多细节，并不适合入门，而且碰巧翻到了一个国外技术大牛的博客有类似的总结文档，简单易懂，知识覆盖也足够全面。遂舶过来翻译好并整理到博客，顺便给自己的知识脉络查漏补缺。踩在巨人肩膀上好办事～ 这是大牛的**[原版文章](https://github.com/winterbe/java8-tutorial)**。在这篇文章的基础上，我适当补充了一些解释，帮助更好的理解。
+> 现在处于稍微空闲的状态，故想借此机会把Java8的一些特性进行归纳，由于Java8 in Action内容太多，涉及过多细节，并不适合入门，而且碰巧翻到了一个技术博客有类似的总结文档，简单易懂，知识覆盖也足够全面。遂舶过来翻译好并整理到博客，顺便给自己的知识脉络查漏补缺。踩在巨人肩膀上好办事～ 这是**[原版文章](https://github.com/winterbe/java8-tutorial)**。在这篇文章的基础上，我适当补充了一些解释，帮助更好的理解。
 
 ## Table of Contents
 
@@ -68,7 +68,7 @@ interface Formula {
 }
 ```
 
-除了calcilate抽象方法，Formula接口同时定义了默认方法sqrt。这样一来，接口实现类只需要实现抽象方法calculate即可，而默认方法sqrt则可以在实现类外部进行调用。代码如下：
+除了calculate抽象方法，Formula接口同时定义了默认方法sqrt。这样一来，接口实现类只需要实现抽象方法calculate即可，而默认方法sqrt则可以在实现类外部进行调用。代码如下：
 
 ```java
 Formula formula = new Formula() {
@@ -82,6 +82,23 @@ formula.calculate(100);     // 100.0
 formula.sqrt(16);           // 4.0
 ```
 上述代码中，Formula接口由匿名对象实现。可以看出，代码非常冗长，仅仅简单的实现了sqrt(a * 100)计算就用了6行代码。我们将在下一章节看到如何在Java8中用更简洁的方式实现单个抽象方法的接口。
+
+以下为补充：
+
+Java 8带来的另一个有趣的特性是接口可以声明（并且可以提供实现）静态方法。例如：
+
+```java
+public interface DefaulableFactory {
+    // Interfaces now allow static methods
+    static double calculate(int a) {
+        return sqrt(a * 100);
+    }
+}
+```
+
+在JVM中，默认方法的实现是非常高效的，并且通过字节码指令为方法调用提供了支持。默认方法允许继续使用现有的Java接口，而同时能够保障正常的编译过程。这方面好的例子是大量的方法被添加到java.util.Collection接口中去：stream()，parallelStream()，forEach()，removeIf()，……
+
+尽管默认方法非常强大，但是在使用默认方法时我们需要小心注意一个地方：在声明一个默认方法前，请仔细思考是不是真的有必要使用默认方法，因为默认方法会带给程序歧义，并且在复杂的继承体系中容易产生编译错误。更多详情请参考[官方文档](http://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html)
 
 ## Lambda expressions
 
@@ -120,7 +137,7 @@ Collections.sort(names, (String a, String b) -> b.compareTo(a));
 names.sort((a, b) -> b.compareTo(a));
 ```
 
-List现在新增了**sort**方法,并且编译器可以自动分析出形参类型，所以你可以直接省略形参类型。让我们更加深入探索lambda表达式的各种神奇的用法。
+List现在新增了**sort**方法,并且编译器可以自动分析出形参类型，所以你可以直接省略形参类型。接下来，我们会更加深入探索lambda表达式的各种神奇的用法。
 
 ## Functional Interfaces
 
@@ -765,7 +782,7 @@ class Person {}
 class Person {}
 ```
 
-使用第二种方式时，java编译器在底层会隐式地建立形如@Hints那种格式的注解数组。这对于通过反射读取注解信息至关重要。
+使用第二种方式时，java编译器在底层会隐式地建立形如@Hints那种格式的注解数组。这对于通过反射读取注解信息至关重要(补充：事实上，这并不是语言层面上的改变，更多的是编译器的技巧，底层的原理保持不变)。
 
 ```java
 Hint hint = Person.class.getAnnotation(Hint.class);
@@ -788,23 +805,23 @@ public class Annotations {
     @Target( { ElementType.TYPE_USE, ElementType.TYPE_PARAMETER } )
     public @interface NonEmpty {
     }
-         
+
     public static class Holder< @NonEmpty T > extends @NonEmpty Object {
-        public void method() throws @NonEmpty Exception {           
+        public void method() throws @NonEmpty Exception {
         }
     }
-         
+
     @SuppressWarnings( "unused" )
     public static void main(String[] args) {
-        final Holder< String > holder = new @NonEmpty Holder< String >();       
-        @NonEmpty Collection< @NonEmpty String > strings = new ArrayList<>();       
+        final Holder< String > holder = new @NonEmpty Holder< String >();
+        @NonEmpty Collection< @NonEmpty String > strings = new ArrayList<>();
     }
 }
 ```
 
 ## Where to go from here?
 
-除了这篇文章外，大神的[blog](http://winterbe.com)还写了一系列文章，有时间再翻译吧，感兴趣的可以看看：
+除了这篇文章外，这篇[博客](http://winterbe.com)还写了一系列文章，有时间再翻译吧，感兴趣的可以看看：
 
 - [Java 8 Stream Tutorial](http://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/)
 - [Java 8 Nashorn Tutorial](http://winterbe.com/posts/2014/04/05/java8-nashorn-tutorial/)
