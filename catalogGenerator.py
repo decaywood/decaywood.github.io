@@ -40,36 +40,35 @@ title = [
     ('##', '* ')
 ]
 
-catalogue = []
-
 rule = re.compile(r'[^a-zA-z| ]')
+
+
+def format_title(title_line):
+    for key, val in title:
+        if key in title_line:
+            this_line = rule.sub('', title_line.strip()).strip()
+            return ''.join([val, '[', this_line, '](#', this_line.lower().replace(' ', '-'), ')'])
+
 
 try:
 
-    print('## Table of content:')
-    print('')
-    for line in open(POST_DIR, 'r'):
-        for key, val in title:
-            if line.find(key) != -1:
-                this_line = rule.sub('', line.strip()).strip()
-                catalogue.append(val + '[' + this_line + '](#' + this_line.lower().replace(' ', '-') + ')')
-                break
+    with open(POST_DIR, 'r') as file:
+        print('## Table of content:')
+        print('')
 
-    for line in catalogue:
-        print(line)
+        for line in [format_title(line) for line in file if '##' in line]:
+            print(line)
 
-    print('')
-    print('')
-    print('')
-    print('##############################################################')
-    print('###############      generate successful!      ###############')
-    print('##############################################################')
-    print('')
-    print('')
-    print('')
+        print('')
+        print('')
+        print('')
+        print('##############################################################')
+        print('###############      generate successful!      ###############')
+        print('##############################################################')
+        print('')
+        print('')
+        print('')
 
 except e:
     print('############## something wrong when executing, error is shown as following... ##############')
     print(e)
-finally:
-    sys.exit()
