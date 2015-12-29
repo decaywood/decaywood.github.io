@@ -110,8 +110,7 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="//cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <!-- Custom Theme JavaScript -->
-<script src="{{prepend: site.baseurl}}/js/decaywood-blog.min.js"></script>
-
+<script src="{{prepend: site.baseurl}}/js/decaywood-blog.js"></script>
 
 <!-- async load function -->
 <script>
@@ -185,5 +184,74 @@
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
+</script>
+{% endif %}
+
+
+{% if page.toc %}
+<script>
+
+    var makeTitle = function (root) {
+        var element = root._index == -1 ? $('<div></div>') : $('<li></li>');
+        if(root._index != -1) {
+            var href = $('<a></a>').attr('href', root.ref).text(root.text);
+            element.append(href);
+        }
+        //href.click(clickHandler);
+        var children = root.children;
+        if(children.length > 0) {
+            var list = $('<ul></ul>');
+            for (var i = 0; i < children.length; i++) {
+                var childEle = children[i];
+                list.append(makeTitle(childEle));
+            }
+            element.append(list);
+        }
+        return element;
+    };
+
+    var wrap = function (data) {
+        var map = {'-1':{
+            'text': 'Table of Content',
+            'ref' : '#table-of-content',
+            '_index' : -1,
+            'children' : []
+        }};
+        for(var i = 0; i < data.length; i++) {
+            var title = data[i];
+            var ref = $(title).attr('id');
+            var text = $(title).text();
+            var obj = {
+                'ref' : '#' + ref,
+                'text' : text,
+                '_index' : title._index,
+                'children' : []
+            };
+            map[obj._index] = obj;
+            map[obj._index - 1].children.push(obj);
+        }
+        return makeTitle(map[-1]);
+    };
+
+    //
+    $(document).ready(function () {
+        var title_table = ['h2', 'h3', 'h4', 'h5', 'h6'];
+        var postContainer = $('.post-container');
+        if(postContainer.length > 0) {
+            var children = [];
+            postContainer.children().each(function () {
+                var that = $(this);
+                for(var i = 0; i < title_table.length; i++) {
+                    var index = title_table[i];
+                    if(that.attr('id') != 'table-of-contents' && that.is(index)) {
+                        that._index = i;
+                        children.push(that);
+                    }
+                }
+            });
+            var wrapper = wrap(children);
+            $('#table-of-contents').after(wrapper);
+        }
+    });
 </script>
 {% endif %}

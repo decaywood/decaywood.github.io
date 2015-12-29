@@ -69,6 +69,8 @@ try:
         print('')
         print('')
 
-except e:
+except Exception:
     print('############## something wrong when executing, error is shown as following... ##############')
-    print(e)
+
+finally:
+    pass

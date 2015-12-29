@@ -1,6 +1,7 @@
 ---
 layout:     post
-title:      "Java8简明教程"
+toc:        true
+title:      "Java8简明教程「译」"
 subtitle:   "Modern Java - A Guide to Java 8"
 date:       2015-12-23 16:34:00
 author:     "decaywood"
@@ -15,44 +16,10 @@ tags:
 
 ## Table of Contents
 
-* [Default Methods for Interfaces](#default-methods-for-interfaces)
-* [Lambda expressions](#lambda-expressions)
-* [Functional Interfaces](#functional-interfaces)
-* [Method and Constructor References](#method-and-constructor-references)
-* [Lambda Scopes](#lambda-scopes)
-  * [Accessing local variables](#accessing-local-variables)
-  * [Accessing fields and static variables](#accessing-fields-and-static-variables)
-  * [Accessing Default Interface Methods](#accessing-default-interface-methods)
-* [Built-in Functional Interfaces](#built-in-functional-interfaces)
-  * [Predicates](#predicates)
-  * [Functions](#functions)
-  * [Suppliers](#suppliers)
-  * [Consumers](#consumers)
-  * [Comparators](#comparators)
-* [Optionals](#optionals)
-* [Streams](#streams)
-  * [Filter](#filter)
-  * [Sorted](#sorted)
-  * [Map](#map)
-  * [Match](#match)
-  * [Count](#count)
-  * [Reduce](#reduce)
-* [Parallel Streams](#parallel-streams)
-  * [Sequential Sort](#sequential-sort)
-  * [Parallel Sort](#parallel-sort)
-* [Maps](#maps)
-* [Date API](#date-api)
-  * [Clock](#clock)
-  * [Timezones](#timezones)
-  * [LocalTime](#localtime)
-  * [LocalDate](#localdate)
-  * [LocalDateTime](#localdatetime)
-* [Annotations](#annotations)
-* [Where to go from here?](#where-to-go-from-here)
 
 整个教程将详细的介绍Java8所有的新特性，并以简短的代码展示出来。你将学会如何使用默认接口方法/lambda表达式/方法引用以及@Repeatable注解。读完本文后，你将对流（stream）/函数式接口（functional interface）/map拓展以及新的日期API等最新的API变动有一个相对了解。整个教程大部分都是以代码形式体现，没有过多的文字说明，让我们开始吧：）
 
-## Default Methods for Interfaces
+## 接口默认方法
 
 Java8可以让我们通过default关键字在接口中添加非抽象的方法，这是一个新的概念，**[虚拟拓展方法](http://stackoverflow.com/questions/24096421/java-8-add-extension-default-method-to-class/24102730#24102730)**（补充：这样可以提供声明行为的默认实现）
 
@@ -100,7 +67,7 @@ public interface DefaulableFactory {
 
 尽管默认方法非常强大，但是在使用默认方法时我们需要小心注意一个地方：在声明一个默认方法前，请仔细思考是不是真的有必要使用默认方法，因为默认方法会带给程序歧义，并且在复杂的继承体系中容易产生编译错误。更多详情请参考[官方文档](http://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html)
 
-## Lambda expressions
+## Lambda表达式
 
 让我们以一个简单老版本的字符串排序为例子开始这一章节：
 
@@ -139,7 +106,7 @@ names.sort((a, b) -> b.compareTo(a));
 
 List现在新增了**sort**方法,并且编译器可以自动分析出形参类型，所以你可以直接省略形参类型。接下来，我们会更加深入探索lambda表达式的各种神奇的用法。
 
-## Functional Interfaces
+## 函数式接口
 
 lambda表达式是如何适应Java的类型系统的呢？每种给定类型的lambda表达式由一个接口来进行描述。这就是所谓的函数式接口，函数式接口必须只包含一个抽象方法定义。每个对应的lambda表达式唯一匹配这一个抽象方法。由于默认方法非抽象，你可以在函数式接口中随意添加默认方法。
 
@@ -162,7 +129,7 @@ System.out.println(converted);    // 123
 
 请一定要记住**@FunctionalInterface**注解不是必须的，如果省略，代码依然是有效的。
 
-## Method and Constructor References
+## 方法引用和构造器引用
 
 如果使用静态方法引用，上文中的例子能够得到更进一步的简化。
 
@@ -222,11 +189,11 @@ Person person = personFactory.create("Peter", "Parker");
 
 我们通过**Person::new**创建了一个指向Person构造器的引用。Java编译器会自动对代码进行分析最后选择一个对应的构造器来匹配PersonFactory接口中定义的方法签名即**PersonFactory.create**。
 
-## Lambda Scopes
+## Lambda 作用域
 
 从lambda表达式访问外部作用域的变量和匿名对象有点类似。你可以从本地外部作用域访问带有final修饰符的变量，也可以访问实例变量和静态变量。
 
-* ### Accessing local variables
+### 访问本地变量
 
 我们可以从lambda表达式的外部作用域读取本地final变量：
 
@@ -259,7 +226,7 @@ num = 3;
 
 同时，从lambda表达式赋值给num也是禁止的。（补充：对于这种行为很好理解，本地变量存储在栈中，lambda表达式本质上还是对象，存储在堆中，必然不能对栈数据进行写操作。）
 
-* ### Accessing fields and static variables
+### 访问域变量和静态变量
 
 相比本地变量，对于实例变量和静态变量，lambda表达式既有读权限也有写权限，这种行为在匿名对象中非常常见。
 
@@ -282,7 +249,7 @@ class Lambda4 {
 }
 ```
 
-* ### Accessing Default Interface Methods
+### 访问默认接口方法
 
 你应该还记得第一章提到的Formula例子吧？Formula接口定义了一个默认方法sqrt，它能被Formula接口的实现类或者匿名对象调用。但在lambda表达式中则不能调用默认方法。下面的代码不能通过编译：
 
@@ -290,13 +257,13 @@ class Lambda4 {
 Formula formula = (a) -> sqrt( a * 100);
 ```
 
-## Built-in Functional Interfaces
+## 内置函数式接口
 
 JDK1.8的API囊括了许多内置函数式接口。其中一些在老版本中就被广泛使用（补充：还记得上文说过的吗？只要接口中定义了唯一的抽象方法就符合函数式接口的规范，可以被当做函数式接口。），例如**Comparator**或者**Runnable**。这些老版本就存在的接口在新版本中经过**@FunctionalInterface**注解标记进行拓展以提供lambda支持。
 
 除了这些接口，Java8 API也提供了全新的函数式接口来减轻你的工作负担。其中一些接口借鉴了**[Google Guava](https://code.google.com/p/guava-libraries/)**库中被广泛使用的功能。即使你对Guava了如指掌，你也应该认真地了解一下Java8中提供的新接口拓展了哪些有用的方法。
 
-* ### Predicates
+### Predicates
 
 Predicate接口是一个返回boolean值的接口，它接收一个参数。这个接口包含了各种默认方法，可以对Predicates进行各种组合来完成复杂的逻辑运算（and, or, negate）。
 
@@ -313,7 +280,7 @@ Predicate<String> isEmpty = String::isEmpty;
 Predicate<String> isNotEmpty = isEmpty.negate();
 ```
 
-* ### Functions
+### Functions
 
 Function接口接收一个参数，返回一个结果。其包含的默认方法能用于将多个Functions结构链接起来（compose，andthen）
 
@@ -324,7 +291,7 @@ Function<String, String> backToString = toInteger.andThen(String::valueOf);
 backToString.apply("123");     // "123"
 ```
 
-* ### Suppliers
+### Suppliers
 
 Supplier接口根据给定的泛型返回一个结果。不像Functions接口，Suppliers不需要传入参数。
 
@@ -333,7 +300,7 @@ Supplier<Person> personSupplier = Person::new;
 personSupplier.get();   // new Person
 ```
 
-* ### Consumers
+### Consumers
 
 Consumer接口代表一类只接收一个参数的操作。
 
@@ -342,7 +309,7 @@ Consumer<Person> greeter = (p) -> System.out.println("Hello, " + p.firstName);
 greeter.accept(new Person("Luke", "Skywalker"));
 ```
 
-* ### Comparators
+### Comparators
 
 Comparator接口在老版本JDK中就广泛使用。Java8新引入了许多默认方法到接口中。
 
@@ -394,7 +361,7 @@ stringCollection.add("ddd1");
 
 Collections在Java8中进行了拓展，所以你可以通过调用**Collection.stream()**或者**Collection.parallelStream()**很方便地生成流。接下来的章节中将会介绍最常用的一些流操作。
 
-* ### Filter
+### Filter
 
 Filter接收一个Predicate类型的参数来对流中的所有元素进行过滤操作。Filter操作属于intermediate操作，可以让我们在输出结果后进一步调用其他流操作（forEach）。**ForEach**操作接收一个Consumer类型的参数来处理经过Filter操作后的流的元素。ForEach属于terminal操作。它没有返回值，所以我们不能继续流操作。
 
@@ -407,7 +374,7 @@ stringCollection
 // "aaa2", "aaa1"
 ```
 
-* ### Sorted
+### Sorted
 
 Sorted操作属于intermediate操作，它返回一个排好序的流的视图。如果不传入自定义的Comparator，元素将以默认排序规则排序。
 
@@ -428,7 +395,7 @@ System.out.println(stringCollection);
 // ddd2, aaa2, bbb1, aaa1, bbb3, ccc, bbb2, ddd1
 ```
 
-* ### Map
+### Map
 
 intermediate操作map传入Function对象将流中的每个元素转换为另一个对象。下面的例子演示了将每个String对象转换为大写的String对象。你也可以使用map操作来将流中的元素转换为其他类型的对象。返回的流的泛型类型依赖于你传给map的Function对象的泛型类型（补充：你不需要显式指定泛型类型，Java8的编译器相当智能，可以自动推导出参数类型）。
 
@@ -442,7 +409,7 @@ stringCollection
 // "DDD2", "DDD1", "CCC", "BBB3", "BBB2", "AAA2", "AAA1"
 ```
 
-* ### Match
+### Match
 
 不同的match操作可以用于判断特定的predicate是否匹配流中的元素。所有这种类型的操作都属于terminal操作，以返回一个boolean值结束。
 
@@ -469,7 +436,7 @@ boolean noneStartsWithZ =
 System.out.println(noneStartsWithZ);      // true
 ```
 
-* ### Count
+### Count
 
 Count属于terminal操作，返回流中的元素个数，类型为long。
 
@@ -483,7 +450,7 @@ long startsWithB =
 System.out.println(startsWithB);    // 3
 ```
 
-* ### Reduce
+### Reduce
 
 这种terminal操作将会借助传入的Function类型参数对流中的元素进行归一化。结果为Optional类型的对象，包含归一化的结果。
 
@@ -498,7 +465,7 @@ reduced.ifPresent(System.out::println);
 // "aaa1#aaa2#bbb1#bbb2#bbb3#ccc#ddd1#ddd2"
 ```
 
-## Parallel Streams
+## 并行流
 
 在流那一节中提到过，流既可以为顺序的也可以是并行的。顺序流中的操作在单个线程中执行，而并行流中的操作则是多线程并发执行。
 
@@ -517,7 +484,7 @@ for (int i = 0; i < max; i++) {
 
 现在我们测试一下对这个集合进行排序操作所消耗的时间。
 
-* ### Sequential Sort
+### Sequential Sort
 
 ```java
 long t0 = System.nanoTime();
@@ -533,7 +500,7 @@ System.out.println(String.format("sequential sort took: %d ms", millis));
 // sequential sort took: 899 ms
 ```
 
-* ### Parallel Sort
+### Parallel Sort
 
 ```java
 long t0 = System.nanoTime();
@@ -615,11 +582,11 @@ map.get(9);             // val9concat
 
 合并操作会在key对应的entry不存在时将新的值置入，否则进行合并操作后再置入合并结果。
 
-## Date API
+## 日期 API
 
 Java8包含了全新的日期和时间API，他们放在**java.time**包下面。新的日期API功能可与**[Joda-Time](http://www.joda.org/joda-time/)**相比，然而他们还是存在一些**[差异](blog.joda.org/2009/11/why-jsr-310-isn-joda-time_4941.html)**。下面的例子将会介绍新API中最重要的一些特性。
 
-* ### Clock
+### Clock
 
 Clock可以访问当前的日期和时间。它可以处理时区问题，也可以用于代替**System.currentTimeMillis()**来获取从**Unix EPOCH（1970-01-01 00:00:00 UTC）**到现在的毫秒数。而Instant类则可以表示当前时间。它可以用来创建遗留的**java.util.Date**对象。
 
@@ -631,7 +598,7 @@ Instant instant = clock.instant();
 Date legacyDate = Date.from(instant);   // legacy java.util.Date
 ```
 
-* ### Timezones
+### Timezones
 
 Timezones由ZoneId表示。它们能通过静态工厂方法返回。Timezones定义了偏移量，这对于Instant实例和本地日期（local dates）和时间之间的转换非常重要：
 
@@ -648,7 +615,7 @@ System.out.println(zone2.getRules());
 // ZoneRules[currentStandardOffset=-03:00]
 ```
 
-* ### LocalTime
+### LocalTime
 
 LocalTime表示本地时间，省略了时区因素。例如10pm 或者 17:30:15。下面的例子用上面定义的Timezone对象创建了两个LocalTime对象。下面我们将比较两个时间，并计算两个时间在时和分上的差。
 
@@ -680,7 +647,7 @@ LocalTime leetTime = LocalTime.parse("13:37", germanFormatter);
 System.out.println(leetTime);   // 13:37
 ```
 
-* ### LocalDate
+### LocalDate
 
 LocalDate代表一个特定的日期，例如2014-03-11。它是不可变的，和LocalTime类似。下面的例子演示了如何通过增减天数/月数/年数来计算新的日期。注意，每次操作都返回了一个新的实例。
 
@@ -706,7 +673,7 @@ LocalDate xmas = LocalDate.parse("24.12.2014", germanFormatter);
 System.out.println(xmas);   // 2014-12-24
 ```
 
-* ### LocalDateTime
+### LocalDateTime
 
 LocalDateTime就是就像上文中日期和时间的组合而成的一个实例。LocalDateTime也是不可变的且和LocalTime/LocalDate行为相似。我们可以利用一些方法来获得LocalDateTime中的属性：
 
@@ -749,7 +716,7 @@ System.out.println(string);     // Nov 03, 2014 - 07:13
 不像**java.text.NumberFormat**，新的DateTimeFormatter是不可变且线程安全的。
 可以在[这里](https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html)查看更多模式的语法细节。
 
-## Annotations
+## 注解
 
 注解在Java8中是可以重复定义的。让我们用例子直观地理解新的注解。
 首先，我们定义了一个注解集，它包含一个注解数组：
@@ -767,14 +734,14 @@ System.out.println(string);     // Nov 03, 2014 - 07:13
 
 java8允许我们使用多个相同类型的注解标注同一个位置，不过注解定义时必须使用**@Repeatable**进行标注。
 
-* ### 对比1：使用容器注解（container annotation） -- 旧版用法
+### 对比1：使用容器注解（container annotation） -- 旧版用法
 
 ```java
 @Hints({@Hint("hint1"), @Hint("hint2")})
 class Person {}
 ```
 
-* ### 对比2：使用容器注解（container annotation） -- 新版用法
+### 对比2：使用容器注解（container annotation） -- 新版用法
 
 ```java
 @Hint("hint1")
@@ -819,7 +786,7 @@ public class Annotations {
 }
 ```
 
-## Where to go from here?
+## 你可能感兴趣?
 
 除了这篇文章外，这篇[博客](http://winterbe.com)还写了一系列文章，有时间再翻译吧，感兴趣的可以看看：
 
