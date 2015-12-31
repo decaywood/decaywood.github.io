@@ -110,7 +110,7 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="//cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <!-- Custom Theme JavaScript -->
-<script src="{{prepend: site.baseurl}}/js/decaywood-blog.js"></script>
+<script src="{{prepend: site.baseurl}}/js/decaywood-blog.min.js"></script>
 
 <!-- async load function -->
 <script>
@@ -140,7 +140,38 @@
         })
     }
 </script>
-<link href="//cdn.bootcss.com/highlight.js/9.0.0/styles/agate.min.css" rel="stylesheet">
+
+
+<!-- Night Mode -->
+<script>
+    $(document).ready(function () {
+        var button = $('#night-mode');
+        var theme = $('#theme');
+
+        theme.mode = 'decaywood-blog.min.css';
+        button.btnText = 'Night Mode';
+
+        button.css('color', 'rgb(24, 149, 255)');
+        button.hover(function () {
+            button.css('cursor', 'pointer');
+            button.css('color', 'rgb(24, 149, 155)');
+        }, function () {
+            button.css('color', 'rgb(24, 149, 255)');
+        });
+        button.click(function () {
+            theme.toggle(0, function () {
+                var preMode = theme.mode;
+
+                theme.mode = theme.mode == 'decaywood-blog.min.css' ? 'decaywood-blog-night-mode.min.css' : 'decaywood-blog.min.css';
+                button.btnText = button.btnText == 'Night Mode' ? 'Daily Mode' : 'Night Mode';
+
+                var curRef = theme.attr('href').replace(preMode, theme.mode);
+                theme.attr('href', curRef);
+                button.text(button.btnText);
+            })
+        })
+    })
+</script>
 
 <!--fastClick.js -->
 <script>
