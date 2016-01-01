@@ -8,7 +8,7 @@ body {
 	.sans-serif;
 	font-size: 16px;
 	// decaywood mpdify to 16px (Mobile First), and increase to 20px while 768+ width
-	//color: @gray-dark;
+	color: @gray-dark;
 	//-webkit-user-select:text; //对于 Blog 还是先不开启这句。
 	overflow-x : hidden;
 }
@@ -36,13 +36,13 @@ h1{
 h4{
     font-size: 21px;
 }
-//a {
-//	color: @gray-dark;
-//	&:hover,
-//	&:focus {
-//		color: @brand-primary;
-//	}
-//}
+a {
+	color: @gray-dark;
+	&:hover,
+	&:focus {
+		color: @brand-primary;
+	}
+}
 
 a img {
 	&:hover,
@@ -55,7 +55,7 @@ article{
 	overflow-x : hidden;
 }
 blockquote {
-	//color: @gray;
+	color: @gray;
 	font-style: italic;
 	font-size: 0.95em;
 	margin: 20px 0 20px;
@@ -120,11 +120,11 @@ pre code{
 // In the post.
 .post-container{
 	a{
-		//color:#337ab7;
+		color:#337ab7;
 		// different to @brand-primary
 		&:hover,
 		&:focus {
-			//color: @brand-primary;
+			color: @brand-primary;
 		}
 	}
 	h1,
@@ -328,7 +328,7 @@ pre code{
 				color: @gray-dark;
 				&:hover,
 				&:focus {
-					//color: @brand-primary;
+					color: @brand-primary;
 				}
 			}
 			.nav {
@@ -337,7 +337,7 @@ pre code{
 						color: @gray-dark;
 						&:hover,
 						&:focus {
-							//color: @brand-primary;
+							color: @brand-primary;
 						}
 					}
 				}
@@ -448,11 +448,11 @@ pre code{
 
 .post-preview {
 	> a {
-		//color: @gray-dark;
+		color: @gray-dark;
 		&:hover,
 		&:focus {
 			text-decoration: none;
-			//color: @brand-primary;
+			color: @brand-primary;
 		}
 		> .post-title {
 			font-size: 21px;
@@ -479,7 +479,7 @@ pre code{
 			color: @gray-dark;
 			&:hover,
 			&:focus {
-				//color: @brand-primary;
+				color: @brand-primary;
 				text-decoration: underline;
 			}
 		}
@@ -505,9 +505,9 @@ pre code{
 .post-content-preview{
     font-size: 13px;
     font-style: italic;
-    //color:#a3a3a3;
+    color:#a3a3a3;
     &:hover{
-        //color: @brand-primary;
+        color: @brand-primary;
     }
     @media only screen and (min-width: 768px) {
         font-size:14px;
@@ -549,7 +549,7 @@ footer {
 			// different to @brand-primary
 			&:hover,
 			&:focus {
-				//color: @brand-primary;
+				color: @brand-primary;
 			}
 		}
 	}
@@ -607,12 +607,12 @@ footer {
 
 .floating-label-form-group-with-focus {
 	label {
-		//color: @brand-primary;
+		color: @brand-primary;
 	}
 }
 
 form .row:first-child .floating-label-form-group {
-	//border-top: 1px solid @gray-light;
+	border-top: 1px solid @gray-light;
 }
 
 // Button Styles
@@ -635,8 +635,8 @@ form .row:first-child .floating-label-form-group {
 .btn-default {
 	&:hover,
 	&:focus {
-		//background-color: @brand-primary;
-		//border: 1px solid @brand-primary;
+		background-color: @brand-primary;
+		border: 1px solid @brand-primary;
 		color: white;
 	}
 }
@@ -671,8 +671,8 @@ form .row:first-child .floating-label-form-group {
 		> a:hover,
 		> a:focus {
 			color: white;
-			//background-color: @brand-primary;
-			//border: 1px solid @brand-primary;
+			background-color: @brand-primary;
+			border: 1px solid @brand-primary;
 		}
 	}
 
@@ -693,13 +693,13 @@ form .row:first-child .floating-label-form-group {
 ::-moz-selection {
 	color: white;
 	text-shadow: none;
-	//background: @brand-primary;
+	background: @brand-primary;
 }
 
 ::selection {
 	color: white;
 	text-shadow: none;
-	//background: @brand-primary;
+	background: @brand-primary;
 }
 
 img::selection {
@@ -758,7 +758,7 @@ img::-moz-selection {
 		margin-bottom: 8px;
 		background: #D6D6D6;
 		&:hover, &:active{
-			//background-color: #0085a1 !important;
+			background-color: #0085a1 !important;
 		}
 	}
 	@media only screen and (min-width: 768px) {
@@ -783,7 +783,7 @@ img::-moz-selection {
 	}
 }
 .listing-seperator{
-	//color:#0085a1;
+	color:#0085a1;
 	font-size: 21px !important;
 	&::before{
 		margin-right: 5px;

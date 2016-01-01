@@ -113,7 +113,7 @@ $(document).ready(function () {
     var button = $('#night-mode');
     var theme = $('#theme');
 
-    theme.mode = 'decaywood-blog.min.css';
+    theme.mode = 'daily-mode.min.css';
     button.btnText = 'Night Mode';
 
     /* Amaze UI cookie API */
@@ -138,8 +138,8 @@ $(document).ready(function () {
     });
 
     var opposite = {
-        'decaywood-blog-night-mode.min.css':'decaywood-blog.min.css',
-        'decaywood-blog.min.css':'decaywood-blog-night-mode.min.css',
+        'night-mode.min.css':'daily-mode.min.css',
+        'daily-mode.min.css':'night-mode.min.css',
         'Night Mode':'Daily Mode',
         'Daily Mode':'Night Mode'
     };
