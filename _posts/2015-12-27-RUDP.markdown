@@ -4,7 +4,6 @@ title:      "可靠性UDP「译」"
 subtitle:   "Reliable UDP"
 date:       2015-12-27 13:50:00
 author:     "decaywood"
-toc:        true
 header-img: "img/post/2015-12-27-Reliable-UDP.jpg"
 tags:
     - 技术文档

@@ -95,7 +95,7 @@ article {
   overflow-x: hidden;
 }
 blockquote {
-  color: #808080;
+  color: #EEEEEE;
   font-style: italic;
   font-size: 0.95em;
   margin: 20px 0 20px;
@@ -631,6 +631,13 @@ footer .copyright a:focus {
 .floating-label-form-group-with-focus label {
   color: #ffe7a8;
 }
+
+hr {
+  border: 1px dashed #7B0011;
+  box-sizing:content-box;
+  margin-top: 5%;
+}
+
 form .row:first-child .floating-label-form-group {
   border-top: 1px solid #eeeeee;
 }

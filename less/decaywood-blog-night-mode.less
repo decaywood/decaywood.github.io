@@ -56,7 +56,7 @@ article{
 	overflow-x : hidden;
 }
 blockquote {
-	color: @gray;
+	color: @gray-light;
 	font-style: italic;
 	font-size: 0.95em;
 	margin: 20px 0 20px;
@@ -92,6 +92,12 @@ img.shadow{
 // override table style in bootstrap
 .table th, .table td{
 	border: 1px solid #eee !important;
+}
+
+hr {
+	border: 1px dashed #7B0011;
+	box-sizing:content-box;
+	margin-top: 5%;
 }
 
 hr.small {
@@ -609,7 +615,7 @@ footer {
 }
 
 form .row:first-child .floating-label-form-group {
-	border-top: 1px solid @gray-light;
+	border-top: 1px dashed #500505;
 }
 
 // Button Styles

@@ -1,6 +1,5 @@
 ---
 layout:     post
-toc:        true
 title:      "Java8简明教程「译」"
 subtitle:   "Modern Java - A Guide to Java 8"
 date:       2015-12-23 16:34:00
