@@ -126,7 +126,6 @@ $(document).ready(function () {
             button.btnText = localText;
         }
     }
-    window.console.info(theme.mode + '  ' + button.btnText);
     loadMode(theme.mode, button.btnText);
 
     button.css('color', 'rgb(24, 149, 255)');
