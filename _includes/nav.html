@@ -47,7 +47,7 @@
     var $navbar = document.querySelector('#decaywoodblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
 
-    $toggle.addEventListener('click', handleMagic)
+    $toggle.addEventListener('click', handleMagic);
     function handleMagic(e){
         if ($navbar.className.indexOf('in') > 0) {
         // CLOSE
@@ -61,7 +61,7 @@
             },400)
         }else{
         // OPEN
-            $collapse.style.height = "auto"
+            $collapse.style.height = "auto";
             $navbar.className += " in";
         }
     }

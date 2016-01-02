@@ -3,12 +3,19 @@ layout: page
 description: "<br/><i><b>只要有足够的意义和理由，突破已有的原则就可以认为是一种创新</b></i>"
 ---
 
+
 {% for post in paginator.posts %}
 <div class="post-preview">
     <a href="{{ post.url | prepend: site.baseurl }}">
+        {% if post.hot %}
+        <h2 id="hot" class="post-title">
+            {{ post.title }}
+        </h2>
+        {% else %}
         <h2 class="post-title">
             {{ post.title }}
         </h2>
+        {% endif %}
         {% if post.subtitle %}
         <h3 class="post-subtitle">
             {{ post.subtitle }}

@@ -155,7 +155,8 @@ $(document).ready(function () {
 
 
 /*  generate TOC */
-if($('#table-of-contents').length > 0) {
+if($('#toc').length > 0) {
+
     var makeTitle = function (root) {
         var element = root._index == -1 ? $('<div></div>') : $('<li></li>');
         if(root._index != -1) {
@@ -177,8 +178,6 @@ if($('#table-of-contents').length > 0) {
 
     var wrap = function (data) {
         var map = {'-1':{
-            'text': 'Table of Content',
-            'ref' : '#table-of-content',
             '_index' : -1,
             'children' : []
         }};
@@ -207,14 +206,14 @@ if($('#table-of-contents').length > 0) {
                 var that = $(this);
                 for(var i = 0; i < title_table.length; i++) {
                     var index = title_table[i];
-                    if(that.attr('id') != 'table-of-contents' && that.is(index)) {
+                    if(that.is(index)) {
                         that._index = i;
                         children.push(that);
                     }
                 }
             });
             var wrapper = wrap(children);
-            $('#table-of-contents').after(wrapper);
+            $('#toc').after(wrapper);
         }
     });
 }
