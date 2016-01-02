@@ -109,19 +109,15 @@
 <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 <!-- global parameters -->
 <script>
-    var parseURL = function (url) { return "url(" + url.replace("img", "http://7xpp2c.com1.z0.glb.clouddn.com") + ")";};
-    // dynamic User by decaywood
+    var cssPath = "{{ site.cdnurl }}/css/";
     var _gaId = "{{ site.ga_track_id }}";
     var _gaDomain = "{{ site.ga_domain }}";
     var _baId = "{{ site.ba_track_id }}";
-    var cssPath = "{{prepend: site.baseurl}}/css/";
-    var siteImgURL = "{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}";
-    var cdn = parseURL(siteImgURL);
-    $(".intro-header").css("background-image", cdn);
+    $(".intro-header").css("background-image", "url({{ site.cdnurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %})");
 </script>
 <!-- Bootstrap Core JavaScript -->
 <script src="//cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <!-- Amaze UI -->
 <script src="http://cdn.amazeui.org/amazeui/2.5.0/js/amazeui.min.js"></script>
 <!-- Custom Theme JavaScript -->
-<script src="{{prepend: site.baseurl}}/js/decaywood-blog.min.js"></script>
+<script src="{{site.cdnurl}}/js/decaywood-blog.min.js"></script>

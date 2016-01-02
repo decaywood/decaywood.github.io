@@ -103,7 +103,7 @@ layout: default
                     <hr><h5><a href="{{ prepend: site.baseurl }}/about/">ABOUT ME</a></h5>
                     <div class="short-about">
                         {% if site.sidebar-avatar %}
-                            <img src="{{ site.sidebar-avatar }}" />
+                        <img src="{{ site.cdnurl }}/{{ site.sidebar-avatar }}" />
                         {% endif %}
                         {% if site.sidebar-about-description %}
                             <p>{{site.sidebar-about-description}}</p>
@@ -113,7 +113,7 @@ layout: default
 
                             {% if site.RSS %}
                             <li>
-                                <a href="{{ prepend: site.baseur l}}/feed.xml">
+                                <a href="{{ prepend: site.baseurl }}/feed.xml">
                                     <span class="fa-stack fa-lg">
                                         <i class="fa fa-circle fa-stack-2x"></i>
                                         <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
