@@ -59,8 +59,8 @@ ba_track_id: 8cfd62dcadd7b6214b39961e11bb6981 # decaywood's track_id
 #ga_track_id:  # Format: UA-xxxxxx-xx
 #ga_domain: # decaywood.github.io
 
-#cdnurl: http://7xppt1.com1.z0.glb.clouddn.com
-cdnurl: ""
+cdnurl: http://7xppt1.com1.z0.glb.clouddn.com
+#cdnurl: ""
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "coding... refactoring... sharing..."
