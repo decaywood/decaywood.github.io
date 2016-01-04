@@ -152,7 +152,33 @@ $(document).ready(function () {
     })
 });
 
+/* Animation */
+$(document).ready(function () {
 
+    $('body').addClass("animsition");
+    $('a:not(#night-mode):not([href^=#])').addClass("animsition-link");
+
+    $(".animsition").animsition({
+        inClass: 'fade-in-down',
+        outClass: 'fade-out-down',
+        inDuration: 300,
+        outDuration: 300,
+        linkElement: '.animsition-link',
+        loading: true,
+        loadingClass: 'animsition-loading',
+        loadingInner: '', // e.g '<img src="loading.svg" />'
+        timeout: false,
+        timeoutCountdown: 5000,
+        onLoadEvent: true,
+        browser: ['animation-duration', '-webkit-animation-duration'],
+        overlay: false,
+        overlayClass: 'animsition-overlay-slide',
+        overlayParentElement: 'body',
+        transition: function (url) {
+            window.location.href = url;
+        }
+    });
+});
 
 /*  generate TOC */
 if($('#toc').length > 0) {
