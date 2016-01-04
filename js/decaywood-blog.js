@@ -159,7 +159,7 @@ $(document).ready(function () {
     $('a:not(#night-mode):not([href^=#])').addClass("animsition-link");
 
     $(".animsition").animsition({
-        inClass: 'fade-in-down',
+        inClass: 'fade-in-up',
         outClass: 'fade-out-down',
         inDuration: 300,
         outDuration: 300,
