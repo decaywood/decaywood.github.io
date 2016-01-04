@@ -9,6 +9,17 @@ $(function() {
     $("[data-toggle='tooltip']").tooltip();
 });
 
+/* jquery.scrollUp */
+$(function(){
+    $.scrollUp({
+        scrollName:'scrollUp',// 元素ID
+        animation:'slide',// 动画类型Fade, slide, none
+        scrollText:'',// 元素文本
+        activeOverlay:false,// 显示scrollUp的基准线，false为不显示, e.g '#00FFFF'
+    });
+    var scrollUp = $("#scrollUp")
+    scrollUp.addClass("fa fa-chevron-circle-up fa-3x");
+});
 
 /* make all images responsive */
 /* $(function() {
@@ -17,16 +28,16 @@ $(function() {
 
 /* responsive tables */
 $(document).ready(function() {
-	$("table").wrap("<div class='table-responsive'></div>");
-	$("table").addClass("table");
+    $("table").wrap("<div class='table-responsive'></div>");
+    $("table").addClass("table");
 });
 
 /* responsive embed videos */
-$(document).ready(function () { 
+$(document).ready(function () {
     $('iframe[src*="youtube.com"]').wrap('<div class="embed-responsive embed-responsive-16by9"></div>');
-	$('iframe[src*="youtube.com"]').addClass('embed-responsive-item');
+    $('iframe[src*="youtube.com"]').addClass('embed-responsive-item');
     $('iframe[src*="vimeo.com"]').wrap('<div class="embed-responsive embed-responsive-16by9"></div>');
-	$('iframe[src*="vimeo.com"]').addClass('embed-responsive-item');
+    $('iframe[src*="vimeo.com"]').addClass('embed-responsive-item');
 });
 
 /* Navigation Scripts to Show Header on Scroll-Up */
