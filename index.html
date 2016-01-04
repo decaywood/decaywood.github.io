@@ -3,6 +3,16 @@ layout: page
 description: "<br/><i><b>只要有足够的意义和理由，突破已有的原则就可以认为是一种创新</b></i>"
 ---
 
+{% if site.data.news %}
+<div id="news">
+    <ul>
+        {% for line in site.data.news %}
+        <li><b>{{ line }}</b></li>
+        {% endfor %}
+    </ul>
+</div>
+<br/>
+{% endif %}
 
 {% for post in paginator.posts %}
 <div class="post-preview">
