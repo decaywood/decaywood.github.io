@@ -4,7 +4,7 @@
  * Licensed under Apache 2.0 (https://github.com/IronSummitMedia/startbootstrap/blob/gh-pages/LICENSE)
  */
 
-// Tooltip Init
+/* Tooltip Init */
 $(function () {
     $("[data-toggle='tooltip']").tooltip();
 });
@@ -12,8 +12,14 @@ $(function () {
 /* Animation */
 $(function () {
 
-    $('body').addClass("animsition");
+    var body = $('body');
+
+    body.addClass("animsition");
     $('a:not(#night-mode):not([href^=#])').addClass("animsition-link");
+
+    body.on('animsition.inStart', function () {
+        body.css("visibility", "");
+    });
 
     $(".animsition").animsition({
         inClass: 'fade-in-up',
@@ -27,7 +33,7 @@ $(function () {
         timeout: false,
         timeoutCountdown: 5000,
         onLoadEvent: true,
-        browser: ['animation-duration', '-webkit-animation-duration'],
+        browser: ['animation-duration', '-webkit-animation-duration','-o-animation-duration'],
         overlay: false,
         overlayClass: 'animsition-overlay-slide',
         overlayParentElement: 'body',
