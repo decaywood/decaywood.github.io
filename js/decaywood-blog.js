@@ -18,6 +18,7 @@ $(function () {
     $('a:not(#night-mode):not([href^=#])').addClass("animsition-link");
 
     body.on('animsition.inStart', function () {
+        window.console.info("animsition inStart");
         body.css("visibility", "");
     });
 
@@ -42,6 +43,12 @@ $(function () {
         }
     });
 });
+
+window.onload = function () {
+    window.console.info("onload invoke");
+    var body = $('body');
+    body.css("visibility", "");
+};
 
 /* jquery.scrollUp */
 $(function () {
