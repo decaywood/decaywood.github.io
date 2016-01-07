@@ -3,7 +3,7 @@ layout:     post
 title:      "JVM参数详解，以及一些常见OOM问题"
 subtitle:   "Summary of JVM parameters & Some OOM Problems"
 date:       2016-01-05 20:38:50
-header-img: "img/post/2016-1-5-jvm-summary.jpg"
+header-img: "img/post/2016-01-05-jvm-summary.jpg"
 author:     "decaywood"
 tags:
     - 技术文档

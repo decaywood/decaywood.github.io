@@ -26,7 +26,7 @@ v2ex_username:      decaywood
 highlighter: pygments
 permalink: pretty
 paginate: 10
-exclude: ["less","node_modules","Gruntfile.js","package.json","decaywood.github.io.iml", "_posts/2016-1-2-copy-me.markdown"]
+exclude: ["less","node_modules","Gruntfile.js","package.json","decaywood.github.io.iml", "_posts/2016-01-02-copy-me.markdown"]
 anchorjs: true                          # if you want to customize anchor. check out line:181 of `post.html`
 
 
