@@ -114,7 +114,14 @@
     var _gaId = "{{ site.ga_track_id }}";
     var _gaDomain = "{{ site.ga_domain }}";
     var _baId = "{{ site.ba_track_id }}";
-    $(".intro-header").css("background-image", "url({{ site.cdnurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %})");
+    var pageRandom = "{{ page.random-img }}";
+    var imgCount = "{{ site.postImgCount }}";
+    var headerImg;
+    if(pageRandom) {
+        headerImg = "{{ site.cdnurl }}/img/post/" + Math.ceil(Math.random() * "{{ site.postImgCount }}") + ".jpg";
+    } else {
+        headerImg = "{{ site.cdnurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}";
+    }
 </script>
 <!-- Bootstrap Core JavaScript -->
 <script src="//cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

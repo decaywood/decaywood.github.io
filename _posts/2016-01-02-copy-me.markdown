@@ -1,5 +1,6 @@
 ---
 layout:     post
+random-img: true
 title:      "title"
 subtitle:   "subtitle"
 date:       2016-01-02 12:44:31

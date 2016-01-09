@@ -1,10 +1,10 @@
 ---
 layout:     post
+random-img: true
 title:      "Java8简明教程「译」"
 subtitle:   "Modern Java - A Guide to Java 8"
 date:       2015-12-23 16:34:00
 author:     "decaywood"
-header-img: "img/post/2015-12-23-Java8-guide.jpg"
 tags:
     - 技术文档
     - 翻译

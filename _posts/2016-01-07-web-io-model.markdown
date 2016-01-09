@@ -1,9 +1,9 @@
 ---
 layout:     post
+random-img: true
 title:      "阻塞/非阻塞 与 同步/异步的区别"
 subtitle:   "Difference of Blocking/Non-Blocking & Synchronous/Asynchronous"
 date:       2016-01-07 19:31:59
-header-img: "img/post/2016-01-07-web-io-model.jpg"
 author:     "decaywood"
 tags:
     - 技术

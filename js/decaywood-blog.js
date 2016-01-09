@@ -19,6 +19,7 @@ $(function () {
 
     body.on('animsition.inStart', function () {
         window.console.info("animsition inStart");
+        $(".intro-header").css("background-image", "url(" + headerImg + ")");
         body.css("visibility", "");
     });
 
@@ -30,7 +31,6 @@ $(function () {
         linkElement: '.animsition-link',
         loading: true,
         loadingClass: 'animsition-loading',
-        loadingInner: '', // e.g '<img src="loading.svg" />'
         timeout: false,
         timeoutCountdown: 5000,
         onLoadEvent: true,
@@ -45,9 +45,13 @@ $(function () {
 });
 
 window.onload = function () {
-    window.console.info("onload invoke");
+    window.console.info("window loaded");
     var body = $('body');
     body.css("visibility", "");
+    var introHeader = $(".intro-header");
+    if(introHeader.css("background-image") == "none") {
+        introHeader.css("background-image", "url(" + headerImg + ")");
+    }
 };
 
 /* jquery.scrollUp */
