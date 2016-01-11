@@ -1,10 +1,10 @@
 ---
 layout:     post
+random-img: true
 title:      "从一个项目出发，所获得的一些工程经验"
 subtitle:   "My Experiences eared from a project"
 date:       2015-12-21 16:47
 author:     "decaywood"
-header-img: "img/post/2015-12-21-journal.jpg"
 tags:
     - 总结
 ---
