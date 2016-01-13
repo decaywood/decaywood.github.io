@@ -293,7 +293,7 @@ if ($('#toc').length > 0) {
     });
 }
 
-/* Google Analytics Originial */
+/* Google Analytics Original */
 if (_gaId) {
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
@@ -311,7 +311,7 @@ if (_gaId) {
     ga('send', 'pageview');
 }
 
-/* Baidu Tongji Originial */
+/* Baidu Analytics Original */
 if (_baId) {
     var _hmt = _hmt || [];
     (function () {
@@ -320,4 +320,10 @@ if (_baId) {
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
     })();
+}
+
+/* 51.la Analytics Original*/
+if(_51laId) {
+    var jsSrc = "http://js.users.51.la/" + _51laId + ".js";
+    document.write ('<script language="javascript" type="text/javascript" src=' + jsSrc + '></script>');
 }
