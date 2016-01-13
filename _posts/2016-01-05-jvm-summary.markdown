@@ -6,7 +6,7 @@ subtitle:   "Summary of JVM parameters & Some OOM Problems"
 date:       2016-01-05 20:38:50
 author:     "decaywood"
 tags:
-    - 技术文档
+    - 技术
     - JVM
 ---
 

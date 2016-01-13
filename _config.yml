@@ -5,7 +5,8 @@ header-img: img/home-bg.jpg
 email: decaywood@qq.com
 description: "Hi, I'm decaywood"
 keyword: "slow coder"
-url: "http://decaywood.github.io"
+github-source: https://github.com/decaywood/decaywood.github.io
+url: http://decaywood.github.io
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 # CDN Accelerate
@@ -18,7 +19,7 @@ permalink: pretty
 paginate: 10
 exclude: ["less","node_modules","Gruntfile.js","package.json","decaywood.github.io.iml", "_posts/2016-01-02-copy-me.markdown"]
 timezone: Asia/Shanghai
-postImgCount: 25
+post-img-count: 25
 
 # Markdown settings
 # replace redcarpet to kramdown,

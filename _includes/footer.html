@@ -109,6 +109,7 @@
 <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 <!-- global parameters -->
 <script>
+    var pagePath = "{{ site.github-source }}/tree/master/{{ page.path }}";
     var cssPath = "{{ site.cdnurl }}/css/";
     var jsPath = "{{ site.cdnurl }}/js/";
     var _gaId = "{{ site.ga_track_id }}";
@@ -116,10 +117,10 @@
     var _baId = "{{ site.ba_track_id }}";
     var _51laId = "{{ site.51la_track_id }}";
     var pageRandom = "{{ page.random-img }}";
-    var imgCount = "{{ site.postImgCount }}";
+    var imgCount = "{{ site.post-img-count }}";
     var headerImg;
     if(pageRandom) {
-        headerImg = "{{ site.cdnurl }}/img/post/" + Math.ceil(Math.random() * "{{ site.postImgCount }}") + ".jpg";
+        headerImg = "{{ site.cdnurl }}/img/post/" + Math.ceil(Math.random() * imgCount) + ".jpg";
     } else {
         headerImg = "{{ site.cdnurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}";
     }

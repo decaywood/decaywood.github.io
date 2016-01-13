@@ -4,6 +4,20 @@
  * Licensed under Apache 2.0 (https://github.com/IronSummitMedia/startbootstrap/blob/gh-pages/LICENSE)
  */
 
+window.onload = function () {
+    window.console.info("window loaded");
+    var body = $('body');
+    body.css("visibility", "");
+    var introHeader = $(".intro-header");
+    if(introHeader.css("background-image") == "none") {
+        introHeader.css("background-image", "url(" + headerImg + ")");
+    }
+    var edit = $("#edit-in-github");
+    if(edit.length > 0) {
+        edit.attr("href", pagePath);
+    }
+};
+
 /* Tooltip Init */
 $(function () {
     $("[data-toggle='tooltip']").tooltip();
@@ -44,15 +58,6 @@ $(function () {
     });
 });
 
-window.onload = function () {
-    window.console.info("window loaded");
-    var body = $('body');
-    body.css("visibility", "");
-    var introHeader = $(".intro-header");
-    if(introHeader.css("background-image") == "none") {
-        introHeader.css("background-image", "url(" + headerImg + ")");
-    }
-};
 
 /* jquery.scrollUp */
 $(function () {
@@ -158,7 +163,7 @@ async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
 });
 
 /* only load tagcloud.js in tag.html */
-if ($('#tag_cloud').length !== 0) {
+if ($('#tag_cloud').length > 0) {
     async(jsPath + "jquery.tagcloud.js", function () {
         $.fn.tagcloud.defaults = {
             //size: {start: 1, end: 1, unit: 'em'},

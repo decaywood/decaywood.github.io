@@ -6,7 +6,7 @@ subtitle:   "Reliable UDP"
 date:       2015-12-27 13:50:00
 author:     "decaywood"
 tags:
-    - 技术文档
+    - 技术
     - 翻译
 ---
 

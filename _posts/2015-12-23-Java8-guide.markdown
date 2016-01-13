@@ -6,7 +6,7 @@ subtitle:   "Modern Java - A Guide to Java 8"
 date:       2015-12-23 16:34:00
 author:     "decaywood"
 tags:
-    - 技术文档
+    - 技术
     - 翻译
 ---
 

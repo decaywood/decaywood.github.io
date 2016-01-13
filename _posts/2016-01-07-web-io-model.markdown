@@ -1,12 +1,13 @@
 ---
 layout:     post
+random-img: true
 title:      "Linux下的五种IO模型"
 subtitle:   "Five IO-Models Under Linux OS"
 date:       2016-01-07 19:31:59
 author:     "decaywood"
 tags:
     - 技术
-    - 网络编程
+    - Tornado
 ---
 
 <b id="toc">目录</b>
@@ -120,7 +121,7 @@ select的调用步骤如下：
 
 poll与select不同，通过一个pollfd数组向内核传递需要关注的事件，故没有描述符个数的限制，pollfd中的events字段和revents分别用于标示关注的事件和发生的事件，故pollfd数组只需要被初始化一次。
 
- poll的实现机制与select类似，其对应内核中的sys_poll，只不过poll向内核传递pollfd数组，然后对pollfd中的每个描述符进行poll，相比处理fdset来说，poll效率更高。poll返回后，需要对pollfd中的每个元素检查其revents值，来得指事件是否发生。
+poll的实现机制与select类似，其对应内核中的sys_poll，只不过poll向内核传递pollfd数组，然后对pollfd中的每个描述符进行poll，相比处理fdset来说，poll效率更高。poll返回后，需要对pollfd中的每个元素检查其revents值，来得指事件是否发生。
 
 
 ### epoll
