@@ -8,7 +8,7 @@ author:     "decaywood"
 description: JVM Java虚拟机参数设值详解 OOM问题
 keyword: JVM 虚拟机 Out Of Memory
 tags:
-    - 技术
+    - Java
     - JVM
 ---
 

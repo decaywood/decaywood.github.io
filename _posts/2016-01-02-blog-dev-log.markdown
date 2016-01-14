@@ -6,9 +6,13 @@ subtitle:   "Blog & Me -- Some of my experience for Iteration,"
 date:       2016-01-02 11:04:13 
 author:     "decaywood"
 hot:        true
+description: 使用jekyll搭建Github博客
+keyword: jekyll Javascript 博客搭建
 tags:
     - 总结
     - 博客搭建
+    - Javascript
+    - jekyll
 ---
 
 <b>致谢: [Hux blog 黄玄](http://huangxuan.me/)</b>

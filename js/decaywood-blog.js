@@ -12,11 +12,21 @@ window.onload = function () {
     if(introHeader.css("background-image") == "none") {
         introHeader.css("background-image", "url(" + headerImg + ")");
     }
+
+};
+
+$(function () {
     var edit = $("#edit-in-github");
     if(edit.length > 0) {
         edit.attr("href", pagePath);
     }
-};
+});
+
+$(function () {
+    $("h2:not(.subheading):not(.post-title)").each(function(){
+        $(this).append("<hr/>");
+    })
+});
 
 /* Tooltip Init */
 $(function () {
@@ -29,9 +39,9 @@ $(function () {
     var body = $('body');
 
     body.addClass("animsition");
-    $('a:not(#night-mode):not([href^=#])').addClass("animsition-link");
+    $("a:not(#night-mode):not([href^=#])").addClass("animsition-link");
 
-    body.on('animsition.inStart', function () {
+    body.on("animsition.inStart", function () {
         window.console.info("animsition inStart");
         $(".intro-header").css("background-image", "url(" + headerImg + ")");
         body.css("visibility", "");
