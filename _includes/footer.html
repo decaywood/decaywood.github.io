@@ -120,9 +120,11 @@
     var imgCount = "{{ site.post-img-count }}";
     var headerImg;
     if(pageRandom) {
-        headerImg = "{{ site.cdnurl }}/img/post/" + Math.ceil(Math.random() * imgCount) + ".jpg";
+        var screenWidth = document.body.clientWidth;
+        var suffix = "?imageMogr2/auto-orient/blur/50x20/interlace/1/thumbnail/" + screenWidth + "x";
+        headerImg = "{{ site.cdnurl }}/img/post/" + Math.ceil(Math.random() * imgCount) + ".jpg" + suffix;
     } else {
-        headerImg = "{{ site.cdnurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}";
+        headerImg = "{{ site.cdnurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" + suffix;
     }
 </script>
 <!-- Bootstrap Core JavaScript -->
