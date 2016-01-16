@@ -156,7 +156,7 @@ def run(self):
     future.add_done_callback(callback)
 ```
 
-装饰器从生成器那接收到一个[```Future```](http://www.tornadoweb.org/en/stable/concurrent.html#tornado.concurrent.Future)后，等待其完成（非阻塞），然后提取[```Future```](http://www.tornadoweb.org/en/stable/concurrent.html#tornado.concurrent.Future)中的结果并作为```yield```表达式的结果回传给生成器。大部分异步代码不会直接与Future类交互，除非直接将异步函数返回的Future传给```yield```表达式。
+装饰器从生成器那接收到一个[```Future```](http://www.tornadoweb.org/en/stable/concurrent.html#tornado.concurrent.Future)后，等待其完成（非阻塞），然后提取[```Future```](http://www.tornadoweb.org/en/stable/concurrent.html#tornado.concurrent.Future)中的结果并作为```yield```表达式的结果回传给生成器,再次进行一轮循环（补充:这里之所以进行递归循环是由于用户可能嵌套了多个异步调用）。大部分异步代码不会直接与Future类交互，除非直接将异步函数返回的Future传给```yield```表达式。
 
 ### 如何调用协程
 
@@ -202,7 +202,7 @@ IOLoop.current().run_sync(lambda: divide(1， 0))
 
 #### 结合 callback
 
-为了使用回调代替[```Future```](http://www.tornadoweb.org/en/stable/concurrent.html#tornado.concurrent.Future)与异步代码进行交互， 把调用包在[```Task```](http://www.tornadoweb.org/en/stable/gen.html#tornado.gen.Task) 类中。 这将为你添加一个回调参数并且返回一个可以yield的[```Future```](http://www.tornadoweb.org/en/stable/concurrent.html#tornado.concurrent.Future):
+为了使用回调代替[```Future```](http://www.tornadoweb.org/en/stable/concurrent.html#tornado.concurrent.Future)与异步代码进行交互， 把调用封装在[```Task```](http://www.tornadoweb.org/en/stable/gen.html#tornado.gen.Task) 类中。 这将为你添加一个回调参数并且返回一个可以yield的[```Future```](http://www.tornadoweb.org/en/stable/concurrent.html#tornado.concurrent.Future):
 
 ```python
 @gen.coroutine
@@ -305,9 +305,9 @@ def minute_loop2():
 
 ## 示例 - 一个并发网络爬虫
 
-Tornado的[```tornado.queues```](http://www.tornadoweb.org/en/stable/queues.html#module-tornado.queues)模块实现了异步生产者/消费者模式的协程，类似于通过Python标准库的[```queue```](https://docs.python.org/3.4/library/queue.html#module-queue)实现线程模式。
+Tornado的[```tornado.queues```](http://www.tornadoweb.org/en/stable/queues.html#module-tornado.queues)模块实现了异步生产者/消费者模式的协程，类似于由Python标准库的[```queue```](https://docs.python.org/3.4/library/queue.html#module-queue)模型实现的线程模式。
 
-一个yield [```Queue.get```](http://www.tornadoweb.org/en/stable/queues.html#tornado.queues.Queue.get)的协程直到队列中有值的时候才会暂停。如果队列设置了最大长度yield [```Queue.put```](http://www.tornadoweb.org/en/stable/queues.html#tornado.queues.Queue.put)的协程直到队列中有空间才会暂停。
+协程在yield [```Queue.get```](http://www.tornadoweb.org/en/stable/queues.html#tornado.queues.Queue.get)时只有在队列中有值的时候才会往下执行。同理，如果队列设置了最大长度，在yield [```Queue.put```](http://www.tornadoweb.org/en/stable/queues.html#tornado.queues.Queue.put)时只有队列没满的情况才会往下执行。
 
 一个[```Queue```](http://www.tornadoweb.org/en/stable/queues.html#tornado.queues.Queue)维护了一系列未完成任务，从0开始计数。[```put```](http://www.tornadoweb.org/en/stable/queues.html#tornado.queues.Queue.put)增加计数;[```task_done```](http://www.tornadoweb.org/en/stable/queues.html#tornado.queues.Queue.task_done)减少计数.
 
@@ -425,9 +425,9 @@ if __name__ == '__main__':
 
 ## Tornado web应用的结构
 
-通常一个Tornado web应用包括一个或者多个[```RequestHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler)子类，一个可以将收到的请求路由到对应handler的[```Application```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.Application)对象，和一个启动服务的```main()```函数.
+通常一个Tornado web应用由三个部分组成，包括一个或者多个[```RequestHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler)子类，一个可以将收到的请求路由到对应handler的[```Application```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.Application)对象，以及一个启动服务的```main()```函数。
 
-一个最简单的"hello world"例子就像下面这样:
+一个最简单的"hello world"例子如下:
 
 ```python
 import tornado.ioloop
@@ -450,45 +450,45 @@ class MainHandler(tornado.web.RequestHandler):
 
 ### Application 对象
 
-[```Application```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.Application)对象是负责全局配置的，包括映射请求转发给处理程序的路由表。
+[```Application```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.Application)对象是负责全局配置的，它维护了一张映射请求到handler的路由表。
 
-路由表是[```URLSpec```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.URLSpec)对象(或元组)的列表，其中每个都包含(至少)一个正则表达式和一个处理类。顺序问题;第一个匹配的规则会被使用。如果正则表达式包含捕获组，这些组会被作为路径参数传递给处理函数的HTTP方法。如果一个字典作为URLSpec的第三个参数被传递，它会作为初始参数传递给[```RequestHandler.initialize```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.initialize)。最后[```URLSpec```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.URLSpec)可能有一个名字(name)，这将允许它被[```RequestHandler.reverse_url```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.reverse_url)使用。
+路由表是一系列[```URLSpec```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.URLSpec)对象(或元组)组成的列表，列表中每个元素都包含(至少)一个正则表达式和一个处理类。且路由表对顺序敏感，使用第一个匹配成功的规则对应的handler处理请求。如果正则表达式包含捕获组，这些组会被作为路径参数传递给处理函数的HTTP方法。如果一个字典作为URLSpec的第三个参数被传递，它会作为初始参数传递给[```RequestHandler.initialize```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.initialize)。最后，[```URLSpec```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.URLSpec)可能有一个名字(name)，这将允许它被[```RequestHandler.reverse_url```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.reverse_url)使用。
 
-例如，在这个片段中根URL"```/```"映射到了MainHandler，像"```/story/```"后跟着一个数字这种形式的URL被映射到了StoryHandler。这个数字被传递(作为字符串)给```StoryHandler.get```。
+例如，在下面的例子中，根URL"```/```"映射到了MainHandler，像"```/story/```"后跟着一个数字这种形式的URL被映射到了StoryHandler。后缀中的数字作为字符串传递给```StoryHandler.get```方法。
 
 ```python
 class MainHandler(RequestHandler):
     def get(self):
         self.write('<a href="%s">link to story 1</a>' % self.reverse_url("story", "1"))
 
-    class StoryHandler(RequestHandler):
-        def initialize(self, db):
-            self.db = db
+class StoryHandler(RequestHandler):
+    def initialize(self, db):
+        self.db = db
 
-        def get(self, story_id):
-            self.write("this is story %s" % story_id)
+    def get(self, story_id):
+        self.write("this is story %s" % story_id)
 
-    app = Application([
-        url(r"/", MainHandler),
-        url(r"/story/([0-9]+)", StoryHandler, dict(db=db), name="story")
-        ])
+app = Application([
+    url(r"/", MainHandler),
+    url(r"/story/([0-9]+)", StoryHandler, dict(db=db), name="story")
+    ])
 ```
 
 [```Application```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.Application)构造函数有很多关键字参数可以用于自定义应用程序的行为和使用某些特性(或者功能);完整列表请查看[```Application.settings```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.Application.settings) 。
 
 ### RequestHandler子类
 
-Tornado web应用程序的大部分工作是在[```RequestHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler)子类下完成的。处理子类的主入口点是一个命名为处理HTTP方法的函数:```get()```，```post()```， 等等。每个处理程序可以定义一个或者多个这种方法来处理不同的HTTP动作。如上所述，这些方法将被匹配路由规则的捕获组对应的参数调用。
+Tornado web应用程序的大部分工作是在[```RequestHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler)子类下完成的。处理子类的主入口点是一个以正被接收处理的HTTP方法命名的函数:例如```get()```，```post()```等等。每个处理程序可以定义一个或者多个这种方法来处理不同的HTTP动作。如上所述，这些方法将被匹配路由规则的捕获组对应的参数调用。
 
-在处理程序中，调用方法如[```RequestHandler.render```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.render)或者[```RequestHandler.write```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.write)产生一个响应。```render()```通过名字加载一个[```Template```](http://www.tornadoweb.org/en/stable/template.html#tornado.template.Template)并使用给定的参数渲染它。```write()```被用于非模板基础的输出; 它接受字符串，字节，和字典(字典会被编码成JSON)。
+在handler中，可以调用[```RequestHandler.render```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.render)或者[```RequestHandler.write```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.write)方法产生一个响应。```render()```通过名字加载一个[```Template```](http://www.tornadoweb.org/en/stable/template.html#tornado.template.Template)并使用给定的参数渲染它。```write()```用于简单输出; 它接受字符串，字节，和字典(字典会被编码成JSON)。
 
-在[```RequestHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler)中的很多方法的设计是为了在子类中复写和在整个应用中使用。常用的方法是定义一个```BaseHandler```类， 复写一些方法例如[```RequestHandler.write_error```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.write_error)和[```RequestHandler.get_current_user```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.get_current_user)然后子类继承使用你自己的BaseHandler而不是[```RequestHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler)在你所有具体的处理程序中。
+在[```RequestHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler)中的很多方法被设计成用于在子类中覆盖并在整个应用中使用。常用的方法是定义一个```BaseHandler```类， 覆盖一些方法，例如[```RequestHandler.write_error```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.write_error)和[```RequestHandler.get_current_user```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.get_current_user)，接下来应用中所有具体的handler都继承BaseHandler而不是[```RequestHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler)。
 
 ### 处理输入请求
 
-处理请求的程序request handler可以使用```self.request```访问代表当前请求的对象。通过[```HTTPServerRequest```](http://www.tornadoweb.org/en/stable/httputil.html#tornado.httputil.HTTPServerRequest)的类定义查看完整的属性列表。
+请求handler可以使用```self.request```访问代表当前请求的对象。通过[```HTTPServerRequest```](http://www.tornadoweb.org/en/stable/httputil.html#tornado.httputil.HTTPServerRequest)的类定义查看完整的属性列表。
 
-使用HTML表单格式请求的数据会被解析并且可以在一些方法中使用，例如[```RequestHandler.get_query_argument```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.get_query_argument)和[```RequestHandler.get_body_argument```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.get_body_argument)。
+使用HTML表单格式请求的数据会被解析并且可以在一些方法中获取，例如[```RequestHandler.get_query_argument```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.get_query_argument)和[```RequestHandler.get_body_argument```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.get_body_argument)。
 
 ```python
 class MyFormHandler(tornado.web.RequestHandler):
@@ -503,11 +503,11 @@ class MyFormHandler(tornado.web.RequestHandler):
             self.write("You wrote " + self.get_body_argument("message"))
 ```
 
-由于HTLM表单编码不确定一个标签的参数是单一值还是一个列表，[```RequestHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler)有明确的方法来允许应用程序表明是否它期望接收一个列表。对于列表，使用[```RequestHandler.get_query_argument```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.get_query_argument)和[```RequestHandler.get_body_argument```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.get_body_argument)而不是它们的单数形式。
+由于HTLM表单编码不确定一个标签的参数是单一值还是一个列表，[```RequestHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler)有明确的方法来允许应用程序表明是否它期望接收一个列表。对于列表，使用[```RequestHandler.get_query_arguments```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.get_query_arguments)和[```RequestHandler.get_body_arguments```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.get_body_arguments)而不是它们的单数形式。
 
-通过一个表单上传的文件可以使用```self.request.files```，它遍历名字(HTML标签```<input type="file">```的name)到一个文件列表.每个文件都是一个字典的形式```{"filename":...， "content_type":...， "body":...}```。 ```files```对象是当前唯一的如果文件上传是通过一个表单包装(i.e. a ```multipart/form-data``` Content-Type); 如果没用这种格式，原生上传的数据可以调用```self.request.body```使用。默认上传的文件是完全缓存在内存中的; 如果你需要处理占用内存太大的文件可以看看 [```stream_request_body```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.stream_request_body)类装饰器。
+通过一个表单上传的文件可以使用```self.request.files```访问，这个方法将名字(HTML标签```<input type="file">```的名字)映射到一个文件列表.每个文件都是一个字典的形式```{"filename":...， "content_type":...， "body":...}```。 ```files```对象是当前唯一的如果文件上传是通过一个表单包装(i.e. a ```multipart/form-data``` Content-Type); 如果没用这种格式，原生上传的数据可以调用```self.request.body```使用。默认上传的文件是完全缓存在内存中的; 如果你需要处理占用内存太大的文件可以参考[```stream_request_body```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.stream_request_body)类装饰器。
 
-由于HTML表单编码格式的怪异 (e.g.在单数和复数参数的含糊不清)，Tornado不会试图统一表单参数和其他输入类型的参数。特别是，我们不解析JSON请求体。应用程序希望使用JSON代替表单编码可以复写[```RequestHandler.prepare```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.prepare)来解析它们的请求:
+由于HTML表单编码格式的怪异 (e.g.在单数和复数参数的含糊不清)，Tornado不会试图统一表单参数和其他输入类型的参数。特别是，我们不解析JSON请求体。应用程序希望使用JSON代替表单编码可以覆盖[```RequestHandler.prepare```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.prepare)来解析它们的请求:
 
 ```python
 def prepare(self):
@@ -517,49 +517,49 @@ def prepare(self):
         self.json_args = None
 ```
 
-### 复写RequestHandler的方法
+### 覆盖RequestHandler的方法
 
-除了```get()```/```post()```/等， 在[```RequestHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler)中的某些其他方法被设计成了在必要的时候让子类重写。在每个请求中， 会发生下面的调用序列:
+除了```get()```/```post()```/等， 在[```RequestHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler)中的某些其他方法也设计成让子类覆盖的形式。每当请求发生时，会执行下面的一系列动作:
 
 *  在每次请求时生成一个新的[```RequestHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler)对象
 
-*  [```RequestHandler.initialize()```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.initialize)被[```Application```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.Application)配置中的初始化参数调用。```initialize```通常应该只保存成员变量传递的参数; 它不能产生任何输出或者调用方法，例如[```RequestHandler.send_error```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.send_error)。
+*  调用[```RequestHandler.initialize()```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.initialize)并传入[```Application```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.Application)配置中的初始化参数。```initialize```通常应该只保存传递给成员变量的参数; 它不能产生或调用任何输出或方法，例如[```RequestHandler.send_error```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.send_error)。
 
-*  [```RequestHandler.prepare()```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.prepare)被调用。这在你所有处理子类共享的基类中是最有用的，无论是使用哪种HTTP方法，```prepare```都会被调用```prepare```可能会产生输出;如果它调用[```RequestHandler.finish```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.finish)(或者```redirect```等)，处理会在这里结束。
+*  调用[```RequestHandler.prepare()```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.prepare)。这个方法在所有子类中共享，它非常有用，无论是使用哪种HTTP方法，```prepare```都会被调用```prepare```可能会产生输出;如果它调用[```RequestHandler.finish```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.finish)(或者```redirect```等)，处理会在这里结束。
 
-*  其中一种HTTP方法被调用:```get()```，```post()```，```put()```，等。如果URL的正则表达式包含捕获组，它们会被作为参数传递给这个方法。
+*  当```get()```，```post()```，```put()```，等中的其中一种方法被调用时，如果URL的正则表达式包含捕获组，它们会被作为参数传递给这个方法。
 
-*  当请求结束，[```RequestHandler.on_finish()```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.on_finish)方法被调用. 对于同步处理程序会在 get() (等)后立即返回; 对于异步处理程序，会在调用[```RequestHandler.finish()```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.finish)后返回.
+*  当请求结束，[```RequestHandler.on_finish()```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.on_finish)方法将被调用. 对于同步处理程序会在get()等方法后立即返回; 对于异步处理程序，则会在调用[```RequestHandler.finish()```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.finish)后返回.
 
-所有这样设计被用来复写的方法被记录在了[```RequestHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler)的文档中.其中最常用的一些被复写的方法包括:
+所有可覆盖的方法在[```RequestHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler)的文档中都有说明。其中最常用的一些可覆盖的方法包括:
 
-*  [```RequestHandler.write_error```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.write_error) - 输出对错误页面使用的HTML.
+*  [```RequestHandler.write_error```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.write_error) - 输出用于显示错误页面的HTML.
 
-*  [```RequestHandler.on_connection_close```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.on_connection_close) - 当客户端断开时被调用;应用程序可以检测这种情况，并中断后续处理. 注意这不能保证一个关闭的连接及时被发现.
+*  [```RequestHandler.on_connection_close```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.on_connection_close) - 当客户端断开时被调用;应用程序可以检测这种情况，并中断后续处理.注意，此方法不能保证一个关闭的连接及时被发现.
 
 *  [```RequestHandler.get_current_user```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.get_current_user) - 参考 [ser-authentication](http://www.tornadoweb.org/en/stable/guide/security.html#user-authentication).
 
 *  [```RequestHandler.get_user_locale```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.get_user_locale) - 返回 .Locale 对象给当前用户使用
 
-*  [```RequestHandler.set_default_headers```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.set_default_headers) - 可以被用来设置额外的响应头(例如自定义的 Server 头)
+*  [```RequestHandler.set_default_headers```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.set_default_headers) - 可以被用来设置额外的响应头(例如自定义的Server头)
 
 ### 错误处理
 
-如果一个处理程序抛出一个异常，[```Tornado会调用RequestHandler.write_error```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.write_error)来生成一个错误页[```tornado.web.HTTPError```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.HTTPError)可以被用来生成一个指定的状态码;所有其他的异常都会返回一个500状态。
+如果一个处理程序抛出一个异常，Tornado会调用[```RequestHandler.write_error```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.write_error)来生成一个错误页[```tornado.web.HTTPError```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.HTTPError)可以被用来生成一个指定的状态码;所有其他的异常都会返回一个500状态。
 
-默认的错误页面包含一个debug模式下的调用栈和另外一行错误描述(e.g. "500: Internal Server Error")。为了创建自定义的错误页面，复写[```Tornado会调用RequestHandler.write_error```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.write_error)(可能在一个所有处理程序共享的一个基类里面)。这个方法可能产生输出通常通过一些方法，例如[```RequestHandler.render```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.render)和[```RequestHandler.write```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.write)如果错误是由异常引起的，一个```exc.info```将作为一个关键字参数传递(注意这个异常不能保证是[```sys.exc_info```](https://docs.python.org/3.4/library/sys.html#sys.exc_info)当前的异常，所以```write_error```必须使用 e.g. [```traceback.format_exception```](https://docs.python.org/3.4/library/traceback.html#traceback.format_exception)代替[```traceback.format_exc```](https://docs.python.org/3.4/library/traceback.html#traceback.format_exc))。
+默认的错误页面包含一个debug模式下的调用栈和一行错误描述(e.g. "500: Internal Server Error")。为了创建自定义的错误页面，可以对[```RequestHandler.write_error```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.write_error)进行覆盖(方法可能在一个所有处理程序共享的一个基类里面)。```write_error```可以通过特定方法产生一些输出，例如[```RequestHandler.render```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.render)和[```RequestHandler.write```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.write)如果错误是由异常引起的，方法将传入一个```exc.info```关键字参数(注意这个异常不保证是当前在[```sys.exc_info```](https://docs.python.org/3.4/library/sys.html#sys.exc_info)中的异常，所以```write_error```必须使用 e.g. [```traceback.format_exception```](https://docs.python.org/3.4/library/traceback.html#traceback.format_exception)代替[```traceback.format_exc```](https://docs.python.org/3.4/library/traceback.html#traceback.format_exc))。
 
-也可以在常规的处理方法中调用 RequestHandler[```set_status```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.set_status)代替```write_error```返回一个(自定义)响应来生成一个错误页面. 特殊的例外[```tornado.web.Finish```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.Finish)在直接返回不方便的情况下能够在不调用 write_error前结束处理程序。
+也可以在常规的处理方法中调用 RequestHandler[```set_status```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.set_status)代替```write_error```返回一个(自定义)响应来生成一个错误页面。在不方便直接返回的情况下，可以通过抛出特殊的[```tornado.web.Finish```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.Finish)异常实现在调用```write_error```前结束处理程序。
 
-对于404错误， 使用```default_handler_class``` [```Application setting```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.Application.settings)。这个处理程序会复写[```RequestHandler.prepare```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.prepare)而不是一个更具体的方法，例如```get()```所以它可以在任何HTTP方法下工作. 它应该会产生如上所说的错误页面: 要么raise一个```HTTPError(404)```要么复写```write_error```， 或者调用```self.set_status(404)```或者在```prepare()```中直接生成响应。
+对于404错误， 使用```default_handler_class``` [```Application setting```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.Application.settings)。这个处理程序会直接覆盖[```RequestHandler.prepare```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.prepare)方法而不是像```get()```这样的具体的方法，所以它可以在任何HTTP方法下执行。它应该会产生如上所说的错误页面: 要么raise一个```HTTPError(404)```要么覆盖```write_error```， 或者调用```self.set_status(404)```或者在```prepare()```中直接生成响应。
 
 ### 重定向
 
-这里有两种主要的方式让你可以在Tornado中重定向请求:[```RequestHandler.redirect```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.redirect)和使用[```RedirectHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RedirectHandler)。
+要在Tornado中重定向请求，这里提供两种主流的方法:使用[```RequestHandler.redirect```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.redirect)或[```RedirectHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RedirectHandler)。
 
-你可以在一个 [```RedirectHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RedirectHandler)的方法中使用```self.redirect()```把用户重定向到其他地方。还有一个可选参数```permanent```你可以使用它来表明这个重定向被认为是永久的。```permanent```的默认值是False，这会生成一个```302 Found```HTTP响应状态码，适合类似在用户的POST请求成功后的重定向。如果```permanent是true，会使用```301 Moved Permanently```HTTP响应，这样可以以一种SEO友好的方式中把一个页面重定向到一个权威的URL中。
+你可以使用[```RedirectHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RedirectHandler)中的```self.redirect()```方法把用户重定向到其他地方。它有一个可选参数```permanent```，可以使用它来表明这个重定向为永久重定向。```permanent```的默认值是False，这会生成一个```302 Found```HTTP响应状态码，适合类似在用户的POST请求成功后的重定向。如果```permanent```为true，则会生成```301 Moved Permanently```HTTP响应状态码，这种策略适用于重定向页面到高权重的URL的SEO优化场景。
 
-[```RedirectHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RedirectHandler)让你直接在你[```Application```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.Application)路由表中配置。例如，配置一个静态重定向:
+[```RedirectHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RedirectHandler)可以让你直接在[```Application```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.Application)路由表中配置。例如，配置一个静态重定向:
 
 ```python
 app = tornado.web.Application([
@@ -568,7 +568,7 @@ app = tornado.web.Application([
     ])
 ```
 
-[```RedirectHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RedirectHandler)也支持正则表达式替换。下面的规则重定向所有以/```pictures```/开始的请求用/```photos```/前缀代替:
+[```RedirectHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RedirectHandler)也支持正则表达式替换。下面的规则把所有以/```pictures```/为前缀的请求重定向到以/```photos```/为前缀的请求中:
 
 ```python
 app = tornado.web.Application([
@@ -578,15 +578,15 @@ app = tornado.web.Application([
     ])
 ```
 
-不像[```RequestHandler.redirect```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.redirect)，[```RedirectHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RedirectHandler)默认使用永久重定向.这是因为路由表在运行时不会改变，而且被认为是永久的。当在处理程序中发现重定向的时候，可能是其他可能改变的逻辑的结果。用[```RedirectHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RedirectHandler)发送临时重定向，需要添加```permanent=False```到[```RedirectHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RedirectHandler)的初始化参数.
+不像[```RequestHandler.redirect```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.redirect)，[```RedirectHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RedirectHandler)默认使用永久重定向。这是因为路由表在运行时不会改变，并被定义为永久的。虽然在handler中的重定向可能是由其他逻辑修改的。使用[```RedirectHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RedirectHandler)发送临时重定向，需要添加```permanent=False```到[```RedirectHandler```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RedirectHandler)的初始化参数.
 
-### 异步处理
+### 异步handler
 
-Tornado默认会同步处理:当```get()```/```post()```方法返回， 请求被认为结束并且返回响应. 因为当一个处理程序正在运行的时候其他所有请求都被阻塞，任何需要长时间运行的处理都应该是异步的，这样它就可以在非阻塞的方式中调用它的慢操作了。这个话题在[Linux下的五种IO模型](http://decaywood.github.io/2016/01/08/web-io-model/#section)中有更详细的讨论。
+Tornado的handler默认为同步的:当```get()```/```post()```方法返回时， 请求随即结束并且返回响应。由于当一个handler正在运行的时候其他所有请求都会被阻塞，所以任何需要长时间运行的handler都应该以异步方式运行，这样的话，即便handler中的处理方法很耗时，也不会阻塞其他handler的执行。这个话题在[Linux下的五种IO模型](http://decaywood.github.io/2016/01/08/web-io-model/#section)中有更详细的讨论。
 
 使用[```coroutine```](http://www.tornadoweb.org/en/stable/gen.html#tornado.gen.coroutine)装饰器是做异步最简单的方式。这允许你使用```yield```关键字执行非阻塞IO，并且直到协程返回才发送响应。查看[协程](#section-4)了解更多细节。
 
-在某些情况下，协程不如回调为主的风格方便，在这种情况下[```tornado.web.asynchronous```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.asynchronous)装饰器可以用来代替协程。当使用这个装饰器的时候,响应不会自动发送;而请求将一直保持开放直到callback调用[```RequestHandler.finish```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.finish)。这需要应用程序确保这个方法被调用或者其他用户的浏览器简单的挂起。
+在某些情况下，协程不如回调方便，在这种情况下[```tornado.web.asynchronous```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.asynchronous)装饰器可以用来代替协程。当使用这个装饰器的时候,响应不会自动发送;在callback调用[```RequestHandler.finish```](http://www.tornadoweb.org/en/stable/web.html#tornado.web.RequestHandler.finish)之前，请求将会一直打开。故应用程序需要确保```finish```方法被调用，否则客户端浏览器会被挂起。
 
 这里是一个使用Tornado内置的[```AsyncHTTPClient```](http://www.tornadoweb.org/en/stable/httpclient.html#tornado.httpclient.AsyncHTTPClient)调用FriendFeed API的例子:
 
@@ -606,7 +606,7 @@ class MainHandler(tornado.web.RequestHandler):
         self.finish()
 ```
 
-当```get()```返回，请求还没有完成。当HTTP客户端最终调用on_response()，这个请求仍然是开放的，直到调用self.finish()，响应才最终刷新到客户端。
+当```get()```返回后，此时请求还没有完成。事实上最终调用on_response()时，这个请求仍然是打开的，直到调用self.finish()，响应才最终刷新到客户端。
 
 为了方便对比， 这里有一个使用协程的相同的例子:
 
@@ -621,4 +621,4 @@ class MainHandler(tornado.web.RequestHandler):
                    "from the FriendFeed API")
 ````
 
-更多高级异步的示例， 请看[chat example application](https://github.com/tornadoweb/tornado/tree/stable/demos/chat)，这个例子实现了一个使用长轮询(long polling)的AJAX聊天室.使用长轮询的用户可能想要覆盖on_connection_close()来在客户端关闭连接之后进行清理(注意看方法的文档来查看警告).
+更多高级异步的示例， 请看[chat example application](https://github.com/tornadoweb/tornado/tree/stable/demos/chat)，这个例子实现了一个使用长轮询(long polling)的AJAX聊天室.如果你使用长轮询，可以覆盖on_connection_close()来在客户端关闭连接之后进行资源释放(注意查询方法的文档来了解如何使用).
