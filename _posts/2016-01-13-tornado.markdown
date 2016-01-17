@@ -1,7 +1,7 @@
 ---
 layout:     post
 random-img: true
-title:      "Tornado完全解读"
+title:      "Tornado完全解读「译」"
 subtitle:   "Tornado Guide"
 date:       2016-01-13 20:31:23
 author:     "decaywood"
@@ -10,6 +10,8 @@ keyword: Tornado IOLoop RequestHandler AsyncHTTPClient HTTPClient HTTPServer Cor
 tags:
     - Tornado
 ---
+
+[原文](http://www.tornadoweb.org/en/stable/index.html)
 
 <b id="toc">目录</b>
 
