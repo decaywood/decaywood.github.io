@@ -63,7 +63,7 @@ v2ex_username:      decaywood
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "coding... refactoring... sharing..."
+sidebar-about-description: coding... refactoring... sharing...
 sidebar-avatar: img/avatar-decaywood.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
