@@ -6,7 +6,7 @@ email: decaywood@qq.com
 description: "Hi, I'm decaywood"
 keyword: "Java Python Javascript..."
 github-source: https://github.com/decaywood/decaywood.github.io
-url: http://decaywood.github.io
+url: blog.decaywood.me
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 # CDN Accelerate
