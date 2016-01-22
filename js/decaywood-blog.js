@@ -7,7 +7,7 @@
 window.onload = function () {
     window.console.info("window loaded");
     var body = $('body');
-    body.css("visibility", "");
+    body.removeAttr("id");
     var introHeader = $(".intro-header");
     if(introHeader.css("background-image") == "none") {
         introHeader.css("background-image", "url(" + headerImg + ")");
@@ -44,7 +44,7 @@ $(function () {
     body.on("animsition.inStart", function () {
         window.console.info("animsition inStart");
         $(".intro-header").css("background-image", "url(" + headerImg + ")");
-        body.css("visibility", "");
+        body.removeAttr("id");
     });
 
     $(".animsition").animsition({
