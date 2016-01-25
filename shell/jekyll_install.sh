@@ -22,6 +22,7 @@ sudo apt-get install gem
 sudo apt-get install libxml2-dev libxslt-dev
 sudo apt-get install zlib1g-dev
 sudo apt-get install node.js
+sudo apt-get install node-less
 
 gem sources --remove https://rubygems.org/
 gem sources -a https://ruby.taobao.org/

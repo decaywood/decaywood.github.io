@@ -28,10 +28,6 @@ $(function () {
     })
 });
 
-/* Tooltip Init */
-$(function () {
-    $("[data-toggle='tooltip']").tooltip();
-});
 
 /* Animation */
 $(function () {
@@ -168,8 +164,8 @@ async("//cdn.bootcss.com/highlight.js/9.0.0/highlight.min.js", function () {
 
 /* fastclick */
 async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
-    var $nav = document.querySelector("nav");
-    if ($nav) FastClick.attach($nav);
+    // global FastClick!!
+    FastClick.attach(document.body);
 });
 
 /* only load tagcloud.js in tag.html */

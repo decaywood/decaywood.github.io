@@ -126,6 +126,10 @@ pre code {
   word-wrap: normal; // no-wrap
 }
 
+.postlist-container {
+  margin-bottom: 15px;
+}
+
 // In the post.
 .post-container {
   a {
@@ -184,6 +188,19 @@ pre code {
     h1, h2, h3, h4, h5, h6 {
       line-height: 2;
       margin-top: 20px;
+    }
+  }
+  .pager li{
+    width: 48%;
+    &.next{ float: right};
+    &.previous{ float: left};
+    > a {
+      width: 100%;
+      > span{
+        color: @gray;
+        font-weight: normal;
+        letter-spacing: 0.5px;
+      }
     }
   }
 }
@@ -687,7 +704,8 @@ form .row:first-child .floating-label-form-group {
       font-weight: 800;
       letter-spacing: 1px;
       padding: 10px;
-      background-color: white;
+      background-color: inherit;
+      border: 1px dashed #7B0011;
       border-radius: 0;
       @media only screen and (min-width: 768px) {
         font-size: 14px;
@@ -696,13 +714,15 @@ form .row:first-child .floating-label-form-group {
     }
 
     > a {
-      color: @gray-dark;
+      color: inherit;
     }
     > a:hover,
     > a:focus {
-      color: white;
-      //background-color: @brand-primary;
-      //border: 1px solid @brand-primary;
+      background-color: inherit;
+      color: red;
+      > span{
+        color: red;
+      }
     }
   }
 
@@ -712,7 +732,7 @@ form .row:first-child .floating-label-form-group {
     > a:focus,
     > span {
       color: @gray;
-      background-color: @gray-dark;
+      background-color: inherit;
       cursor: not-allowed;
     }
   }
@@ -944,6 +964,13 @@ img::-moz-selection {
       }
       .ds-post-button {
         border-bottom: 1px solid #ccc;
+      }
+      .ds-post-button{
+        background: white;
+        box-shadow: none;
+        &:hover{
+          background: @gray-light;
+        }
       }
     }
   }
