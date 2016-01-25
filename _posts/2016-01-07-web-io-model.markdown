@@ -8,8 +8,7 @@ author:     "decaywood"
 description: 本文介绍了同步与异步阻塞与非阻塞的一些差异，以及Linux的五种IO模型
 keyword: 同步 异步 阻塞 非阻塞 select poll epoll
 tags:
-    - 网络IO
-    - Tornado
+    - 架构
 ---
 
 <b id="toc">目录</b>

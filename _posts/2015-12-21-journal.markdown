@@ -6,6 +6,8 @@ subtitle:   "My Experiences eared from a project"
 date:       2015-12-21 16:47
 author:     "decaywood"
 tags:
+    - Java
+    - 架构
     - 总结
 ---
 

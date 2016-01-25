@@ -23,9 +23,12 @@ sudo apt-get install libxml2-dev libxslt-dev
 sudo apt-get install zlib1g-dev
 sudo apt-get install node.js
 
+gem sources --remove https://rubygems.org/
+gem sources -a https://ruby.taobao.org/
+
 echo "install bundle..."
 
-gem install bundle
+sudo gem install bundle
 bundle install
 bundle update
 

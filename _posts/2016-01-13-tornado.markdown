@@ -8,7 +8,8 @@ author:     "decaywood"
 description: 本文介绍了Tornado的一些运作机制，并用源码构建了一个例子，帮助初学者快速上手Tornado
 keyword: Tornado IOLoop RequestHandler AsyncHTTPClient HTTPClient HTTPServer Coroutine
 tags:
-    - Tornado
+    - Python
+    - 框架
 ---
 
 [原文](http://www.tornadoweb.org/en/stable/index.html)
