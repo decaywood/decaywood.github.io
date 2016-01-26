@@ -1,10 +1,10 @@
 ---
 layout:     post
 random-img: true
-title:      "博客与我, 功能迭代中的一些心历路程(持续更新)"
-subtitle:   "Blog & Me -- Some of my experience for Iteration,"
+title:      博客与我, 功能迭代中的一些心历路程(持续更新)
+subtitle:   Blog & Me -- Some of my experience for Iteration
 date:       2016-01-02 11:04:13 
-author:     "decaywood"
+author:     decaywood
 hot:        true
 description: 使用jekyll搭建Github博客
 keyword: jekyll Javascript 博客搭建

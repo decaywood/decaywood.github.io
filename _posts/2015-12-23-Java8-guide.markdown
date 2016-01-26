@@ -1,10 +1,10 @@
 ---
 layout:     post
 random-img: true
-title:      "Java8简明教程「译」"
-subtitle:   "Modern Java - A Guide to Java 8"
+title:      Java8简明教程「译」
+subtitle:   Modern Java - A Guide to Java 8
 date:       2015-12-23 16:34:00
-author:     "decaywood"
+author:     decaywood
 description: 本文介绍了一些Java8的新特性，包括lambda表达式，stream流，以及一些函数式编程的概念
 keyword: Java8 lambda stream API
 tags:

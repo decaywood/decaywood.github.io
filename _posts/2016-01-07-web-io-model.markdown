@@ -1,10 +1,10 @@
 ---
 layout:     post
 random-img: true
-title:      "Linux下的五种IO模型"
-subtitle:   "Five IO-Models Under Linux OS"
+title:      Linux下的五种IO模型
+subtitle:   Five IO-Models Under Linux OS
 date:       2016-01-07 19:31:59
-author:     "decaywood"
+author:     decaywood
 description: 本文介绍了同步与异步阻塞与非阻塞的一些差异，以及Linux的五种IO模型
 keyword: 同步 异步 阻塞 非阻塞 select poll epoll
 tags:

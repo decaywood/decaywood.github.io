@@ -1,10 +1,10 @@
 ---
 layout:     post
 random-img: true
-title:      "JVM参数详解，以及一些常见OOM问题"
-subtitle:   "Summary of JVM parameters & Some OOM Problems"
+title:      JVM参数详解，以及一些常见OOM问题
+subtitle:   Summary of JVM parameters & Some OOM Problems
 date:       2016-01-05 20:38:50
-author:     "decaywood"
+author:     decaywood
 description: JVM Java虚拟机参数设值详解 OOM问题
 keyword: JVM 虚拟机 Out Of Memory
 tags:

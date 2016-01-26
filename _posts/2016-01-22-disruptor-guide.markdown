@@ -1,10 +1,10 @@
 ---
 layout:     post
 random-img: true
-title:      "Disruptor入门"
-subtitle:   "Disruptor Guide"
+title:      Disruptor入门
+subtitle:   Disruptor Guide
 date:       2016-01-22 17:27:18
-author:     "decaywood"
+author:     decaywood
 description: 本文主要介绍了一下Disruptor的总体框架以及一些优化细节，并大致讲解了一下使用方法，Disruptor作为一个并发库，有着比JDK内置工具更优秀的性能，其对并发性能的优化深入到了Java底层甚至CUP指令级别，能够深入的研究下去对于Java内存模型甚至计算机体系都会有全新的认识，是一个非常值得学习的一个框架！后续我会继续对Disruptor的源码进行分析，彻底揭开Disruptor“快”的本质。
 keyword: Disruptor RingBuffer EventHandler EventProcessor EventFactory 缓存行填充 伪共享 CAS
 tags:
