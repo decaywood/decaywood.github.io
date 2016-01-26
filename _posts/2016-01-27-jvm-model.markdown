@@ -20,7 +20,7 @@ tags:
 
 ## JVM 结构
 
-<img src="{{site.cdnurl}}/img/post/content/JVM-structure.svg" alt="SVG" style="background-color:white">
+<img src="{{site.cdnurl}}/img/post/content/JVM-structure.png" alt="SVG" style="background-color:white">
 
 可以看出，JVM主要由类加载器子系统、运行时数据区（内存空间）、执行引擎以及与本地方法接口等组成。其中运行时数据区又由方法区、堆、Java栈、PC寄存器、本地方法栈组成。
 
