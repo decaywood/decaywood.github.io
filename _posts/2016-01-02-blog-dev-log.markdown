@@ -7,7 +7,7 @@ date:       2016-01-02 11:04:13
 author:     decaywood
 hot:        true
 description: 使用jekyll搭建Github博客
-keyword: jekyll Javascript 博客搭建
+keywords: jekyll,Javascript,博客搭建
 tags:
     - 总结
     - 博客搭建

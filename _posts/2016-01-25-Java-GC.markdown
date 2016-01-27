@@ -6,7 +6,7 @@ subtitle:   GC Oriented Programming
 date:       2016-01-25 19:51:41
 author:     decaywood
 description: 本文讨论了一下如何写出GC友好的程序以及一些JVM内存优化的方法
-keyword: GC JVM
+keywords: GC,JVM
 tags:
     - Java
     - JVM

@@ -6,7 +6,7 @@ subtitle:   subtitle
 date:       2016-01-02 12:44:31
 author:     decaywood
 description:
-keyword:
+keywords:
 tags:
     - 生活
 ---

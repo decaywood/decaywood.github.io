@@ -4,7 +4,7 @@ SEOTitle: decaywood's Blog
 header-img: img/home-bg.jpg
 email: decaywood@qq.com
 description: "Hi, I'm decaywood"
-keyword: "Java Python Javascript..."
+keywords: "Java Python Javascript..."
 github-source: https://github.com/decaywood/decaywood.github.io
 url: blog.decaywood.me
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'

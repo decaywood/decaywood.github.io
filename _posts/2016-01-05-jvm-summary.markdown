@@ -6,7 +6,7 @@ subtitle:   Summary of JVM parameters & Some OOM Problems
 date:       2016-01-05 20:38:50
 author:     decaywood
 description: JVM Java虚拟机参数设值详解 OOM问题
-keyword: JVM 虚拟机 Out Of Memory
+keywords: JVM,虚拟机,Out Of Memory
 tags:
     - Java
     - JVM

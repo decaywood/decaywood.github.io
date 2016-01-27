@@ -6,7 +6,7 @@ subtitle:   Reliable UDP
 date:       2015-12-27 13:50:00
 author:     decaywood
 description: RUDP 可靠性UDP 文献翻译
-keyword: RUDP 翻译
+keywords: RUDP,翻译
 tags:
     - 翻译
 ---

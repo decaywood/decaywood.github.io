@@ -6,7 +6,7 @@ subtitle:   Tornado Guide
 date:       2016-01-13 20:31:23
 author:     decaywood
 description: 本文介绍了Tornado的一些运作机制，并用源码构建了一个例子，帮助初学者快速上手Tornado
-keyword: Tornado IOLoop RequestHandler AsyncHTTPClient HTTPClient HTTPServer Coroutine
+keywords: Tornado,IOLoop,RequestHandler,AsyncHTTPClient,HTTPClient,HTTPServer,Coroutine
 tags:
     - Python
     - 框架
