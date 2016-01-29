@@ -21,6 +21,9 @@ exclude: ["less","node_modules","Gruntfile.js","package.json","decaywood.github.
 timezone: Asia/Shanghai
 post-img-count: 70
 
+# nessessary in Mac OS
+gems: [jekyll-paginate]
+
 # Markdown settings
 # replace redcarpet to kramdown,
 # although redcarpet can auto highlight code, the lack of header-id make the catalog impossible, so I switch to kramdown
