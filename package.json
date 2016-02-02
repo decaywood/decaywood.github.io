@@ -1,9 +1,9 @@
 {
     "name": "decaywood-blog",
     "title": "decaywood's Blog",
-    "author": "decaywood <decaywood@qq.com>",
+    "author": "decaywood <decaywood@qq.com> (http://blog.decaywood.me/)",
     "version": "1.0.0",
-    "homepage": "http://decaywood.github.io",
+    "license": "MIT",
     "repository": {
         "type": "git",
         "url": "https://github.com/decaywood/decaywood.github.io"
@@ -19,7 +19,6 @@
     "scripts": {
         "preview": "cd _site; python -m SimpleHTTPServer 8020",
         "watch"  : "grunt watch & npm run preview & jekyll serve -w",
-        "boil"   : "git push boilerplate boilerplate:master",
         "push"   : "git push origin master --tag",
         "cafe"   : "git co gitcafe-pages; git merge master; git push gitcafe gitcafe-pages:gitcafe-pages --tag; git co master;"
     }

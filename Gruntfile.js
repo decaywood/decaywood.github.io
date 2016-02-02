@@ -10,21 +10,15 @@ module.exports = function(grunt) {
             }
         },
         less: {
-            expanded: {
-                options: {
-                    paths: ["css"]
-                },
-                files: {
-                    "css/<%= pkg.name %>.css": "less/<%= pkg.name %>.less"
-                }
-            },
             minified: {
                 options: {
                     paths: ["css"],
                     cleancss: true
                 },
                 files: {
-                    "css/<%= pkg.name %>.min.css": "less/<%= pkg.name %>.less"
+                    "css/<%= pkg.name %>.min.css": "less/<%= pkg.name %>.less",
+                    "css/night-mode.min.css": "less/night-mode.less",
+                    "css/daily-mode.min.css": "less/daily-mode.less"
                 }
             }
         },
@@ -39,7 +33,7 @@ module.exports = function(grunt) {
                     banner: '<%= banner %>'
                 },
                 files: {
-                    src: ['css/<%= pkg.name %>.css', 'css/<%= pkg.name %>.min.css', 'js/<%= pkg.name %>.min.js']
+                    src: ['css/*.min.css', 'js/<%= pkg.name %>.min.js']
                 }
             }
         },
@@ -48,17 +42,17 @@ module.exports = function(grunt) {
                 files: ['js/<%= pkg.name %>.js'],
                 tasks: ['uglify'],
                 options: {
-                    spawn: false,
-                },
+                    spawn: false
+                }
             },
             less: {
                 files: ['less/*.less'],
                 tasks: ['less'],
                 options: {
-                    spawn: false,
+                    spawn: false
                 }
-            },
-        },
+            }
+        }
     });
 
     // Load the plugins.
