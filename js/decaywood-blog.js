@@ -231,8 +231,8 @@ $(function () {
         theme.attr('href', cssPath + mode);
         button.text(text);
         if (window.navigator.cookieEnabled) {
-            cookie_opt('mode', mode, { expires: 7 });
-            cookie_opt('text', text, { expires: 7 });
+            cookie_opt('mode', mode, { expires: 100 });
+            cookie_opt('text', text, { expires: 100 });
         } else console.info('cookie is not available')
     };
 

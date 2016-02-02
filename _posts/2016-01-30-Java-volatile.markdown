@@ -1,7 +1,7 @@
 ---
 layout:     post
 random-img: true
-title:      Java volatile 关键字原理分析
+title:      Java volatile 关键字原理分析「转」
 subtitle:   More about Java volatile
 date:       2016-01-30 14:29:37
 author:     decaywood
@@ -10,6 +10,7 @@ keywords: 缓存,Volatile,Java
 tags:
     - Java
     - JVM
+    - 并发编程
 ---
 
 <b id="toc">目录</b>

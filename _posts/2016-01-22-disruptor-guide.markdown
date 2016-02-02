@@ -9,6 +9,7 @@ description: 本文主要介绍了一下Disruptor的总体框架以及一些优�
 keywords: Disruptor,RingBuffer,EventHandler,EventProcessor,EventFactory,缓存行填充,伪共享,CAS
 tags:
     - Java
+    - 并发编程
     - 框架
 ---
 
