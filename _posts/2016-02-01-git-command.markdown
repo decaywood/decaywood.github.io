@@ -172,4 +172,13 @@ git checkout feature && git rebase master
 
 效果: 你可能知道用 git reset 然后重新 commit 来达到类似效果，不过那样会丢失 commit 历史。
 
+## 新增更新 :
+
+### Git commit message写错了,有办法进行修改吗?
+
+```bash
+# 可以对上一次的提交做修改
+git commit --amend
+```
+
 Keep Updating…
