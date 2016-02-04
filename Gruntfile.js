@@ -3,9 +3,17 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        concat: {
+            options: {
+            },
+            dist: {
+                src: ['js/jquery.vticker.js', 'js/structure.js', 'js/beautify.js'],
+                dest: 'js/<%= pkg.name %>.min.js'
+            }
+        },
         uglify: {
             main: {
-                src: 'js/<%= pkg.name %>.js',
+                src: 'js/<%= pkg.name %>.min.js',
                 dest: 'js/<%= pkg.name %>.min.js'
             }
         },
@@ -23,9 +31,9 @@ module.exports = function(grunt) {
             }
         },
         banner: '/*!\n' +
-            ' * <%= pkg.title %> v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
-            ' * Copyright <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
-            ' */\n',
+                ' * <%= pkg.title %> v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
+                ' * Copyright <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
+                ' */\n',
         usebanner: {
             dist: {
                 options: {
@@ -57,11 +65,12 @@ module.exports = function(grunt) {
 
     // Load the plugins.
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-banner');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     // Default task(s).
-    grunt.registerTask('default', ['uglify', 'less', 'usebanner']);
+    grunt.registerTask('default', ['concat', 'uglify', 'less', 'usebanner']);
 
 };

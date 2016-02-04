@@ -4,13 +4,16 @@
 {% include head.html %}
 
 <!-- hack iOS CSS :active style -->
+
 <body id="body-hidden" ontouchstart="">
 
     {% include nav.html %}
-
-    {{ content }}
-
+    <div id="reactive-bg">
+        <canvas id="reactive-bg-canvas" style="position: absolute; margin: 0;padding: 0"></canvas>
+        {{ content }}
+    </div>
     {% include footer.html %}
+
 
 
 <!-- Image to hack wechat -->
