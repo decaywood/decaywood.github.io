@@ -3,7 +3,7 @@ layout:     post
 random-img: true
 title:      关于原子操作
 subtitle:   About Atomic Operation
-date:       2016-02-04 01:36:29
+date:       2016-02-02 01:36:29
 author:     decaywood
 description: 本文让我们一起来聊一聊在Inter处理器和Java里是如何实现原子操作的。
 keywords: CAS,原子操作,锁

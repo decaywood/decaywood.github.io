@@ -3,7 +3,7 @@ layout:     post
 random-img: true
 title:      博客与我, 功能迭代中的一些心历路程(持续更新)
 subtitle:   Blog & Me -- Some of my experience for Iteration
-date:       2016-01-02 11:04:13 
+date:       2016-02-04 20:37:48
 author:     decaywood
 hot:        true
 description: 使用jekyll搭建Github博客
@@ -115,3 +115,11 @@ if($('#toc').length > 0) {
 
 
 总的来说，这个博客自上线以来就一直细心的维护着，从一开始的一个简单的Jekyll模版，到现在拥有各种人性化的功能，中途花了不少精力。不过看着自己的博客慢慢变得个性与智能，内心还是颇有成就感的！
+
+近期更新:
+
+* 增加了背景响应式效果,鼠标移动页面会有对应反馈
+
+* 随着博客特效以及功能越来越复杂,js文件越来越庞大,故对js文件进行了拆分,由grunt进行自动化合并以及uglify
+
+* 移除了一些冗余的库
