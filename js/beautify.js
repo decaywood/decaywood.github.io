@@ -1,49 +1,11 @@
 /*
- * optimize the animations of browser
+ * Reactive Background
  */
-if ($('#reactive-bg').length > 0) {
-    $(function () {
-        var lastTime = 0;
-        var vendors = ["ms", "moz", "webkit", "o"];
-        /*
-         * retrieve the browser's current implementation of
-         * requestAnimationFrame and cancelAnimationFrame
-         */
-        for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-            window.requestAnimationFrame = window[vendors[x] + "RequestAnimationFrame"];
-            window.cancelAnimationFrame = window[vendors[x] + "CancelAnimationFrame"]
-                || window[vendors[x] + "CancelRequestAnimationFrame"];
-        }
-        /*
-         * back off the func to 'setTimeout' if current browser
-         * doesn't support requestAnimationFrame
-         */
-        if (!window.requestAnimationFrame)
-            window.requestAnimationFrame = function (callback) {
-                var currTime = new Date().getTime();
-                var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-                var id = window.setTimeout(function () {
-                        callback(currTime + timeToCall);
-                    },
-                    timeToCall);
-                lastTime = currTime + timeToCall;
-                return id;
-            };
-        /*
-         * back off the func to 'setTimeout' if current browser
-         * doesn't support cancelAnimationFrame
-         */
-        if (!window.cancelAnimationFrame)
-            window.cancelAnimationFrame = function (id) {
-                clearTimeout(id);
-            };
-    });
-
-    /*----------------------------  Reactive Background  ----------------------------*/
+if (window.requestAnimationFrame && window.cancelAnimationFrame) {
 
     $(function () {
 
-        var width, height, reactiveBg, canvas, ctx, points, target, _reactive = true;
+        var width, height, canvas, ctx, points, target;
 
         // Main
         initHeader();
@@ -52,21 +14,14 @@ if ($('#reactive-bg').length > 0) {
 
         function initHeader() {
 
-            reactiveBg = document.getElementById("reactive-bg");
-
-            width = reactiveBg.offsetWidth;
-            height = reactiveBg.offsetHeight;
-
-            console.info(width);
-            console.info(height);
-
+            canvas = document.getElementById("reactive-bg-canvas");
+            canvas.width = $(document).width();
+            canvas.height = $(window).height();
+            canvas.style.position = "fixed";
+            width = canvas.width;
+            height = canvas.height;
             target = {x: width / 2, y: height / 2};
 
-            reactiveBg.style.height = height + "px";
-
-            canvas = document.getElementById("reactive-bg-canvas");
-            canvas.width = width;
-            canvas.height = height;
             ctx = canvas.getContext("2d");
 
             // create points
@@ -121,35 +76,18 @@ if ($('#reactive-bg').length > 0) {
             if (!("ontouchstart" in window)) {
                 window.addEventListener("mousemove", mouseMove);
             }
-            window.addEventListener("scroll", scrollCheck);
             window.addEventListener("resize", resize);
         }
 
         function mouseMove(e) {
-            var posX = 0;
-            var posY = 0;
-            if (e.pageX || e.pageY) {
-                posX = e.pageX;
-                posY = e.pageY;
-            }
-            else if (e.clientX || e.clientY) {
-                posX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-                posY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-            }
-            posX = posX - reactiveBg.offsetLeft;
-            posY = posY - reactiveBg.offsetTop;
-            target.x = posX;
-            target.y = posY;
+            target.x = e.clientX;
+            target.y = e.clientY;
         }
 
-        function scrollCheck() {
-            _reactive = document.body.scrollTop <= height;
-        }
 
         function resize() {
             width = window.innerWidth;
             height = window.innerHeight;
-            reactiveBg.style.height = height + "px";
             canvas.width = width;
             canvas.height = height;
         }
@@ -163,27 +101,24 @@ if ($('#reactive-bg').length > 0) {
         }
 
         function animate() {
-            if (_reactive) {
-                ctx.clearRect(0, 0, width, height);
-                for (var i = 0; i < points.length; i++) {
-                    // detect points in range
-                    if (Math.abs(getDistance(target, points[i])) < 4000) {
-                        points[i].active = 0.3;
-                        points[i].circle.active = 0.6;
-                    } else if (Math.abs(getDistance(target, points[i])) < 20000) {
-                        points[i].active = 0.1;
-                        points[i].circle.active = 0.3;
-                    } else if (Math.abs(getDistance(target, points[i])) < 40000) {
-                        points[i].active = 0.02;
-                        points[i].circle.active = 0.1;
-                    } else {
-                        points[i].active = 0;
-                        points[i].circle.active = 0;
-                    }
-
-                    drawLines(points[i]);
-                    points[i].circle.draw();
+            ctx.clearRect(0, 0, width, height);
+            for (var i = 0; i < points.length; i++) {
+                // detect points in range
+                if (Math.abs(getDistance(target, points[i])) < 4000) {
+                    points[i].active = 0.3;
+                    points[i].circle.active = 0.6;
+                } else if (Math.abs(getDistance(target, points[i])) < 20000) {
+                    points[i].active = 0.1;
+                    points[i].circle.active = 0.3;
+                } else if (Math.abs(getDistance(target, points[i])) < 40000) {
+                    points[i].active = 0.02;
+                    points[i].circle.active = 0.1;
+                } else {
+                    points[i].active = 0;
+                    points[i].circle.active = 0;
                 }
+                drawLines(points[i]);
+                points[i].circle.draw();
             }
             requestAnimationFrame(animate);
         }
@@ -191,7 +126,7 @@ if ($('#reactive-bg').length > 0) {
         function shiftPoint(p) {
             TweenLite.to(p, 1 + Math.random(), {
                 x: p.originX - 50 + Math.random() * 100,
-                y: p.originY - 50 + Math.random() * 100, ease: Circ.easeInOut,
+                y: p.originY - 50 + Math.random() * 100,
                 onComplete: function () {
                     shiftPoint(p);
                 }
