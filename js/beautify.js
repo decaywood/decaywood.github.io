@@ -413,7 +413,7 @@ $(function () {
             return (document.cookie = [
                 encodeURIComponent(key), '=', encodeURIComponent(String(value)),
                 options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
-                options.path ? '; path=' + options.path : '/',
+                options.path ? '; path=' + options.path : '',
                 options.domain ? '; domain=' + options.domain : '',
                 options.secure ? '; secure' : ''
             ].join(''));
@@ -430,6 +430,7 @@ $(function () {
             var parts = cookies[i].split('=');
             var name = decodeURIComponent(parts.shift());
             var cookie = parts.join('=');
+            console.info(cookie);
             if (key && key === name) {
                 // If second argument (value) is a function it's a converter...
                 result = read(cookie, value);
@@ -444,8 +445,8 @@ $(function () {
         theme.attr('href', cssPath + mode);
         button.text(text);
         if (window.navigator.cookieEnabled) {
-            cookie_opt('mode', mode, {expires: 100});
-            cookie_opt('text', text, {expires: 100});
+            cookie_opt('mode', mode, {expires: 100, path: "/"});
+            cookie_opt('text', text, {expires: 100, path: "/"});
         } else console.info('cookie is not available')
     };
 
