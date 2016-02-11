@@ -18,7 +18,7 @@
         };
 
         var options = $.extend(defaults, options);
-        window.console.info(options.showItems);
+
         moveUp = function (obj2, height, options) {
             if (options.isPaused)
                 return;

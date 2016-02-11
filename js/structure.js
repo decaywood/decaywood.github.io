@@ -34,10 +34,9 @@ $(function () {
 if ($('#tag_cloud').length > 0) {
 
     (function($) {
+
         $.fn.tagcloud = function(options) {
-            var opts = $.extend({
-                size: {start: 14, end: 18, unit: "pt"}
-            }, options);
+            var opts = $.extend({}, $.fn.tagcloud.defaults, options);
             tagWeights = this.map(function(){
                 return $(this).attr("rel");
             });
@@ -113,9 +112,10 @@ if ($('#tag_cloud').length > 0) {
 
     })(jQuery);
 
+
     $(function () {
         $.fn.tagcloud.defaults = {
-            //size: {start: 1, end: 1, unit: 'em'},
+            size: {start: 1, end: 1, unit: 'em'},
             color: {start: '#bbbbee', end: '#0085a1'},
         };
         $('#tag_cloud a').tagcloud();
