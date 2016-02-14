@@ -1,7 +1,7 @@
 /*
  * Reactive Background
  */
-if (window.requestAnimationFrame && window.cancelAnimationFrame) {
+if (!("ontouchstart" in window)) {
 
     $(function () {
 
