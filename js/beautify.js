@@ -20,7 +20,7 @@ if (!("ontouchstart" in window)) {
 
         var options = {
             lineLen: 30,
-            heartBeatCD: 3000,
+            heartBeatCD: 15000,
             heartBeatRange: 300,
             rgb : function (circlePos, heartBeatCenter) {
                 var px = circlePos.x; // a point on boom circle
