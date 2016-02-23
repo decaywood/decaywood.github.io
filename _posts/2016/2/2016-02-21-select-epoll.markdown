@@ -8,7 +8,7 @@ author:     decaywood
 description: 本文对select的缺点以及epoll所做的改进进行了总结
 keywords: 同步,异步,阻塞,非阻塞,select,poll,epoll
 tags:
-    - 架构
+    - 网络编程
 ---
 
 本文作为博客内[Linux下的五种IO模型](/2016/01/08/web-io-model/)一文的补充
