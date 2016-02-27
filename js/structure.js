@@ -305,7 +305,7 @@ if (_baId) {
 }
 
 /* 51.la Analytics Original*/
-if(_51laId) {
-    var jsSrc = "http://js.users.51.la/" + _51laId + ".js";
-    document.write ('<script language="javascript" type="text/javascript" src=' + jsSrc + '></script>');
-}
+//if(_51laId) {
+//    var jsSrc = "http://js.users.51.la/" + _51laId + ".js";
+//    document.write ('<script language="javascript" type="text/javascript" src=' + jsSrc + '></script>');
+//}

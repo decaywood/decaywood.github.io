@@ -7,6 +7,8 @@ if (!("ontouchstart" in window)) {
 
         polyFill();
 
+        $("body").append("<canvas id='reactive-bg-canvas'></canvas>");
+
         var width,
             height,
             canvas,
@@ -16,7 +18,7 @@ if (!("ontouchstart" in window)) {
             draw = true,
             intersections = [],
             $canvas = $("#reactive-bg-canvas");
-
+        $canvas.css("z-index", -999);
 
         var options = {
             lineLen: 30,
@@ -105,9 +107,7 @@ if (!("ontouchstart" in window)) {
             height = window.innerHeight;
             canvas.width = width;
             canvas.height = height;
-            window.cancelAnimationFrame();
             initMap();
-            initAnimation();
         }
 
         // animation
@@ -430,7 +430,6 @@ $(function () {
             var parts = cookies[i].split('=');
             var name = decodeURIComponent(parts.shift());
             var cookie = parts.join('=');
-            console.info(cookie);
             if (key && key === name) {
                 // If second argument (value) is a function it's a converter...
                 result = read(cookie, value);

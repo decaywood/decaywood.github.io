@@ -6,13 +6,9 @@
 <!-- hack iOS CSS :active style -->
 
 <body id="body-hidden" ontouchstart="">
-<canvas id="reactive-bg-canvas"></canvas>
     {% include nav.html %}
     {{ content }}
     {% include footer.html %}
-
-
-
 <!-- Image to hack wechat -->
 <img src="{{ site.cdnurl }}/img/icon_wechat.png" width="0" height="0" />
 <!-- Migrate from head to bottom, no longer block render and still work -->
