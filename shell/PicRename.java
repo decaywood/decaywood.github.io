@@ -38,7 +38,7 @@ public class PicRename {
     public static void main(String[] args) {
         String path = PicRename.class.getClassLoader().getResource(".").getPath();
         File file = new File(path);
-        String split = file.getPath().contains("/") ? "/" : "\\";
+        String split = File.separator;
         File folder = new File(file.getPath().trim() + split + "changed");
         if(!folder.exists()) folder.mkdir();
         String outputPath = folder.getPath() + split;
