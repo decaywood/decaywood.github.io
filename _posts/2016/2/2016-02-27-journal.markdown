@@ -6,7 +6,7 @@ subtitle:   "Legacy Project & The key to face the frequently requirements change
 date:       2016-02-27 21:36:52
 author:     decaywood
 description: 关于如何应对甲方频繁的变更需求的一些总结
-keywords:
+keywords: 总结,重构,架构,需求变更
 tags:
     - 总结
     - 架构

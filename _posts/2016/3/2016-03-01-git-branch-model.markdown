@@ -6,7 +6,7 @@ subtitle:   A Successful Git Branch Model
 date:       2016-03-01 22:43:47
 author:     decaywood
 description: 在这篇文章中介绍了一个实用的Git版本控制模型，而且已经被证明是非常成功的。
-keywords: Git 版本控制
+keywords: Git,版本控制
 tags:
     - 版本控制
 ---

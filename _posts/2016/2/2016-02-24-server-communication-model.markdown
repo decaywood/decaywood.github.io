@@ -6,7 +6,7 @@ subtitle:   Summary of Java IO-Programming Model
 date:       2016-02-24 12:52:12
 author:     decaywood
 description: 本文对Java下的网路编程模型进行了总结
-keywords: IO NIO NIO2.0 Netty
+keywords: IO,NIO,NIO2.0,Netty
 tags:
     - 网络编程
     - Java
