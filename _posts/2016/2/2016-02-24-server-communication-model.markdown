@@ -22,7 +22,7 @@ tags:
 
 下面通过下图所示的通信模型图来熟悉下BIO的服务器端通信模型：采用BIO通信模型的服务端，通常由一个独立的Acceptor线程负责监听客户端的连接，它收到客户端连接请求之后为每个客户端创建一个新的线程进行链路处理，处理完成之后，通过输出流返回应答给客户端，线程销毁。这就是典型的请求--应答通信模型。
 
-<img src="{{site.cdnurl}}/img/post/content/BIO-Model.svg" alt="SVG" style="background-color:white">
+<img src="{{site.cdnurl}}/img/post/2016/BIO-Model.svg" alt="SVG" style="background-color:white">
 
 该模型最大的问题就是缺乏弹性伸缩的能力，当客户端并发访问量增加后，服务端的线程个数和客户端并发访问数呈1:1的正比关系，由于线程是Java虚拟机非常宝贵的系统资源，当线程数膨胀之后，系统性能急剧下降，随着并发访问量的继续增大，系统会发生线程堆栈溢出、创建新线程失败等问题，并最终导致进程宕机或者僵死，不能对外提供服务。在高性能的服务器应用领域，旺旺需要面向成千上万个客户端的并发连接，这种模型显然无法满足高性能、高并发接入的场景。
 
@@ -34,7 +34,7 @@ tags:
 
 采用线程池和任务队列可以实现一种叫做伪异步的IO通信框架，它的模型图如下图所示。
 
-<img src="{{site.cdnurl}}/img/post/content/Fake-BIO-Model.svg" alt="SVG" style="background-color:white">
+<img src="{{site.cdnurl}}/img/post/2016/Fake-BIO-Model.svg" alt="SVG" style="background-color:white">
 
 当有新的客户端接入的时候，将客户端的Socket封装成一个Task（该Task实现java.lang.Runnable接口）投递到后端的线程池中进行处理，JDK的线程池维护一个消息队列和N个活跃线程对消息队列中的任务进行处理。由于线程池可以设置消息队列的大小和最大线程数，因此，它的资源占用是可控的，无论多少个客户端并发访问，都不会导致资源耗尽和宕机。
 
@@ -54,7 +54,7 @@ Java NIO中有一个叫做Selector的重要概念，它是Java NIO编程的基�
 
 模型图如下所示:
 
-<img src="{{site.cdnurl}}/img/post/content/NIO-Model.svg" alt="SVG" style="background-color:white">
+<img src="{{site.cdnurl}}/img/post/2016/NIO-Model.svg" alt="SVG" style="background-color:white">
 
 不过，如果严格按照UNIX网络编程模型和JDK的实现进行区分，实际上它只能被称为非阻塞IO，不能叫异步非阻塞IO。
 

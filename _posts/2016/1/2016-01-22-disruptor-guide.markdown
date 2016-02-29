@@ -129,7 +129,7 @@ Disruptor 定义的事件处理接口，由用户实现，用于处理事件，�
 
 ## 整体结构图
 
-<img src="{{site.cdnurl}}/img/post/content/disruptor-structure.svg" alt="SVG" style="background-color:white">
+<img src="{{site.cdnurl}}/img/post/2016/disruptor-structure.svg" alt="SVG" style="background-color:white">
 
 ## 如何使用Disruptor
 
