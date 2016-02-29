@@ -2,7 +2,7 @@
 layout:     post
 random-img: true
 title:      Linux下epoll对于select所做的改进总结
-subtitle:   The milestone from select to epoll
+subtitle:   The Milestone from Select to Epoll
 date:       2016-02-21 13:51:32
 author:     decaywood
 description: 本文对select的缺点以及epoll所做的改进进行了总结

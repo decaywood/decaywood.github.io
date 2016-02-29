@@ -2,7 +2,7 @@
 layout:     post
 random-img: true
 title:      博客与我, 功能迭代中的一些心历路程(持续更新)
-subtitle:   Blog & Me -- Some of my experience for Iteration
+subtitle:   Blog & Me -- Some of My Experience for Iteration
 date:       2016-01-02 11:04:13
 author:     decaywood
 hot:        true
