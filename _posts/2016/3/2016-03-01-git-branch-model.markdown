@@ -1,5 +1,5 @@
 ---
-layout:     postPr
+layout:     post
 random-img: true
 title:      一个成功的Git分支模型
 subtitle:   A Successful Git Branch Model
