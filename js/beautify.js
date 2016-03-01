@@ -112,24 +112,29 @@ if (!("ontouchstart" in window)) {
 
         // animation
         function initAnimation() {
-            animate();
             setInterval(heartBeat, options.heartBeatCD);
         }
 
         function animate() {
 
             ctx.clearRect(0, 0, width, height);
+            var count = 0;
             for (var i = 0; i < intersections.length; i++) {
                 var intersection = intersections[i];
                 if (intersection.circle.active > 0) {
                     intersection.circle.active -= 0.012;
                     intersection.circle.draw();
-                }
+                } else count++;
+            }
+            if(intersections.length > 0 && count == intersections.length) {
+                intersections = [];
+                return;
             }
             requestAnimationFrame(animate);
         }
 
         function heartBeat() {
+            animate();
             var clsP = findClosest();
             var srcCircle = new Circle(clsP, 0);
             var activeTime = 3000 * 0.8;
@@ -138,7 +143,6 @@ if (!("ontouchstart" in window)) {
             var sleep = activeTime / _frames;
             var originOpacity = 0.8;
             var centerP = getRelativeP();
-            intersections = [];
 
             var f = function () {
                 if (srcCircle.radius < options.heartBeatRange) {
