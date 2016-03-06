@@ -1,7 +1,7 @@
 /*
  * Reactive Background
  */
-if (!("ontouchstart" in window)) {
+if (!("ontouchstart" in window) && headerImg != "img/404-bg.jpg") {
 
     $(function () {
 
