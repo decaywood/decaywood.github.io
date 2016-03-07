@@ -10,13 +10,13 @@ url: blog.decaywood.me
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 # CDN Accelerate
-#cdnurl: http://7xppt1.com1.z0.glb.clouddn.com
-cdnurl: ""
+cdnurl: http://7xppt1.com1.z0.glb.clouddn.com
+#cdnurl: ""
 
 
 # Build settings
 permalink: pretty
-paginate: 10
+paginate: 15
 exclude: ["less","node_modules","Gruntfile.js","package.json","decaywood.github.io.iml", "_posts/2016-01-02-copy-me.markdown"]
 timezone: Asia/Shanghai
 post-img-count: 70
@@ -28,7 +28,7 @@ gems: [jekyll-paginate]
 # replace redcarpet to kramdown,
 # although redcarpet can auto highlight code, the lack of header-id make the catalog impossible, so I switch to kramdown
 # document: http://jekyllrb.com/docs/configuration/#kramdown
-markdown: kramdown
+
 kramdown:
   input: GFM                            # use Github Flavored Markdown !important
 
