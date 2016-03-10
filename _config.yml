@@ -18,7 +18,7 @@ cdnurl: http://7xppt1.com1.z0.glb.clouddn.com
 permalink: pretty
 paginate: 15
 exclude: ["less","node_modules","Gruntfile.js","package.json","decaywood.github.io.iml", "_posts/2016-01-02-copy-me.markdown"]
-timezone: Asia/Shanghai
+
 post-img-count: 70
 
 # nessessary in Mac OS
