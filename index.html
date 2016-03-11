@@ -7,6 +7,7 @@ description: "只要有足够的意义和理由，突破已有的原则就可以
 {% if site.data.news %}
 <div id="news">
     <ul>
+        <li><b>博客已累计录入 {{ paginator.total_posts }} 篇文章</b></li>
         {% for line in site.data.news %}
         <li><b>{{ line }}</b></li>
         {% endfor %}
