@@ -19,7 +19,7 @@ tags:
 
 **IntelliJ Idea下的界面**
 
-<img src="{{site.cdnurl}}/img/post/2016/git-branch-screenshot.png" alt="SVG" style="background-color:white">
+<img src="{{site.cdnurl}}/img/post/2016/Git-branch-screenshot.png" alt="SVG" style="background-color:white">
 
 如图所示，在Author那栏，有两行作者名字有个星号，这代表cherry-pick过来的文件的原始作者。在这两次提交的message信息中可以看到当前提交所依赖的原始作者的提交的hash值。
 
