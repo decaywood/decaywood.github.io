@@ -86,6 +86,12 @@ get()方法是用来获取ThreadLocal在当前线程中保存的变量副本，s
 static class ThreadLocalMap {
 
         /**
+         * The table, resized as necessary.
+         * table.length MUST always be a power of two.
+         */
+        private Entry[] table;
+
+        /**
          * The entries in this hash map extend WeakReference, using
          * its main ref field as the key (which is always a
          * ThreadLocal object).  Note that null keys (i.e. entry.get()
@@ -96,12 +102,6 @@ static class ThreadLocalMap {
         static class Entry extends WeakReference<ThreadLocal<?>> {
             /** The value associated with this ThreadLocal. */
             Object value;
-            
-            /**
-             * The table, resized as necessary.
-             * table.length MUST always be a power of two.
-             */
-            private Entry[] table;
 
             Entry(ThreadLocal<?> k, Object v) {
                 super(k);
@@ -111,7 +111,7 @@ static class ThreadLocalMap {
 }
 ```
 
-可以看到ThreadLocalMap内部维护了一个Entry数组，而Entry继承了WeakReference，并且使用ThreadLocal作为键值。然后再继续看setInitialValue方法的具体实现：
+可以看到ThreadLocalMap内部维护了一个Entry数组table，table采用hash进行索引插入，在内部以开放地址法解决hash碰撞问题。table可以看做一个hashmap，以ThreadLocal的threadLocalHashCode变量作为键值，限于篇幅不再赘述，有兴趣的可以看看源码。Entry类继承了WeakReference，并且使用ThreadLocal作为键值。然后再继续看setInitialValue方法的具体实现：
 
 ```java
     /**
@@ -147,27 +147,24 @@ static class ThreadLocalMap {
     }
 ```
 
-至此，ThreadLocal如何为每个线程创建变量的副本的步骤已经明了。首先，在每个线程Thread内部有一个ThreadLocal.ThreadLocalMap类型的成员变量threadLocals，这个threadLocals就是用来存储实际的变量副本的，键值为当前ThreadLocal变量，value为变量副本（即T类型的变量）。初始时，在Thread里面，threadLocals为空，当通过ThreadLocal变量调用get()方法或者set()方法，就会对Thread类中的threadLocals进行初始化，并且以当前ThreadLocal变量为键值，以ThreadLocal要保存的副本变量为value，存到threadLocals。然后在当前线程里面，如果要使用副本变量，就可以通过get方法在threadLocals里面查找。
+至此，ThreadLocal如何为每个线程创建变量的副本的步骤已经明了。首先，在每个线程Thread内部有一个ThreadLocal.ThreadLocalMap类型的成员变量threadLocals，这个threadLocals就是用来存储实际的变量副本的，内部由名为table的Entry数组维护，Entry的键值为当前ThreadLocal变量，value为变量副本（即T类型的变量）。初始时，在Thread里面，threadLocals为空，当通过ThreadLocal变量调用get()方法或者set()方法，就会对Thread类中的threadLocals进行初始化，并且以当前ThreadLocal变量为键值，以ThreadLocal要保存的副本变量为value，存到threadLocals。然后在当前线程里面，如果要使用副本变量，就可以通过get方法在threadLocals里面查找。
 
 ## ThreadLocal原理图
 
 为了更清晰的认识其中的结构，我绘制了一幅原理图：
 
-<img src="{{site.cdnurl}}/img/post/2016/git-branch-screenshot.png" alt="SVG" style="background-color:white">
+<img src="{{site.cdnurl}}/img/post/2016/ThreadLocal.svg" alt="SVG" style="background-color:white">
 
 ## 小节
 
 * 实际的通过ThreadLocal创建的副本是存储在每个线程自己的threadLocals中的
-
-* 为何threadLocals的类型ThreadLocalMap的键值之所以为ThreadLocal对象是因为每个线程中可有多个threadLocal变量，例如上图的ThreadLocal A/B/C/D
-
+* threadLocals(ThreadLocalMap)的键值之所以为ThreadLocal对象是因为每个线程中可有多个threadLocal变量，例如上图的ThreadLocal A/B/C/D
 * 在进行get之前，必须先set，否则会报空指针异常；
-
 * 如果想在get之前不需要调用set就能正常访问的话，必须重写initialValue()方法。
 
 **补充：**
 
-在Java8中新增了一个ThreadLocal构造方法：
+在Java8中增加了一个ThreadLocal的工厂方法：
 
 ```java
     /**
