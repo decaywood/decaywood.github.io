@@ -21,6 +21,7 @@ if (!("ontouchstart" in window) && headerImg != "img/404-bg.jpg") {
         $canvas.css("z-index", -999);
 
         var options = {
+            speedThreshold:50,
             lineLen: 30,
             heartBeatRange: 300,
             rgb : function (circlePos, heartBeatCenter) {
@@ -86,6 +87,7 @@ if (!("ontouchstart" in window) && headerImg != "img/404-bg.jpg") {
             target.x = target.rx + document.body.scrollLeft + document.documentElement.scrollLeft;
             target.y = target.ry + document.body.scrollTop + document.documentElement.scrollTop;
             target.speed = Math.abs(py - target.y);
+            if(target.animate) target.animate();
         }
 
         function mouseMove(e) {
@@ -113,19 +115,18 @@ if (!("ontouchstart" in window) && headerImg != "img/404-bg.jpg") {
 
         // animation
         function initAnimation() {
-            $(document).ready(function(){
-                var dy = 0;
-                $(document).bind("scrollstop", function(e) {
-                    if (!intersections.length) {
-                        var speed = target.speed;
-                        if(speed <= 1) heartBeat();
-                    }
-                });
-            });
+
+            target.animate = function () {
+                if (this.speed > options.speedThreshold && !this.pass) {
+                    this.pass = true;
+                } else if (this.speed == 1 && this.pass) {
+                    this.pass = false;
+                    if(!intersections.length) heartBeat();
+                }
+            }
         }
 
         function animate() {
-
             ctx.clearRect(0, 0, width, height);
             var count = 0;
             for (var i = 0; i < intersections.length; i++) {
