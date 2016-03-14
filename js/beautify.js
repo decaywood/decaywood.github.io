@@ -22,7 +22,6 @@ if (!("ontouchstart" in window) && headerImg != "img/404-bg.jpg") {
 
         var options = {
             lineLen: 30,
-            heartBeatCD: 15000,
             heartBeatRange: 300,
             rgb : function (circlePos, heartBeatCenter) {
                 var px = circlePos.x; // a point on boom circle
@@ -83,8 +82,10 @@ if (!("ontouchstart" in window) && headerImg != "img/404-bg.jpg") {
         }
 
         function scroll() {
+            var py = target.y;
             target.x = target.rx + document.body.scrollLeft + document.documentElement.scrollLeft;
             target.y = target.ry + document.body.scrollTop + document.documentElement.scrollTop;
+            target.speed = Math.abs(py - target.y);
         }
 
         function mouseMove(e) {
@@ -112,7 +113,15 @@ if (!("ontouchstart" in window) && headerImg != "img/404-bg.jpg") {
 
         // animation
         function initAnimation() {
-            setInterval(heartBeat, options.heartBeatCD);
+            $(document).ready(function(){
+                var dy = 0;
+                $(document).bind("scrollstop", function(e) {
+                    if (!intersections.length) {
+                        var speed = target.speed;
+                        if(speed <= 1) heartBeat();
+                    }
+                });
+            });
         }
 
         function animate() {
