@@ -269,43 +269,48 @@ if ($('#toc').length > 0) {
     });
 }
 
-/* Google Analytics Original */
-if (_gaId) {
-    (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-        a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+function analytics() {
+    /* Google Analytics Original */
+    if (_gaId) {
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-    ga('create', _gaId, _gaDomain);
-    ga('send', 'pageview');
-}
+        ga('create', _gaId, _gaDomain);
+        ga('send', 'pageview');
+    }
 
-/* Baidu Analytics Original */
-if (_baId) {
-    var _hmt = _hmt || [];
-    (function () {
-        var hm = document.createElement("script");
-        hm.src = "//hm.baidu.com/hm.js?" + _baId;
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
+    /* Baidu Analytics Original */
+    if (_baId) {
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?" + _baId;
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
 
-        // site auto push
-        var bp = document.createElement('script');
-        bp.src = '//push.zhanzhang.baidu.com/push.js';
-        s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-}
+            // site auto push
+            var bp = document.createElement('script');
+            bp.src = '//push.zhanzhang.baidu.com/push.js';
+            s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    }
 
-/* 51.la Analytics Original*/
-if(_51laId) {
-    var jsSrc = "http://js.users.51.la/" + _51laId + ".js";
-    document.write ('<script language="javascript" type="text/javascript" src=' + jsSrc + '></script>');
+    /* 51.la Analytics Original*/
+    if(_51laId) {
+        (function () {
+            var _script = document.createElement("script");
+            _script.src = "http://js.users.51.la/" + _51laId + ".js";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(_script, s);
+        })();
+    }
 }

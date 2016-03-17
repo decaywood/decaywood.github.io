@@ -356,7 +356,7 @@ $(function () {
         if (introHeader.css("background-image") == "none") {
             introHeader.css("background-image", "url(" + headerImg + ")");
         }
-
+        analytics();
     };
 
     var body = $('body');
