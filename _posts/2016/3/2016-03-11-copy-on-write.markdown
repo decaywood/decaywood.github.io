@@ -8,6 +8,7 @@ author:     decaywood
 description: Copy-On-Write简称COW，是一种用于程序设计中的优化策略。其基本思路是，从一开始大家都在共享同一个内容，当某个人想要修改这个内容的时候，才会真正把内容Copy出去形成一个新的内容然后再改，这是一种延时懒惰策略。
 keywords: Copy-On-Write
 tags:
+    - Java
     - 并发编程
 ---
 

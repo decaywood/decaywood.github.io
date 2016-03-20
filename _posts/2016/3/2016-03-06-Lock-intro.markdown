@@ -8,6 +8,7 @@ author:     decaywood
 description: 从Java 5之后，在java.util.concurrent.locks包下提供了另外一种方式来实现同步访问，那就是Lock。本文将介绍并发包中的Lock接口及其相关的一些概念
 keywords: Lock,锁,并发
 tags:
+    - Java
     - 并发编程
 ---
 
