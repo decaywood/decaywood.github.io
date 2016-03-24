@@ -13,8 +13,6 @@ tags:
     - 框架
 ---
 
-<b id="toc">目录</b>
-
 ## Disruptor是什么
 
 Disruptor是一个开源的Java框架，它被设计用于在生产者—消费者问题（producer-consumer problem，简称PCP）上获得尽量高的吞吐量（TPS,Transaction Per Second)）和尽量低的延迟。Disruptor是LMAX在线交易平台的关键组成部分，LMAX平台使用该框架对订单处理速度能达到600万TPS，除金融领域之外，其他一般的应用中都可以用到Disruptor，它可以带来显著的性能提升。

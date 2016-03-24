@@ -11,8 +11,6 @@ tags:
     - 生活
 ---
 
-<b id="toc">目录</b>
-
 <img src="{{site.cdnurl}}/img/post/2016/Lock.svg" alt="SVG" style="background-color:white">
 
 特殊符号大全：

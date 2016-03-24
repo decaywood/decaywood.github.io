@@ -12,8 +12,6 @@ tags:
     - 并发编程
 ---
 
-<b id="toc">目录</b>
-
 ## 什么是CopyOnWrite容器
 
 Copy-On-Write简称COW，是一种用于程序设计中的优化策略。其基本思路是，当某个线程想要修改某个内容的时候，容器会把数据拷贝一份进行修改。这是一种延时懒惰策略。从JDK1.5开始Java并发包里提供了两个使用CopyOnWrite机制实现的并发容器,它们是CopyOnWriteArrayList和CopyOnWriteArraySet。CopyOnWrite容器非常有用，可以在非常多的并发场景中使用到。

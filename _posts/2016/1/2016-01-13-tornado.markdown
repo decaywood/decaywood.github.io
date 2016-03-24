@@ -14,8 +14,6 @@ tags:
 
 [原文](http://www.tornadoweb.org/en/stable/index.html)
 
-<b id="toc">目录</b>
-
 ## 简介
 
 Tornado是一个基于Python开发的异步网络库以及网络框架，由[FriendFeed](http://blog.friendfeed.com/)着手开发。通过非阻塞网络IO，Tornado能同时处理一万个连接。在[Long polling， WebSockets](https://en.wikipedia.org/wiki/Push_technology#Long_polling)，以及其他需要长连接的场合下能够提供理想的性能。

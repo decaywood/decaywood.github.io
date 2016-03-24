@@ -109,6 +109,7 @@
 <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 <!-- global parameters -->
 <script>
+    var debug = "{{ site.debug }}";
     var pagePath = "{{ site.github-source }}/tree/master/{{ page.path }}";
     var cssPath = "{{ site.cdnurl }}/css/";
     var jsPath = "{{ site.cdnurl }}/js/";
@@ -116,6 +117,8 @@
     var _gaDomain = "{{ site.ga_domain }}";
     var _baId = "{{ site.ba_track_id }}";
     var _51laId = "{{ site.51la_track_id }}";
+    var _duoshuo_name = "{{site.duoshuo_username}}";
+    var duoshuoQuery = {short_name: _duoshuo_name };
     var pageRandom = "{{ page.random-img }}";
     var imgCount = "{{ site.post-img-count }}";
     var headerImg;
@@ -132,4 +135,4 @@
 <!-- Scroll Up -->
 <script src="//cdn.bootcss.com/scrollup/2.4.0/jquery.scrollUp.min.js"></script>
 <!-- Custom Theme JavaScript -->
-<script src="{{site.cdnurl}}/js/decaywood-blog.min.js?v=2.0.8.beta"></script>
+<script src="{{site.cdnurl}}/js/decaywood-blog.min.js?v=2.2.1beta"></script>

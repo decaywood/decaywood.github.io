@@ -7,7 +7,7 @@ module.exports = function(grunt) {
             options: {
             },
             dist: {
-                src: ['js/jquery.vticker.js', 'js/beautify.js', 'js/structure.js'],
+                src: ['js/plug-in.js', 'js/beautify.js', 'js/structure.js'],
                 dest: 'js/<%= pkg.name %>.min.js'
             }
         },

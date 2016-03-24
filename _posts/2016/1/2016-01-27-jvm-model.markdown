@@ -12,8 +12,6 @@ tags:
     - JVM
 ---
 
-<b id="toc">目录</b>
-
 本文旨在给所有希望了解[JVM](https://en.wikipedia.org/wiki/Java_Virtual_Machine)（Java Virtual Machine）的同学一个概念性的入门，主要介绍了JVM的组成部分以及它们内部工作的机制和原理。当然本文只是一个简单的入门，不会涉及过多繁杂的参数和配置，感兴趣的同学可以做更深入的研究，在研究JVM的过程中会发现，其实JVM本身就是一个计算机体系结构，很多原理和我们平时的硬件、微机原理、操作系统都有十分相似的地方，所以学习JVM本身也是加深自我对计算机结构认识的一个很好的途径。
 
 另外需要注意的是，虽然平时我们用的大多是Sun（现已被Oracle收购）JDK提供的JVM，但是JVM本身是一个[规范](http://docs.oracle.com/javase/specs/)，所以可以有多种实现，除了[Hotspot](http://www.oracle.com/technetwork/java/javase/tech/index-jsp-136373.html)外，还有诸如Oracle的[JRockit](http://www.oracle.com/technetwork/middleware/jrockit/overview/index.html)、IBM的[J9](https://en.wikipedia.org/wiki/IBM_J9)也都是非常有名的JVM。
