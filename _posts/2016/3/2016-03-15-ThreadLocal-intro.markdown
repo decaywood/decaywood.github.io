@@ -3,7 +3,7 @@ layout:     post
 random-img: true
 title:      ThreadLocal原理分析
 subtitle:   ThreadLocal Reveal
-date:       2016-03-12 21:05:26
+date:       2016-03-15 21:05:26
 author:     decaywood
 description: ThreadLocal，也称线程本地变量。顾名思义，ThreadLocal为变量在每个线程中都创建了一个副本，那么每个线程可以访问自己内部的副本变量。其意义在于高并发场景时变量为各个线程所读时互不影响，有效地避免了线程安全问题，也避免了同步造成的性能开销。
 keywords: ThreadLocal
