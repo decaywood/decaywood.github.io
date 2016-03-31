@@ -154,7 +154,7 @@ static class ThreadLocalMap {
 
 <img src="{{site.cdnurl}}/img/post/2016/ThreadLocal.svg" alt="SVG" style="background-color:white">
 
-## 小节
+## 小结
 
 * 实际的通过ThreadLocal创建的副本是存储在每个线程自己的threadLocals中的
 * threadLocals(ThreadLocalMap)的键值之所以为ThreadLocal对象是因为每个线程中可有多个threadLocal变量，例如上图的ThreadLocal A/B/C/D

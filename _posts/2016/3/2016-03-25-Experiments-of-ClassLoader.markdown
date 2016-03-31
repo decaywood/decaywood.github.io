@@ -203,7 +203,7 @@ public class ClassLoaderTest {}
 ```
 
 ```bash
-echo $JAVA\_HOME -> /Library/Java/JavaVirtualMachines/jdk1.8.0_71.jdk/Contents/Home
+echo $JAVA_HOME -> /Library/Java/JavaVirtualMachines/jdk1.8.0_71.jdk/Contents/Home
 ```
 
 #### 测试一
@@ -282,7 +282,7 @@ sun.misc.Launcher$AppClassLoader@2503db
 
 ```bash
 decaywood-mac:src decaywood$ jar -cvf test.jar org/ 
-decaywood-mac:src decaywood$ sudo mv test.jar $JAVA\_HOME/jre/lib/ext
+decaywood-mac:src decaywood$ sudo mv test.jar $JAVA_HOME/jre/lib/ext
 ```
 
 测试一中的ClassLoaderInheritance2文件一行改为如下：

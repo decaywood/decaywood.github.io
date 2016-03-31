@@ -7,11 +7,11 @@ date:       2016-01-02 11:04:13
 author:     decaywood
 hot:        true
 description: 使用jekyll搭建Github博客
-keywords: jekyll,Javascript,博客搭建
+keywords: jekyll,JavaScript,博客搭建
 tags:
     - 总结
     - 博客搭建
-    - Javascript
+    - JavaScript
     - jekyll
 ---
 
@@ -28,7 +28,7 @@ Github Page默认使用[Jekyll](http://jekyllrb.com/)来把代码生成为静态
 * [没有文章自动目录生成功能](#1)
 * [没有夜间模式](#2)
 * [没有优化资源加载时间](#3)
-* [javascript代码分离不够彻底](#4)
+* [JavaScript代码分离不够彻底](#4)
 
 <b id="1">没有文章自动目录生成功能</b>
 
@@ -109,7 +109,7 @@ if($('#toc').length > 0) {
 
 这个模板大量使用了大图背景增加视觉冲击，这也是我喜欢这个风格的原因之一。不过，为了保证大屏幕的清晰度，背景图size偏大，像Github这种代码管理网站IO性能一般都不是很高，然而这还是国外网站，IO速度可以想象，于是我将所有体积较大的静态文件转到了国内比较专业的[七牛运存储](http://www.qiniu.com/)来实现资源加速，js库也使用了Bootstrap网维护的CDN加速，网站整体加载速度提升了将近一倍。
 
-<b id="4">javascript代码分离不够彻底</b>
+<b id="4">JavaScript代码分离不够彻底</b>
 
 可能作者是出于让js代码可以读取HTML页面上下文的目的比如百度统计的ID，他将部分js代码嵌入了HTML页面，这种混乱的编码我当然不能忍！但要读取上下文参数怎么办？很简单，只要在引入的script标签上面加一段全局变量代码就行了，不过为了防止与库的变量混淆，最好将自己的js文件script标签和全局变量代码段放在footer的最底层。
 

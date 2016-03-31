@@ -342,7 +342,7 @@ optional.ifPresent((s) -> System.out.println(s.charAt(0)));     // "b"
 
 **java.util.Stream**代表一系列可以进行一种或多种操作的元素，Stream也叫做流。流操作既可以是intermediate（补充：即还有下一步操作）也可以是terminal（终止）的。terminal操作返回一个特定类型的结果。intermediate操作则返回流对象自身以进行链式调用。流由source（数据源）创建，例如**集合(java.util.Collection)**中的List/Set（map不支持流操作）。流操作既可以顺序地执行也可以并行执行（补充：这里指并行流）。
 
-> 有需要的可以看一看[Stream.js](https://github.com/winterbe/streamjs)，一个跟Java8 Stream API风格相似的javascript API。
+> 有需要的可以看一看[Stream.js](https://github.com/winterbe/streamjs)，一个跟Java8 Stream API风格相似的JavaScript API。
 
 让我们看看顺序流是如何工作的。首先我们创建一个String列表作为Stream的示例源：
 

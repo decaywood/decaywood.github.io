@@ -8,7 +8,7 @@
 sh jekyll_install.sh
 ```
 
-* [catalogGenerator.py](https://github.com/decaywood/decaywood.github.io/blob/master/shell/catalogGenerator.py)自动生成markdown目录脚本,目前已实现javascript自动生成目录，此脚本弃用
+* [catalogGenerator.py](https://github.com/decaywood/decaywood.github.io/blob/master/shell/catalogGenerator.py)自动生成markdown目录脚本,目前已实现JavaScript自动生成目录，此脚本弃用
 
 ```bash
 python catalogGenerator.py _posts/your_file.md
