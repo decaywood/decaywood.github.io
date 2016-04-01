@@ -362,7 +362,7 @@ $(function () {
     var body = $('body');
 
     body.addClass("animsition");
-    $("a:not(#night-mode):not([href^=#])").addClass("animsition-link");
+    $("a:not('#night-mode'):not([href^='#'])").addClass("animsition-link");
 
     body.on("animsition.inStart", function () {
         window.console.info("animsition inStart");

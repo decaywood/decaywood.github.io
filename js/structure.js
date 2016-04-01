@@ -13,7 +13,7 @@ function async(u, c) {
 }
 
 /* Highlight.js */
-async("//cdn.bootcss.com/highlight.js/9.0.0/highlight.min.js", function () {
+async("//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js", function () {
     hljs.initHighlightingOnLoad();
 });
 
