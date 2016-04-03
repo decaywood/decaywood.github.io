@@ -24,6 +24,55 @@ async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
 });
 
 $(function () {
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var toggle = $(".navbar-toggle");
+    var navbar = $("#blog_navbar");
+    var collapse = $(".navbar-collapse");
+    var blogNav = {
+        close: function(){
+            navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if(navbar.className.indexOf('in') < 0) {
+                    collapse.style.height = "0px"
+                }
+            },400)
+        },
+        open: function(){
+            collapse.style.height = "auto";
+            navbar.className += " in";
+        }
+    };
+    // Bind Event
+    toggle.click(function(){
+        if (navbar.className.indexOf('in') > 0) {
+            blogNav.close()
+        }else{
+            blogNav.open()
+        }
+    });
+    /**
+     * Since Fastclick is used to delegate 'touchstart' globally
+     * to hack 300ms delay in iOS by performing a fake 'click',
+     * Using 'e.stopPropagation' to stop 'touchstart' event from
+     * $toggle/$collapse will break global delegation.
+     *
+     * Instead, we use a 'e.target' filter to prevent handler
+     * added to document close blogNav.
+     *
+     * Also, we use 'click' instead of 'touchstart' as compromise
+     */
+    document.addEventListener('click', function(e){
+        if(e.target == toggle) return;
+        if(e.target.className == 'icon-bar') return;
+        blogNav.close();
+    })
+});
+
+$(function () {
     var edit = $("#edit-in-github");
     if(edit.length > 0) {
         edit.attr("href", pagePath);
@@ -344,9 +393,6 @@ function remote_serve() {
         ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
         ds.charset = 'UTF-8';
         $("script:last").after(ds);
-        //(document.getElementsByTagName('head')[0]
-        //|| document.getElementsByTagName('body')[0]).appendChild(ds);
-
     }
 
 }
