@@ -153,7 +153,7 @@ public class LongEvent {
 ```
 ### 定义事件工厂
 
-事件工厂(EventFactory)定义了如何实例化前面第1步中定义的事件(Event)，需要实现接口EventFactory<T>。Disruptor 通过 EventFactory 在 RingBuffer 中预创建 Event 的实例。一个Event实例实际上被用作一个“数据槽”，发布者发布前，先从 RingBuffer 获得一个Event的实例，然后往Event实例中填充数据，之后再发布到RingBuffer中，之后由Consumer获得该Event实例并从中读取数据。
+事件工厂(EventFactory)定义了如何实例化前面第1步中定义的事件(Event)，需要实现接口EventFactory\<T\>。Disruptor 通过 EventFactory 在 RingBuffer 中预创建 Event 的实例。一个Event实例实际上被用作一个“数据槽”，发布者发布前，先从 RingBuffer 获得一个Event的实例，然后往Event实例中填充数据，之后再发布到RingBuffer中，之后由Consumer获得该Event实例并从中读取数据。
 
 ```java
 /**
@@ -173,7 +173,7 @@ public class LongEventFactory implements EventFactory<LongEvent> {
 
 ### 定义事件处理的具体实现
 
-事件定义好后，消费者需要处理具体事件，具体的处理逻辑可以在EventHandler<T>中实现。
+事件定义好后，消费者需要处理具体事件，具体的处理逻辑可以在EventHandler\<T\>中实现。
 
 ```java
 import com.lmax.disruptor.EventHandler;

@@ -161,7 +161,7 @@ $ git tag -a 1.2
 
 这样release分支已经完成工作，tag也已经打了。
 
-备注:你可以使用-s or -u <key>参数为你的tag设置标签签名。
+备注:你可以使用-s or -u \<key\>参数为你的tag设置标签签名。
 
 为了保存这些在release分支所做的变更，我们需要将这些变更合并回develop分支。执行如下Git命令:
 
@@ -228,7 +228,7 @@ Merge made by recursive.
 $ git tag -a 1.2.1
 ```
 
-备注:你可以使用-s or -u <key>参数为你的tag设置标签签名。
+备注:你可以使用-s or -u \<key\>参数为你的tag设置标签签名。
 
 紧接着，在develop分支合并bugfix代码
 
