@@ -1,8 +1,8 @@
 /*
  * Reactive Background
  */
-if (!("ontouchstart" in window) && headerImg != "img/404-bg.jpg") {
-
+if (!("ontouchstart" in window) && !exception) {
+    console.info(headerImg);
     $(function () {
 
         polyFill();
@@ -21,10 +21,10 @@ if (!("ontouchstart" in window) && headerImg != "img/404-bg.jpg") {
         $canvas.css("z-index", -999);
 
         var options = {
-            speedThreshold:50,
+            speedThreshold: 50,
             lineLen: 30,
             heartBeatRange: 300,
-            rgb : function (circlePos, heartBeatCenter) {
+            rgb: function (circlePos, heartBeatCenter) {
                 var px = circlePos.x; // a point on boom circle
                 var py = circlePos.y;
                 var hbcx = heartBeatCenter.x;
@@ -35,7 +35,7 @@ if (!("ontouchstart" in window) && headerImg != "img/404-bg.jpg") {
 
                 var r = parseInt(255 * dis / maxDis);
                 // do some computation....
-                return {r:r,g:217,b:203};
+                return {r: r, g: 217, b: 203};
             }
         };
 
@@ -87,7 +87,7 @@ if (!("ontouchstart" in window) && headerImg != "img/404-bg.jpg") {
             target.x = target.rx + document.body.scrollLeft + document.documentElement.scrollLeft;
             target.y = target.ry + document.body.scrollTop + document.documentElement.scrollTop;
             target.speed = Math.abs(py - target.y);
-            if(target.animate) target.animate();
+            if (target.animate) target.animate();
         }
 
         function mouseMove(e) {
@@ -121,7 +121,7 @@ if (!("ontouchstart" in window) && headerImg != "img/404-bg.jpg") {
                     this.pass = true;
                 } else if (this.speed == 1 && this.pass) {
                     this.pass = false;
-                    if(!intersections.length) heartBeat();
+                    if (!intersections.length) heartBeat();
                 }
             }
         }
@@ -136,7 +136,7 @@ if (!("ontouchstart" in window) && headerImg != "img/404-bg.jpg") {
                     intersection.circle.draw();
                 } else count++;
             }
-            if(intersections.length > 0 && count == intersections.length) {
+            if (intersections.length > 0 && count == intersections.length) {
                 intersections = [];
                 return;
             }
@@ -318,7 +318,6 @@ if (!("ontouchstart" in window) && headerImg != "img/404-bg.jpg") {
         }
 
 
-
         function Circle(pos, rad, centerP) {
 
             this.pos = pos || null;
@@ -345,11 +344,12 @@ if (!("ontouchstart" in window) && headerImg != "img/404-bg.jpg") {
 }
 
 /* Animation */
+
 $(function () {
 
-    window.onload = function () {
+    var onload = function () {
         // just in case visit could see nothing due to the Animation is not available
-        window.console.info("window loaded");
+
         var body = $('body');
         body.removeAttr("id"); // id = "body-hidden"
         var introHeader = $(".intro-header");
@@ -359,37 +359,41 @@ $(function () {
         if (!debug) remote_serve();
     };
 
-    var body = $('body');
+    if (exception) {onload();} else {
+        window.onload = onload;
+        var body = $('body');
+        body.addClass("animsition");
+        $("a:not('#night-mode'):not([href^='#'])").addClass("animsition-link");
 
-    body.addClass("animsition");
-    $("a:not('#night-mode'):not([href^='#'])").addClass("animsition-link");
+        body.on("animsition.inStart", function () {
+            window.console.info("animsition inStart");
+            $(".intro-header").css("background-image", "url(" + headerImg + ")");
+            body.removeAttr("id");
+        });
 
-    body.on("animsition.inStart", function () {
-        window.console.info("animsition inStart");
-        $(".intro-header").css("background-image", "url(" + headerImg + ")");
-        body.removeAttr("id");
-    });
+        $(".animsition").animsition({
+            inClass: 'fade-in-up',
+            outClass: 'fade-out-down',
+            inDuration: 300,
+            outDuration: 300,
+            linkElement: '.animsition-link',
+            loading: true,
+            loadingClass: 'animsition-loading',
+            timeout: false,
+            timeoutCountdown: 5000,
+            onLoadEvent: true,
+            browser: ['animation-duration', '-webkit-animation-duration', '-o-animation-duration'],
+            overlay: false,
+            overlayClass: 'animsition-overlay-slide',
+            overlayParentElement: 'body',
+            transition: function (url) {
+                window.location.href = url;
+            }
+        });
 
-    $(".animsition").animsition({
-        inClass: 'fade-in-up',
-        outClass: 'fade-out-down',
-        inDuration: 300,
-        outDuration: 300,
-        linkElement: '.animsition-link',
-        loading: true,
-        loadingClass: 'animsition-loading',
-        timeout: false,
-        timeoutCountdown: 5000,
-        onLoadEvent: true,
-        browser: ['animation-duration', '-webkit-animation-duration', '-o-animation-duration'],
-        overlay: false,
-        overlayClass: 'animsition-overlay-slide',
-        overlayParentElement: 'body',
-        transition: function (url) {
-            window.location.href = url;
-        }
-    });
+    }
 });
+
 
 /*
  * add line under every article title
