@@ -24,33 +24,30 @@ async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function () {
 });
 
 $(function () {
-    // Drop Bootstarp low-performance Navbar
-    // Use customize navbar with high-quality material design animation
-    // in high-perf jank-free CSS3 implementation
-    var toggle = $(".navbar-toggle");
-    var navbar = $("#blog_navbar");
-    var collapse = $(".navbar-collapse");
+    var $toggle = document.querySelector(".navbar-toggle");
+    var $navbar = document.querySelector('#blog_navbar');
+    var $collapse = document.querySelector(".navbar-collapse");
     var blogNav = {
-        close: function(){
-            navbar.className = " ";
+        close: function () {
+            $navbar.className = " ";
             // wait until animation end.
-            setTimeout(function(){
+            setTimeout(function () {
                 // prevent frequently toggle
-                if(navbar.className.indexOf('in') < 0) {
-                    collapse.style.height = "0px"
+                if ($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
                 }
-            },400)
+            }, 400)
         },
-        open: function(){
-            collapse.style.height = "auto";
-            navbar.className += " in";
+        open: function () {
+            $collapse.style.height = "auto";
+            $navbar.className += " in";
         }
     };
     // Bind Event
-    toggle.click(function(){
-        if (navbar.className.indexOf('in') > 0) {
+    $toggle.addEventListener('click', function (e) {
+        if ($navbar.className.indexOf('in') > 0) {
             blogNav.close()
-        }else{
+        } else {
             blogNav.open()
         }
     });
@@ -61,12 +58,12 @@ $(function () {
      * $toggle/$collapse will break global delegation.
      *
      * Instead, we use a 'e.target' filter to prevent handler
-     * added to document close blogNav.
+     * added to document close HuxNav.
      *
      * Also, we use 'click' instead of 'touchstart' as compromise
      */
     document.addEventListener('click', function(e){
-        if(e.target == toggle) return;
+        if(e.target == $toggle) return;
         if(e.target.className == 'icon-bar') return;
         blogNav.close();
     })
