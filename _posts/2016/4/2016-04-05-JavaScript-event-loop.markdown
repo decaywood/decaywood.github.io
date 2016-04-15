@@ -139,7 +139,7 @@ baz
 
 ## 闭包
 
-JavaScript对[闭包](2016-04-01-Javascript-closure-intro)的支持允许回调函数在执行时访问其外部的上下文，上下文在声明回调的函数弹出调用栈后仍然有效。考虑下面的例子：
+JavaScript对[闭包](/2016/04/02/Javascript-closure-intro/)的支持允许回调函数在执行时访问其外部的上下文，上下文在声明回调的函数弹出调用栈后仍然有效。考虑下面的例子：
 
 ```javascript
 function say_hello() {
