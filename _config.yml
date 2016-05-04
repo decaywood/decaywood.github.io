@@ -18,10 +18,8 @@ cdnurl: http://7xppt1.com1.z0.glb.clouddn.com
 permalink: pretty
 paginate: 20
 exclude: ["less","node_modules","Gruntfile.js","package.json","decaywood.github.io.iml", "_posts/2016-01-02-copy-me.markdown"]
-
 post-img-count: 70
-
-# nessessary in Mac OS
+timezone: CN
 gems: [jekyll-paginate]
 
 # Markdown settings
@@ -34,10 +32,8 @@ kramdown:
 
 
 # social settings
-
-#Disqus settings
-#disqus_username: _your_disqus_short_name_
-
+# Disqus settings
+# disqus_username: _your_disqus_short_name_
 # Duoshuo settings
 duoshuo_username: decaywood
 # Share component is depend on Comment so we can NOT use share only.
