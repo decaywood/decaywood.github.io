@@ -11,7 +11,7 @@ tags:
     - 网络编程
 ---
 
-本文作为博客内[Linux下的五种IO模型](/2016/01/08/web-io-model/)一文的补充
+本文作为博客内[Linux下的五种IO模型](/2016/01/07/web-io-model/)一文的补充
 
 
 目前支持IO多路复用的系统调用有select、pselect、poll、epoll，在Linux网络编程过程中，很长一段时间都使用select做轮询和网络事件通知，然而select的一些固有缺陷导致了它的应用受到了很大的限制，使得linux不得不在新的内核中寻找出替代方案，最终选择了epoll。epoll与select原理类似，为了克服select的缺点，epoll作出了很多重大改进，现总结如下：
