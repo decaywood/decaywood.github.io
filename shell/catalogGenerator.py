@@ -12,7 +12,7 @@ if len(sys.argv) == 1:
 file_name = sys.argv[1]
 
 BASE_DIR = os.path.dirname(__file__)
-POST_DIR = BASE_DIR + '/' + file_name
+POST_DIR = BASE_DIR + os.path.sep + file_name
 
 POST_DIR = POST_DIR if POST_DIR.startswith('.') else '.' + POST_DIR
 

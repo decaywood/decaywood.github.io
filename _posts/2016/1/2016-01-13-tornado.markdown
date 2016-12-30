@@ -33,7 +33,7 @@ Tornado网络框架和HTTP服务端提供了替代[WSGI](https://www.python.org/
 
 为了最小化并发连接的代价，Tornado使用单线程的Event loop模型。这意味着所有应用代码都必须是异步并且非阻塞的，应为同一时间只可能进行一个操作，否则程序就假死了。
 
-异步和非阻塞是两个联系紧密但却经常被混淆的术语，事实上他们不是一个概念，博客里有一个专门讲解同步/异步，阻塞/非阻塞区别的[章节](/2016/01/08/web-io-model/#section)
+异步和非阻塞是两个联系紧密但却经常被混淆的术语，事实上他们不是一个概念，博客里有一个专门讲解同步/异步，阻塞/非阻塞区别的[章节](/2016/01/07/web-io-model/#section)
 
 ### 阻塞
 
@@ -583,7 +583,7 @@ app = tornado.web.Application([
 
 ### 异步handler
 
-Tornado的handler默认为同步的:当get()/post()方法返回时， 请求随即结束并且返回响应。由于当一个handler正在运行的时候其他所有请求都会被阻塞，所以任何需要长时间运行的handler都应该以异步方式运行，这样的话，即便handler中的处理方法很耗时，也不会阻塞其他handler的执行。这个话题在[Linux下的五种IO模型](/2016/01/08/web-io-model/#section)中有更详细的讨论。
+Tornado的handler默认为同步的:当get()/post()方法返回时， 请求随即结束并且返回响应。由于当一个handler正在运行的时候其他所有请求都会被阻塞，所以任何需要长时间运行的handler都应该以异步方式运行，这样的话，即便handler中的处理方法很耗时，也不会阻塞其他handler的执行。这个话题在[Linux下的五种IO模型](/2016/01/07/web-io-model/#section)中有更详细的讨论。
 
 使用[coroutine](http://www.tornadoweb.org/en/stable/gen.html#tornado.gen.coroutine)装饰器是做异步最简单的方式。这允许你使用yield关键字执行非阻塞IO，并且直到协程返回才发送响应。查看[协程](#section-4)了解更多细节。
 
