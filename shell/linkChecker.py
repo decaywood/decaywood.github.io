@@ -2,12 +2,20 @@
 # !/usr/bin/env python
 # !/usr/bin/python
 # author : decaywood
+import sys
 import os
 import re
 import fileinput
 
+def cur_file_dir():
+   path = sys.path[0]
+   if os.path.isdir(path):
+       return path
+   elif os.path.isfile(path):
+       return os.path.dirname(path)
+
 PATTERN = re.compile(r'.*\[(.*)\]\((.*)\).*')
-BASE_DIR = os.path.dirname(__file__)
+BASE_DIR = cur_file_dir()
 POST_DIR = ''.join([os.path.dirname(BASE_DIR), os.path.sep, '_posts'])
 CARE_TYPE = '.markdown'
 
