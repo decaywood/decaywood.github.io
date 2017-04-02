@@ -153,7 +153,7 @@ function say_hello() {
 say_hello();
 ```
 
-在这个例子中，say_hello函数被执行时定义了变量name。之后setTimeout函数被执行，约1000毫秒后，绑定了say_hello_again回调的消息入队。之后say_hello函数返回，栈帧弹出结束第一个消息的处理，但name变量仍然可以通过闭包被引用，而不是被垃圾回收。当第二个消息被处理(say_hello_again回调)，它保持了对在外部函数上下文中声明的name变量的访问。一旦回调函数执行结束，header变量可以被垃圾回收。
+在这个例子中，say\_hello函数被执行时定义了变量name。之后setTimeout函数被执行，约1000毫秒后，绑定了say\_hello\_again回调的消息入队。之后say\_hello函数返回，栈帧弹出结束第一个消息的处理，但name变量仍然可以通过闭包被引用，而不是被垃圾回收。当第二个消息被处理(say\_hello\_again回调)，它保持了对在外部函数上下文中声明的name变量的访问。一旦回调函数执行结束，header变量可以被垃圾回收。
 
 执行结果：
 

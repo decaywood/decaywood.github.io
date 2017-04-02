@@ -47,9 +47,10 @@ def get_local_links():
 
 def get_link_in_file(container, file_path):
     for line in fileinput.input(file_path):
-        match = PATTERN.match(line)
-        if match:
-            x, y = match.groups()
+
+        matches = []
+        get_matches_pair(line, matches)
+        for x, y in matches:
             container.append((os.path.basename(file_path), x, y))
 
 
@@ -71,5 +72,15 @@ def do_list_file_infos(dir_list, path):
             dir_list.append(f_path)
         elif os.path.isdir(f_path):
             do_list_file_infos(dir_list, f_path)
+
+
+def get_matches_pair(line, matches):
+    match = PATTERN.match(line)
+    if match:
+        x, y = match.groups()
+        start = line.rfind(x)
+        line = line[:start]
+        matches.append((x, y))
+        get_matches_pair(line, matches)
 
 check()

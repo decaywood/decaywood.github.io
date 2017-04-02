@@ -96,7 +96,7 @@ JDK 8的HotSpot JVM现在使用的是本地内存来表示类的元数据，这�
 
 * -XX:CMSInitiatingOccupancyFraction:
 指示在oldgeneration在使用了n%的比例后，启动ConcurrentCollector，默认值是68，如:-XX:CMSInitiatingOccupancyFraction=70
-有个bug，在低版本(1.5.09andearly)的JVM上出现，http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6486089
+有个bug，在低版本(1.5.09andearly)的JVM上出现，http://bugs.sun.com/bugdatabase/view\_bug.do?bug\_id=6486089
 
 * -XX:+UseCMSInitiatingOccupancyOnly
 指示只有在OldGeneration在使用了初始化的比例后ConcurrentCollector启动收集
