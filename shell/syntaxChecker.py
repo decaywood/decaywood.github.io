@@ -15,6 +15,7 @@ def cur_file_dir():
     elif os.path.isfile(path):
         return os.path.dirname(path)
 
+
 PATTERN = re.compile(r'.*\[(.*)\]\((.*)\).*')
 BASE_DIR = cur_file_dir()
 POST_DIR = ''.join([os.path.dirname(BASE_DIR), os.path.sep, '_posts'])
@@ -36,12 +37,31 @@ def check_underline(line, line_num, ignore):
             if legal:
                 cols.append(index)
 
-
-
     if cols:
         print 'line:', line_num, 'cols:', cols, 'content:'
         print line
     return cols
+
+
+def stack_checker_gen(syntax):
+    ignore = [False]
+
+    def checker(line):
+        if syntax in line:
+            ignore[0] = not ignore[0]
+        return ignore[0]
+
+    return checker
+
+
+def stack_checker():
+    checker1 = stack_checker_gen('```')
+    checker2 = stack_checker_gen('---')
+
+    def check(line):
+        return checker1(line) or checker2(line)
+
+    return check
 
 
 CHECKERS = [check_underline]
@@ -55,18 +75,18 @@ def process():
 
 def process_file(file_path):
     line_num = 0
-    ignore = False
+    ignore = stack_checker()
     has_error = False
     for line in fileinput.input(file_path):
-        if '```' in line:
-            ignore = not ignore
+        _ignore = ignore(line)
         line_num += 1
         for func in CHECKERS:
-            res = func(line, line_num, ignore)
+            res = func(line, line_num, _ignore)
             has_error = has_error or res
     if has_error:
         print file_path
         print '------'
+
 
 def list_file_infos(path):
     dir_list = []
@@ -82,7 +102,6 @@ def do_list_file_infos(dir_list, path):
             dir_list.append(f_path)
         elif os.path.isdir(f_path):
             do_list_file_infos(dir_list, f_path)
-
 
 
 def get_ignore_index_pair(line, pairs):
