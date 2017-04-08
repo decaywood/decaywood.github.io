@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" viewBox="57 -187 803 849" width="803pt" height="849pt" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <metadata> Produced by OmniGraffle 7.0.2 
+    <dc:date>2017-04-07 13:23:58 +0000</dc:date>
+  </metadata>
+  <defs>
+    <font-face font-family="Helvetica Neue" font-size="16" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="500">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="PingFang SC" font-size="28" panose-1="2 11 4 0 0 0 0 0 0 0" units-per-em="1000" underline-position="-150" underline-thickness="58" slope="0" x-height="600" cap-height="860" ascent="1060.0021" descent="-340.0007" font-weight="500">
+      <font-face-src>
+        <font-face-name name="PingFangSC-Regular"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="Helvetica Neue" font-size="28" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="500">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+  </defs>
+  <g stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1">
+    <title>Canvas 1</title>
+    <g>
+      <title>Layer 1</title>
+      <circle cx="177.5" cy="167.37755" r="50.00008" fill="white"/>
+      <circle cx="177.5" cy="167.37755" r="50.00008" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <circle cx="119.5" cy="167.37755" r="50.00008" fill="#ff2600"/>
+      <circle cx="119.5" cy="167.37755" r="50.00008" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M 149.54035 208.82943 C 126.64711 193.38774 120.60644 162.31115 136.04812 139.4179 C 139.96636 133.60888 145.0618 128.68826 151.00404 124.97515" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(74.5 38.481555)" fill="black">
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="15" textLength="158.16">SELECT &lt;select_list&gt; </tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="33.448" textLength="59.872">FROM T</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="58.4" y="33.448" textLength="74.08">ABLE A A </tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="51.895996" textLength="91.28">LEFT JOIN T</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="89.808" y="51.895996" textLength="70.816">ABLE B B</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="70.34399" textLength="88.864">USING(KEY)</tspan>
+      </text>
+      <circle cx="610.5" cy="167.37755" r="50.00008" fill="white"/>
+      <circle cx="610.5" cy="167.37755" r="50.00008" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <circle cx="668.5" cy="167.37755" r="50.00008" fill="#ff2600"/>
+      <circle cx="668.5" cy="167.37755" r="50.00008" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M 638.45965 125.92567 C 661.3529 141.36736 667.3936 172.44396 651.9519 195.3372 C 648.8542 199.9297 645.01485 203.97553 640.59075 207.30933" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(553.5 38.481555)" fill="black">
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="15" textLength="158.16">SELECT &lt;select_list&gt; </tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="33.448" textLength="59.872">FROM T</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="58.4" y="33.448" textLength="74.08">ABLE A A </tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="51.895996" textLength="102.224">RIGHT JOIN T</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="100.752" y="51.895996" textLength="70.816">ABLE B B</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="70.34399" textLength="88.864">USING(KEY)</tspan>
+      </text>
+      <circle cx="421.5391" cy="167.37755" r="50.00008" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <circle cx="365" cy="167.13265" r="50.00008" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M 406.2308 167.84277 L 394.5394 209.19567 C 376.05813 200.61348 366.31053 175.1419 372.76752 152.30333 C 376.00995 140.83477 382.9608 131.67098 391.95946 127.0013 Z" fill="#ff2600"/>
+      <path d="M 394.5394 209.19567 C 376.05813 200.61348 366.31053 175.1419 372.76752 152.30333 C 376.00995 140.83477 382.9608 131.67098 391.95946 127.0013" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M 378.71063 168.25486 L 392.93227 126.26108 C 411.96537 135.46695 421.0275 161.73104 413.1731 184.92356 C 409.57304 195.55392 402.79837 204.18843 394.21577 209.08526 Z" fill="#ff2600"/>
+      <path d="M 392.93227 126.26108 C 411.96537 135.46695 421.0275 161.73104 413.1731 184.92356 C 409.57304 195.55392 402.79837 204.18843 394.21577 209.08526" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(308.5 38.481555)" fill="black">
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="15" textLength="158.16">SELECT &lt;select_list&gt; </tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="33.448" textLength="59.872">FROM T</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="58.4" y="33.448" textLength="74.08">ABLE A A </tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="51.895996" textLength="102.224">INNER JOIN T</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="100.752" y="51.895996" textLength="70.816">ABLE B B</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="70.34399" textLength="88.864">USING(KEY)</tspan>
+      </text>
+      <circle cx="119.5" cy="384" r="50.00008" fill="#ff2600"/>
+      <circle cx="119.5" cy="384" r="50.00008" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <circle cx="177.5" cy="384" r="50.00008" fill="white"/>
+      <circle cx="177.5" cy="384" r="50.00008" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M 147.45965 342.54812 C 170.35289 357.9898 176.39356 389.0664 160.95188 411.95965 C 157.85419 416.55216 154.01485 420.598 149.59075 423.9318" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(62.5 236.38)" fill="black">
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="15" textLength="158.16">SELECT &lt;select_list&gt; </tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="33.448" textLength="59.872">FROM T</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="58.4" y="33.448" textLength="74.08">ABLE A A </tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="51.895996" textLength="91.28">LEFT JOIN T</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="89.808" y="51.895996" textLength="70.816">ABLE B B</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="70.34399" textLength="129.616">ON A.KEY=B.KEY</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="88.79199" textLength="171.856">WHERE B.KEY IS NULL</tspan>
+      </text>
+      <circle cx="423.5" cy="424" r="50.00008" fill="#ff2600"/>
+      <circle cx="423.5" cy="424" r="50.00008" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <circle cx="365.5" cy="424" r="50.00008" fill="#ff2600"/>
+      <circle cx="365.5" cy="424" r="50.00008" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M 408.83053 423.5879 L 397.1391 464.9408 C 378.65786 456.3586 368.91026 430.88704 375.36725 408.04847 C 378.6097 396.5799 385.56054 387.4161 394.5592 382.74644 Z" fill="white"/>
+      <path d="M 397.1391 464.9408 C 378.65786 456.3586 368.91026 430.88704 375.36725 408.04847 C 378.6097 396.5799 385.56054 387.4161 394.5592 382.74644" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M 381.31036 424 L 395.532 382.0062 C 414.5651 391.2121 423.62724 417.4762 415.77285 440.6687 C 412.17277 451.29906 405.3981 459.93357 396.8155 464.8304 Z" fill="white"/>
+      <path d="M 395.532 382.0062 C 414.5651 391.2121 423.62724 417.4762 415.77285 440.6687 C 412.17277 451.29906 405.3981 459.93357 396.8155 464.8304" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(308.5 258.156)" fill="black">
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="15" textLength="158.16">SELECT &lt;select_list&gt; </tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="33.448" textLength="59.872">FROM T</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="58.4" y="33.448" textLength="74.08">ABLE A A </tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="51.895996" textLength="150.848">FULL OUTER JOIN T</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="149.376" y="51.895996" textLength="70.816">ABLE B B</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="70.34399" textLength="129.616">ON A.KEY=B.KEY</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="88.79199" textLength="171.856">WHERE B.KEY IS NULL</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="107.23999" textLength="137.504">OR A.KEY IS NULL</tspan>
+      </text>
+      <circle cx="668.5" cy="384" r="50.00008" fill="#ff2600"/>
+      <circle cx="668.5" cy="384" r="50.00008" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <circle cx="610.5" cy="384" r="50.00008" fill="white"/>
+      <circle cx="610.5" cy="384" r="50.00008" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M 640.54035 425.4519 C 617.6471 410.0102 611.6064 378.9336 627.0481 356.04035 C 630.1458 351.44784 633.98515 347.40202 638.40925 344.06822" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(553.5 236.38)" fill="black">
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="15" textLength="158.16">SELECT &lt;select_list&gt; </tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="33.448" textLength="59.872">FROM T</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="58.4" y="33.448" textLength="74.08">ABLE A A </tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="51.895996" textLength="102.224">RIGHT JOIN T</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="100.752" y="51.895996" textLength="70.816">ABLE B B</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="70.34399" textLength="129.616">ON A.KEY=B.KEY</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="88.79199" textLength="171.264">WHERE A.KEY IS NULL</tspan>
+      </text>
+      <circle cx="423.5" cy="-52.2449" r="50.00008" fill="#ff2600"/>
+      <circle cx="423.5" cy="-52.2449" r="50.00008" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <circle cx="365.5" cy="-52.2449" r="50.00008" fill="#ff2600"/>
+      <circle cx="365.5" cy="-52.2449" r="50.00008" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path d="M 395.54035 -10.793019 C 372.6471 -26.234704 366.60644 -57.3113 382.0481 -80.20454 C 385.1458 -84.79706 388.98515 -88.84287 393.40925 -92.17667" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(308.5 -181.1409)" fill="black">
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="15" textLength="158.16">SELECT &lt;select_list&gt; </tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="33.448" textLength="59.872">FROM T</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="58.4" y="33.448" textLength="74.08">ABLE A A </tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="51.895996" textLength="150.848">FULL OUTER JOIN T</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="149.376" y="51.895996" textLength="70.816">ABLE B B</tspan>
+        <tspan font-family="Helvetica Neue" font-size="16" font-weight="500" x="0" y="70.34399" textLength="88.864">USING(KEY)</tspan>
+      </text>
+      <text transform="translate(395.5 514.73045)" fill="black">
+        <tspan font-family="PingFang SC" font-size="28" font-weight="500" x="0" y="30" textLength="304.052">Database Join Diagram</tspan>
+        <tspan font-family="Helvetica Neue" font-size="28" font-weight="500" x="0" y="101" textLength="184.072">by decaywood</tspan>
+      </text>
+    </g>
+  </g>
+</svg>
