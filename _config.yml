@@ -1,12 +1,12 @@
 # Site settings
-title: decaywood's Blog
-SEOTitle: decaywood's Blog
+title: 李胖子的博客
+SEOTitle: Li's Blog
 header-img: img/home-bg.jpg
 email: decaywood@qq.com
 description: "Hi, I'm decaywood"
-keywords: "Java Python Javascript..."
-github-source: https://github.com/decaywood/decaywood.github.io
-url: http://blog.decaywood.me
+keywords: "Python Javascript Datascience..."
+github-source: https://github.com/chaoyangqq/chaoyangqq.github.io
+url:
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 # CDN Accelerate
