@@ -6,7 +6,7 @@ email: decaywood@qq.com
 description: "Hi, I'm decaywood"
 keywords: "Python Javascript Datascience..."
 github-source: https://github.com/chaoyangqq/chaoyangqq.github.io
-url:
+url: https://chaoyangqq.github.io/
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 # CDN Accelerate
@@ -43,9 +43,9 @@ duoshuo_share: true                     # set to false if you want to use Commen
 RSS: true
 #weibo_username:     decaywood
 #zhihu_username:     decaywood
-github_username:    decaywood
+github_username:    chaoyangqq
 #lofter_username:    decaywood
-v2ex_username:      decaywood
+# v2ex_username:      decaywood
 #twitter_username:  decaywood
 #facebook_username:  decaywood
 
@@ -54,7 +54,7 @@ v2ex_username:      decaywood
 
 # Analytics settings
 # Baidu Analytics
-ba_track_id: 8cfd62dcadd7b6214b39961e11bb6981
+# ba_track_id: 8cfd62dcadd7b6214b39961e11bb6981
 # Google Analytics
 #ga_track_id:  # Format: UA-xxxxxx-xx
 #ga_domain: # decaywood.github.io
