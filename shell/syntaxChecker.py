@@ -47,6 +47,8 @@ def stack_checker_gen(syntax):
     ignore = [False]
 
     def checker(line):
+        if syntax in line and line.count(syntax) %2 == 0:
+            return True
         if syntax in line:
             ignore[0] = not ignore[0]
         return ignore[0]
